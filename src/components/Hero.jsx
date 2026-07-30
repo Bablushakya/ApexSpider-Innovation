@@ -1,30 +1,45 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+import GlowHorizonFM from './ui/GlowHorizonFM';
+import { AnimatedTitleFM } from './ui/AnimatedTitleFM';
 import './Hero.css';
 
 export default function Hero() {
   return (
     <section className="hero-section" id="hero">
-      {/* Background glow blobs */}
-      <div className="glow-blob glow-blob-teal pulse-glow-teal hero-blob-1"></div>
-      <div className="glow-blob glow-blob-indigo pulse-glow-indigo hero-blob-2"></div>
+      {/* Background glow horizon */}
+      <GlowHorizonFM variant="top" />
 
       <div className="container hero-container">
-        {/* Left Column: Context / Content */}
+        {/* Centered Content */}
         <div className="hero-content">
-          <div className="hero-badge">
+          <motion.div 
+            className="hero-badge"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
             <span className="badge-tag">Now in Beta</span>
             <span className="badge-text">Scalable Solutions for Modern Teams</span>
-          </div>
+          </motion.div>
           
-          <h1 className="hero-title">
-            We build <span className="text-gradient-cyan">scalable software</span> for next-gen enterprises.
-          </h1>
+          <AnimatedTitleFM open={true} />
           
-          <p className="hero-description">
+          <motion.p 
+            className="hero-description"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+          >
             Custom web systems, automated workflows, and premium digital interfaces tailored to establish credibility and accelerate performance.
-          </p>
+          </motion.p>
           
-          <div className="hero-actions">
+          <motion.div 
+            className="hero-actions"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.7 }}
+          >
             <a href="#services" className="btn btn-primary">
               Explore Services
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -34,20 +49,30 @@ export default function Hero() {
             <a href="#work" className="btn btn-secondary">
               View Work
             </a>
-          </div>
+          </motion.div>
 
-          <div className="hero-social-proof">
+          <motion.div 
+            className="hero-social-proof"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.9 }}
+          >
             <p className="social-proof-title">Trusted by growing teams worldwide</p>
             <div className="social-proof-logos">
               <span className="proof-logo">Enterprise Beta</span>
               <span className="proof-logo">SaaS Alpha</span>
               <span className="proof-logo">Digital Delta</span>
             </div>
-          </div>
+          </motion.div>
         </div>
 
-        {/* Right Column: Premium Visual Placeholder Mockup */}
-        <div className="hero-visual">
+        {/* Premium Visual Mockup */}
+        <motion.div 
+          className="hero-visual"
+          initial={{ opacity: 0, y: 60, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.8 }}
+        >
           <div className="glass-panel mock-dashboard">
             {/* Dashboard header bar */}
             <div className="dashboard-header">
@@ -110,7 +135,7 @@ export default function Hero() {
               </main>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
