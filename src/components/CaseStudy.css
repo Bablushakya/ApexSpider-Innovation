@@ -154,4 +154,10 @@
     flex-direction: column;
     gap: 16px;
   }
+  
+  .work-visual-wrapper {
+    aspect-ratio: auto;
+    padding: 24px 16px;
+    height: 160px;
+  }
 }

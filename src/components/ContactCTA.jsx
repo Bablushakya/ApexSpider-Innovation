@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import './ContactCTA.css';
 
 export default function ContactCTA() {
+  const premiumEase = [0.16, 1, 0.3, 1];
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -83,7 +86,13 @@ export default function ContactCTA() {
 
       <div className="container contact-container">
         {/* Left Column: text and contact details */}
-        <div className="contact-details">
+        <motion.div 
+          className="contact-details"
+          initial={{ opacity: 0, y: 30, filter: "blur(5px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: true, margin: "-10%" }}
+          transition={{ duration: 0.9, ease: premiumEase }}
+        >
           <span className="tag">Get In Touch</span>
           <h2 className="contact-title">Let's build something <span className="text-gradient-cyan">exceptional</span>.</h2>
           <p className="contact-desc">
@@ -102,10 +111,16 @@ export default function ContactCTA() {
             <span className="pulse-dot"></span>
             <span className="status-text">Available for custom sprints</span>
           </div>
-        </div>
+        </motion.div>
 
         {/* Right Column: Contact Form */}
-        <div className="contact-form-wrapper">
+        <motion.div 
+          className="contact-form-wrapper"
+          initial={{ opacity: 0, y: 35, scale: 0.98, filter: "blur(6px)" }}
+          whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+          viewport={{ once: true, margin: "-10%" }}
+          transition={{ duration: 0.9, ease: premiumEase, delay: 0.15 }}
+        >
           <div className="glass-panel contact-card">
             {isSubmitted ? (
               <div className="form-success-message">
@@ -194,7 +209,7 @@ export default function ContactCTA() {
               </form>
             )}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

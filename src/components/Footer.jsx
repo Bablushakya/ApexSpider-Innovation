@@ -1,5 +1,6 @@
 import React from 'react';
 import './Footer.css';
+import logoImg from '../assets/ApexSpiderLogo.png';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -19,12 +20,8 @@ export default function Footer() {
         
         {/* Logo and Brand column */}
         <div className="footer-brand-column">
-          <a href="#" className="footer-logo" aria-label="ApexSpider Home">
-            <svg className="footer-logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="12" cy="12" r="3" fill="currentColor" />
-              <path d="M12 2v20M2 12h20M12 2l7 7M12 2L5 9M12 22l7-7M12 22l-7-7" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <span className="brand-name">ApexSpider<span className="brand-dot">.</span></span>
+          <a href="#" className="footer-logo" aria-label="Apex Spider Innovation Home">
+            <img src={logoImg} alt="Apex Spider Innovation Logo" className="footer-logo-img" />
           </a>
           <p className="footer-tagline">Architecting premium custom web applications and scalable enterprise software solutions.</p>
         </div>

@@ -26,10 +26,10 @@
   gap: 10px;
 }
 
-.footer-logo-icon {
-  width: 28px;
-  height: 28px;
-  color: var(--color-accent-teal);
+.footer-logo-img {
+  height: 42px;
+  width: auto;
+  object-fit: contain;
 }
 
 .footer-tagline {
