@@ -1,0 +1,135 @@
+.process-timeline {
+  position: relative;
+  margin-top: 60px;
+  z-index: 10;
+}
+
+/* Horizontal dotted line behind steps */
+.timeline-line {
+  position: absolute;
+  top: 25px;
+  left: 10%;
+  width: 80%;
+  height: 2px;
+  background-image: linear-gradient(to right, var(--border-glass) 50%, transparent 50%);
+  background-size: 15px 100%;
+  background-repeat: repeat-x;
+  z-index: 1;
+}
+
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  position: relative;
+  z-index: 2;
+}
+
+.process-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.step-badge-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.step-number-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--color-bg-deep);
+  border: 2px solid var(--border-glass);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-premium);
+  transition: var(--transition-smooth);
+}
+
+.step-num {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.step-phase {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-secondary);
+}
+
+.step-content-card {
+  padding: 30px 24px;
+  width: 100%;
+  height: 100%;
+}
+
+/* Hover and active updates */
+.process-step:hover .step-number-circle {
+  border-color: var(--color-accent-teal);
+  box-shadow: var(--shadow-teal-glow);
+  transform: scale(1.1);
+}
+
+.process-step:hover .step-num {
+  color: var(--color-accent-teal);
+}
+
+.process-step:hover .step-phase {
+  color: var(--color-text-primary);
+}
+
+.step-title {
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.step-desc {
+  font-size: 0.88rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* Responsiveness */
+@media (max-width: 1024px) {
+  .timeline-line {
+    display: none;
+  }
+  
+  .process-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    max-width: 550px;
+    margin: 0 auto;
+  }
+  
+  .process-step {
+    flex-direction: row;
+    text-align: left;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  
+  .step-badge-wrapper {
+    flex-direction: column;
+    margin-bottom: 0;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  
+  .step-number-circle {
+    margin-bottom: 8px;
+  }
+}
