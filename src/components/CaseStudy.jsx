@@ -1,7 +1,10 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import './CaseStudy.css';
 
 export default function CaseStudy() {
+  const premiumEase = [0.16, 1, 0.3, 1];
+
   const caseStudies = [
     {
       tag: 'Custom SaaS Portal',
@@ -28,14 +31,56 @@ export default function CaseStudy() {
           <rect x="215" y="65" width="100" height="110" rx="4" fill="rgba(255,255,255,0.02)" stroke="var(--border-glass)" />
           
           <line x1="45" y1="80" x2="85" y2="80" stroke="rgba(255,255,255,0.1)" strokeWidth="4" strokeLinecap="round" />
-          <line x1="45" y1="95" x2="105" y2="95" stroke="var(--color-accent-teal)" strokeWidth="6" strokeLinecap="round" />
+          <motion.line 
+            x1="45" 
+            y1="95" 
+            x2="105" 
+            y2="95" 
+            stroke="var(--color-accent-teal)" 
+            strokeWidth="6" 
+            strokeLinecap="round" 
+            initial={{ pathLength: 0 }}
+            whileInView={{ pathLength: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: premiumEase, delay: 0.6 }}
+          />
           
           <line x1="135" y1="80" x2="175" y2="80" stroke="rgba(255,255,255,0.1)" strokeWidth="4" strokeLinecap="round" />
-          <line x1="135" y1="95" x2="195" y2="95" stroke="var(--color-accent-indigo)" strokeWidth="6" strokeLinecap="round" />
+          <motion.line 
+            x1="135" 
+            y1="95" 
+            x2="195" 
+            y2="95" 
+            stroke="var(--color-accent-indigo)" 
+            strokeWidth="6" 
+            strokeLinecap="round" 
+            initial={{ pathLength: 0 }}
+            whileInView={{ pathLength: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: premiumEase, delay: 0.8 }}
+          />
 
           {/* Graph lines in third box */}
-          <path d="M225 150 Q 245 110 265 130 T 305 85" fill="none" stroke="var(--color-accent-teal)" strokeWidth="2" />
-          <circle cx="305" cy="85" r="3" fill="var(--color-accent-teal)" />
+          <motion.path 
+            d="M225 150 Q 245 110 265 130 T 305 85" 
+            fill="none" 
+            stroke="var(--color-accent-teal)" 
+            strokeWidth="2" 
+            initial={{ pathLength: 0 }}
+            whileInView={{ pathLength: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.5, ease: "easeInOut", delay: 0.5 }}
+          />
+          <motion.circle 
+            cx="305" 
+            cy="85" 
+            r="3" 
+            fill="var(--color-accent-teal)" 
+            initial={{ scale: 0 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ type: "spring", delay: 1.6 }}
+          />
           
           {/* Bottom lists */}
           <line x1="35" y1="135" x2="155" y2="135" stroke="rgba(255,255,255,0.05)" strokeWidth="4" />
@@ -56,44 +101,169 @@ export default function CaseStudy() {
       visual: (
         <svg viewBox="0 0 350 200" fill="none" className="visual-svg">
           <rect width="350" height="200" rx="8" fill="rgba(255,255,255,0.01)" />
+          
+          {/* Outer glow rings */}
+          <motion.circle 
+            cx="175" 
+            cy="100" 
+            r="32" 
+            fill="none" 
+            stroke="var(--color-accent-indigo)" 
+            strokeWidth="1" 
+            strokeOpacity="0.15" 
+            initial={{ scale: 0.6, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 0.15 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.2, ease: premiumEase, delay: 0.6 }}
+          />
+          <motion.circle 
+            cx="175" 
+            cy="100" 
+            r="48" 
+            fill="none" 
+            stroke="var(--color-accent-indigo)" 
+            strokeWidth="1" 
+            strokeOpacity="0.08" 
+            strokeDasharray="5 5" 
+            initial={{ scale: 0.5, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 0.08 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.5, ease: premiumEase, delay: 0.8 }}
+          />
+
           {/* Main network graph nodes */}
-          <circle cx="175" cy="100" r="18" fill="rgba(99, 102, 241, 0.2)" stroke="var(--color-accent-indigo)" strokeWidth="2" />
+          <motion.circle 
+            cx="175" 
+            cy="100" 
+            r="18" 
+            fill="rgba(99, 102, 241, 0.2)" 
+            stroke="var(--color-accent-indigo)" 
+            strokeWidth="2" 
+            initial={{ scale: 0 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ type: "spring", delay: 0.3 }}
+          />
           <text x="175" y="104" fill="var(--color-accent-indigo)" fontSize="10" textAnchor="middle" fontFamily="var(--font-mono)">HUB</text>
           
           {/* Surrounding nodes */}
-          <circle cx="90" cy="60" r="10" fill="rgba(0, 255, 255, 0.15)" stroke="var(--color-accent-teal)" strokeWidth="1.5" />
-          <circle cx="260" cy="60" r="10" fill="rgba(255,255,255,0.05)" stroke="var(--border-glass)" strokeWidth="1.5" />
-          <circle cx="90" cy="140" r="10" fill="rgba(255,255,255,0.05)" stroke="var(--border-glass)" strokeWidth="1.5" />
-          <circle cx="260" cy="140" r="10" fill="rgba(0, 255, 255, 0.15)" stroke="var(--color-accent-teal)" strokeWidth="1.5" />
+          <motion.circle cx="90" cy="60" r="10" fill="rgba(0, 255, 255, 0.15)" stroke="var(--color-accent-teal)" strokeWidth="1.5" initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true }} transition={{ type: "spring", delay: 0.5 }} />
+          <motion.circle cx="260" cy="60" r="10" fill="rgba(255,255,255,0.05)" stroke="var(--border-glass)" strokeWidth="1.5" initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true }} transition={{ type: "spring", delay: 0.7 }} />
+          <motion.circle cx="90" cy="140" r="10" fill="rgba(255,255,255,0.05)" stroke="var(--border-glass)" strokeWidth="1.5" initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true }} transition={{ type: "spring", delay: 0.9 }} />
+          <motion.circle cx="260" cy="140" r="10" fill="rgba(0, 255, 255, 0.15)" stroke="var(--color-accent-teal)" strokeWidth="1.5" initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true }} transition={{ type: "spring", delay: 1.1 }} />
           
           {/* Connecting node lines */}
-          <line x1="100" y1="65" x2="160" y2="90" stroke="var(--color-accent-teal)" strokeWidth="1.5" strokeDasharray="3 3" />
-          <line x1="250" y1="65" x2="190" y2="90" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-          <line x1="100" y1="135" x2="160" y2="110" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-          <line x1="250" y1="135" x2="190" y2="110" stroke="var(--color-accent-teal)" strokeWidth="1.5" strokeDasharray="3 3" />
-          
-          {/* Outer glow rings */}
-          <circle cx="175" cy="100" r="32" fill="none" stroke="var(--color-accent-indigo)" strokeWidth="1" strokeOpacity="0.15" />
-          <circle cx="175" cy="100" r="48" fill="none" stroke="var(--color-accent-indigo)" strokeWidth="1" strokeOpacity="0.08" strokeDasharray="5 5" />
+          <motion.line 
+            x1="100" 
+            y1="65" 
+            x2="160" 
+            y2="90" 
+            stroke="var(--color-accent-teal)" 
+            strokeWidth="1.5" 
+            strokeDasharray="3 3" 
+            initial={{ pathLength: 0 }}
+            whileInView={{ pathLength: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+          />
+          <motion.line 
+            x1="250" 
+            y1="65" 
+            x2="190" 
+            y2="90" 
+            stroke="rgba(255,255,255,0.1)" 
+            strokeWidth="1" 
+            initial={{ pathLength: 0 }}
+            whileInView={{ pathLength: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 1.0 }}
+          />
+          <motion.line 
+            x1="100" 
+            y1="135" 
+            x2="160" 
+            y2="110" 
+            stroke="rgba(255,255,255,0.1)" 
+            strokeWidth="1" 
+            initial={{ pathLength: 0 }}
+            whileInView={{ pathLength: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 1.2 }}
+          />
+          <motion.line 
+            x1="250" 
+            y1="135" 
+            x2="190" 
+            y2="110" 
+            stroke="var(--color-accent-teal)" 
+            strokeWidth="1.5" 
+            strokeDasharray="3 3" 
+            initial={{ pathLength: 0 }}
+            whileInView={{ pathLength: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 1.4 }}
+          />
         </svg>
       )
     }
   ];
 
+  const gridContainerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: 40, 
+      filter: "blur(6px)" 
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      filter: "blur(0px)",
+      transition: { 
+        duration: 0.9, 
+        ease: premiumEase
+      }
+    }
+  };
+
   return (
     <section className="work-section section-padding" id="work">
       <div className="container">
         {/* Section Header */}
-        <div className="section-header">
+        <motion.div 
+          className="section-header"
+          initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: true, margin: "-10%" }}
+          transition={{ duration: 0.8, ease: premiumEase }}
+        >
           <span className="tag">Project Spotlight</span>
           <h2>Prototype Results</h2>
           <p>Explore mock project outputs designed to demonstrate platform speed, UI styling, and structural modularity.</p>
-        </div>
+        </motion.div>
 
         {/* Case Studies Container */}
-        <div className="work-container">
+        <motion.div 
+          className="work-container"
+          variants={gridContainerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-8%" }}
+        >
           {caseStudies.map((project, index) => (
-            <div key={index} className="glass-panel work-card">
+            <motion.div 
+              key={index} 
+              className="glass-panel work-card"
+              variants={cardVariants}
+            >
               {/* Left Column: Visual Graph representation */}
               <div className="work-visual-wrapper">
                 {project.visual}
@@ -123,17 +293,20 @@ export default function CaseStudy() {
                 </div>
 
                 {/* Explore prototype button */}
-                <button className="btn-text work-action-btn">
+                <motion.button 
+                  className="btn-text work-action-btn"
+                  whileHover={{ gap: "12px", color: "var(--color-text-primary)" }}
+                >
                   Explore Sample Prototype
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <line x1="5" y1="12" x2="19" y2="12" />
                     <polyline points="12 5 19 12 12 19" />
                   </svg>
-                </button>
+                </motion.button>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

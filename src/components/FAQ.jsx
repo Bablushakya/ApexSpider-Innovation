@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import './FAQ.css';
 
 export default function FAQ() {
+  const premiumEase = [0.16, 1, 0.3, 1];
   const [activeIndex, setActiveIndex] = useState(null);
 
   const faqs = [
@@ -31,25 +33,64 @@ export default function FAQ() {
     setActiveIndex(activeIndex === index ? null : index);
   };
 
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: 25, 
+      filter: "blur(4px)" 
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      filter: "blur(0px)",
+      transition: { 
+        duration: 0.8, 
+        ease: premiumEase
+      }
+    }
+  };
+
   return (
     <section className="faq-section section-padding" id="faq">
       <div className="container">
         {/* Section Header */}
-        <div className="section-header">
+        <motion.div 
+          className="section-header"
+          initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: true, margin: "-10%" }}
+          transition={{ duration: 0.8, ease: premiumEase }}
+        >
           <span className="tag">Support</span>
           <h2>Frequently Asked Questions</h2>
           <p>Common questions concerning our coding standards, dev timelines, and integration methodologies.</p>
-        </div>
+        </motion.div>
 
         {/* Accordions Container */}
-        <div className="faq-container">
+        <motion.div 
+          className="faq-container"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-8%" }}
+        >
           {faqs.map((faq, idx) => {
             const isOpen = activeIndex === idx;
             return (
-              <div 
+              <motion.div 
                 key={idx} 
                 className={`glass-panel faq-item ${isOpen ? 'active' : ''}`}
                 onClick={() => handleToggle(idx)}
+                variants={itemVariants}
               >
                 <button 
                   className="faq-question-btn"
@@ -73,10 +114,10 @@ export default function FAQ() {
                     <p className="faq-answer-text">{faq.a}</p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

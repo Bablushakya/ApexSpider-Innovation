@@ -78,15 +78,16 @@
 .preloader-title {
   font-family: var(--font-headings);
   font-weight: 800;
-  font-size: 5.5rem;
+  font-size: clamp(1.4rem, 6.5vw, 5.5rem);
   line-height: 1;
   letter-spacing: -0.04em;
   color: var(--color-text-primary);
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
   user-select: none;
   margin: 0;
+  white-space: nowrap;
 }
 
 .preloader-title-char {
@@ -113,10 +114,6 @@
 
 /* Responsive Scaling */
 @media (max-width: 768px) {
-  .preloader-title {
-    font-size: 3.5rem;
-    letter-spacing: -0.03em;
-  }
   .preloader-slogan {
     font-size: 0.85rem;
   }
@@ -135,9 +132,6 @@
 }
 
 @media (max-width: 480px) {
-  .preloader-title {
-    font-size: 2.8rem;
-  }
   .preloader-glow-bl {
     width: 400px;
     height: 400px;

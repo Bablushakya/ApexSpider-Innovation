@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Header.css';
+import logoImg from '../assets/ApexSpiderLogo.png';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -17,6 +18,17 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
   const navLinks = [
     { name: 'Services', href: '#services' },
     { name: 'Value', href: '#value-props' },
@@ -30,13 +42,8 @@ export default function Header() {
     <header className={`site-header ${isScrolled ? 'scrolled' : ''}`}>
       <div className="container header-container">
         {/* Brand Logo */}
-        <a href="#" className="brand-logo" aria-label="ApexSpider Home">
-          <svg className="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <circle cx="12" cy="12" r="3" fill="currentColor" />
-            <path d="M12 2v20M2 12h20M12 2l7 7M12 2L5 9M12 22l7-7M12 22l-7-7" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M3 3l18 18M3 21L21 3" strokeOpacity="0.4" />
-          </svg>
-          <span className="brand-name">ApexSpider<span className="brand-dot">.</span></span>
+        <a href="#" className="brand-logo" aria-label="Apex Spider Innovation Home">
+          <img src={logoImg} alt="Apex Spider Innovation Logo" className="logo-img" />
         </a>
 
         {/* Desktop Navigation */}

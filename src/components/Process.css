@@ -133,3 +133,16 @@
     margin-bottom: 8px;
   }
 }
+
+@media (max-width: 580px) {
+  .process-step {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .step-badge-wrapper {
+    margin-bottom: 8px;
+  }
+}

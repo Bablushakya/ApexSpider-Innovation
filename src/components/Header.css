@@ -35,16 +35,15 @@
   z-index: 110;
 }
 
-.logo-icon {
-  width: 32px;
-  height: 32px;
-  color: var(--color-accent-teal);
+.logo-img {
+  height: 46px;
+  width: auto;
+  object-fit: contain;
   transition: var(--transition-smooth);
 }
 
-.brand-logo:hover .logo-icon {
-  transform: rotate(45deg);
-  color: var(--color-accent-indigo);
+.brand-logo:hover .logo-img {
+  transform: scale(1.05);
 }
 
 .brand-name {
@@ -151,8 +150,11 @@
   transform: translateX(100%);
   transition: var(--transition-smooth);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding: 110px 24px 40px 24px;
+  overflow-y: auto;
   opacity: 0;
 }
 

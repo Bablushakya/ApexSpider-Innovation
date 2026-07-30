@@ -1,7 +1,10 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import './Services.css';
 
 export default function Services() {
+  const premiumEase = [0.16, 1, 0.3, 1];
+
   const servicesList = [
     {
       icon: (
@@ -70,20 +73,63 @@ export default function Services() {
     }
   ];
 
+  // Animation variants
+  const gridContainerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.08
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: 35, 
+      filter: "blur(5px)" 
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      filter: "blur(0px)",
+      transition: { 
+        duration: 0.8, 
+        ease: premiumEase
+      }
+    }
+  };
+
   return (
     <section className="services-section section-padding" id="services">
       <div className="container">
         {/* Section Title Header */}
-        <div className="section-header">
+        <motion.div 
+          className="section-header"
+          initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: true, margin: "-10%" }}
+          transition={{ duration: 0.8, ease: premiumEase }}
+        >
           <span className="tag">Capabilities</span>
           <h2>Our Services & Solutions</h2>
           <p>We deliver robust technical architectures and refined user interfaces to fuel product velocity.</p>
-        </div>
+        </motion.div>
 
         {/* Services Grid */}
-        <div className="services-grid">
+        <motion.div 
+          className="services-grid"
+          variants={gridContainerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-8%" }}
+        >
           {servicesList.map((service, index) => (
-            <div key={index} className="glass-panel service-card">
+            <motion.div 
+              key={index} 
+              className="glass-panel service-card"
+              variants={cardVariants}
+            >
               <div className="service-icon-wrapper">
                 {service.icon}
               </div>
@@ -99,9 +145,9 @@ export default function Services() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

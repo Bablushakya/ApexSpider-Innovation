@@ -83,17 +83,21 @@ function StaggeredTextCycle({
 // Main Component: Preloader
 // -------------------------------------------------------------
 export default function Preloader({ onComplete }) {
-  const brandName = "ApexSpider";
+  const brandName = "Apex Spider Innovation";
   const brandChars = brandName.split("");
 
   useEffect(() => {
     // Lock scroll on mount
     document.body.style.overflow = 'hidden';
 
-    // Auto-complete loading and start exit transition after 2.7s
+    // Calculate dynamic duration based on device size
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const loadDuration = isMobile ? 1800 : 2500;
+
+    // Auto-complete loading and start exit transition
     const timer = setTimeout(() => {
       onComplete();
-    }, 2700);
+    }, loadDuration);
 
     return () => {
       clearTimeout(timer);
@@ -145,13 +149,15 @@ export default function Preloader({ onComplete }) {
         y: '-100vh',
         transition: { duration: 1.0, ease: [0.76, 0, 0.24, 1] }
       }}
+      onClick={onComplete}
+      style={{ cursor: 'pointer' }}
     >
       {/* Visual cybernetic backdrop */}
       <div className="preloader-grid" />
       <div className="preloader-glow-bl" />
       <div className="preloader-glow-tr" />
 
-      <div className="preloader-content">
+      <div className="preloader-content" style={{ pointerEvents: 'none' /* ensure text select doesn't block click */ }}>
         {/* Main Title Entrance Animation */}
         <motion.h1 
           className="preloader-title"
@@ -186,6 +192,23 @@ export default function Preloader({ onComplete }) {
             exitYOffset={-25}
           />
         </div>
+
+        {/* Click to skip hint (fade-in after 0.8s delay) */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.35 }}
+          transition={{ delay: 0.8, duration: 0.5 }}
+          style={{ 
+            fontFamily: 'var(--font-mono)', 
+            fontSize: '0.62rem', 
+            color: 'var(--color-text-secondary)',
+            letterSpacing: '0.1em',
+            marginTop: '20px',
+            textTransform: 'uppercase'
+          }}
+        >
+          [ Tap anywhere to skip ]
+        </motion.div>
       </div>
     </motion.div>
   );
