@@ -1,6 +1,6 @@
 import React from 'react';
 import './Footer.css';
-import logoImg from '../assets/ApexSpiderLogo.png';
+import logoImg from '../assets/logo/full_logo.png';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();

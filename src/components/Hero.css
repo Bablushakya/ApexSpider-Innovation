@@ -201,26 +201,45 @@
 }
 
 .mock-sidebar {
-  width: 48px;
-  background: rgba(15, 23, 42, 0.5);
+  width: 52px;
+  background: rgba(10, 18, 35, 0.6);
   border-right: 1px solid var(--border-glass);
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 16px 0;
-  gap: 16px;
+  padding: 14px 0;
+  gap: 14px;
 }
 
 .sidebar-item {
-  width: 20px;
-  height: 20px;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.05);
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.3);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.sidebar-item svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.sidebar-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .sidebar-item.active {
   background: var(--color-accent-teal-muted);
-  border: 1px solid var(--color-accent-teal);
+  border: 1px solid rgba(0, 255, 255, 0.35);
+  color: var(--color-accent-teal);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.15);
 }
 
 .mock-main {
@@ -234,64 +253,238 @@
 
 .mock-metrics-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
 }
 
 .mock-metric-card {
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.025);
   border: 1px solid var(--border-glass);
-  border-radius: 8px;
-  padding: 16px;
+  border-radius: 10px;
+  padding: 12px 14px;
   display: flex;
   flex-direction: column;
+  gap: 6px;
+  transition: border-color 0.3s ease;
+}
+
+.mock-metric-card:hover {
+  border-color: rgba(0, 255, 255, 0.2);
+}
+
+/* Top row: label + badge */
+.metric-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 4px;
 }
 
 .metric-label {
-  font-size: 0.7rem;
+  font-size: 0.62rem;
   font-family: var(--font-mono);
   color: var(--color-text-secondary);
   text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
 }
 
 .metric-value {
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   font-family: var(--font-headings);
-  font-weight: 600;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1.1;
 }
 
-.metric-chart-up {
-  font-size: 0.65rem;
-  color: var(--color-accent-teal);
+.metric-unit {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  margin-left: 2px;
+}
+
+/* Status badge with pulsing dot */
+.metric-status-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.58rem;
+  font-family: var(--font-mono);
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  padding: 2px 6px;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.pulse-green {
+  background: #10b981;
+  animation: pulseStatusDot 1.8s ease-in-out infinite;
+}
+
+@keyframes pulseStatusDot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(16,185,129,0.5); }
+  50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(16,185,129,0); }
+}
+
+/* Auto tag badge */
+.metric-tag-badge {
+  font-size: 0.55rem;
+  font-family: var(--font-mono);
+  color: var(--color-accent-indigo);
+  background: var(--color-accent-indigo-muted);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  padding: 2px 5px;
+  border-radius: 3px;
+  letter-spacing: 0.05em;
+}
+
+/* Trend text */
+.metric-trend {
+  font-size: 0.6rem;
+  font-family: var(--font-mono);
+}
+
+.metric-up { color: #10b981; }
+.metric-down { color: #ef4444; }
+
+/* Progress bar */
+.metric-progress-bar {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.metric-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-accent-teal), var(--color-accent-indigo));
+  border-radius: 99px;
+}
+
+/* Sparkline mini chart */
+.sparkline-svg {
+  width: 100%;
+  height: 20px;
+  display: block;
+  margin-top: 2px;
 }
 
 .mock-chart-container {
   flex: 1;
   background: rgba(255, 255, 255, 0.01);
   border: 1px solid var(--border-glass);
-  border-radius: 8px;
-  padding: 16px;
+  border-radius: 10px;
+  padding: 14px 14px 10px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
 .chart-header {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  font-size: 0.75rem;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
-.chart-legend {
+.chart-title {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+}
+
+/* Legend row: dots + labels */
+.chart-legend-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chart-legend-label {
+  font-size: 0.58rem;
+  font-family: var(--font-mono);
   color: var(--color-text-secondary);
-  font-size: 0.7rem;
+}
+
+.legend-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-dot.sm {
+  width: 5px;
+  height: 5px;
+}
+
+.teal-dot  { background: var(--color-accent-teal); }
+.indigo-dot { background: var(--color-accent-indigo); }
+
+/* Chart area with tooltip positioning context */
+.chart-area-wrap {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .mock-svg-chart {
   width: 100%;
-  height: 100px;
+  flex: 1;
+  display: block;
+}
+
+/* Floating glassmorphic tooltip */
+.chart-tooltip {
+  position: absolute;
+  top: 2px;
+  left: 52%;
+  transform: translateX(-50%);
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  border-radius: 7px;
+  padding: 7px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 80px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 12px rgba(0, 255, 255, 0.07);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.tooltip-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tooltip-label {
+  font-size: 0.6rem;
+  font-family: var(--font-mono);
+  color: var(--color-text-secondary);
+  flex: 1;
+}
+
+.tooltip-value {
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--color-text-primary);
 }
 
 /* Responsiveness */

@@ -1,147 +1,405 @@
-/* Framer-Style Ambient Preloader CSS */
-.preloader-overlay {
+/* ═══════════════════════════════════════════════════════════════════
+   CINEMATIC PRELOADER — Apex Spider Innovation
+   Premium · Minimal · Intentional
+   ═══════════════════════════════════════════════════════════════════
+
+   COLOR PALETTE
+   ─────────────────────────────
+   Background   #090B12
+   Glass panel  rgba(14,18,28,0.98)
+   Panel border rgba(80,160,255,0.15)
+   Cyan primary #5BE7FF
+   Blue         #3F8CFF
+   Accent       #6A5CFF
+   Laser edge   #59E6FF
+   ─────────────────────────────                                    */
+
+/* ── Root: covers 100vw × 100vh above everything ── */
+.pl-root {
   position: fixed;
   inset: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: var(--color-bg-deep);
   z-index: 99999;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   overflow: hidden;
+  isolation: isolate;
 }
 
-/* Ambient Radial Glows (Exact recreation from the Framer component) */
-.preloader-glow-bl {
-  position: absolute;
-  width: 640px;
-  height: 640px;
-  left: -300px;
-  bottom: -300px;
-  background: radial-gradient(
-    60% 60% at 50% 50%,
-    rgba(89, 187, 213, 0.28) 0%,
-    rgba(10, 10, 10, 0) 100%
-  );
-  filter: blur(80px);
-  -webkit-filter: blur(80px);
-  pointer-events: none;
-  z-index: 1;
-}
-
-.preloader-glow-tr {
-  position: absolute;
-  width: 640px;
-  height: 640px;
-  right: -300px;
-  top: -300px;
-  background: radial-gradient(
-    60% 60% at 50% 50%,
-    rgba(206, 255, 113, 0.22) 0%,
-    rgba(10, 10, 10, 0) 100%
-  );
-  filter: blur(80px);
-  -webkit-filter: blur(80px);
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* Scanline / Grid effect for extra premium feel (subtle) */
-.preloader-grid {
+/* ═══════════════════════════════════════════════
+   BACKGROUND
+   Dark base + two tinted radial glows + noise
+   ═══════════════════════════════════════════════ */
+.pl-bg {
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.003) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(255, 255, 255, 0.003) 1px, transparent 1px);
-  background-size: 80px 80px;
-  background-position: center;
-  opacity: 0.5;
+  background-color: #090B12;
+  z-index: 0;
+}
+
+.pl-bg-glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Soft blue glow — top right */
+.pl-bg-glow--tr {
+  width: 60vw;
+  height: 60vw;
+  top:   -18vw;
+  right: -18vw;
+  background: radial-gradient(
+    circle,
+    rgba(63, 140, 255, 0.20) 0%,
+    rgba(63, 140, 255, 0.07) 40%,
+    transparent 70%
+  );
+  filter: blur(90px);
+  animation: pl-drift-tr 10s ease-in-out infinite alternate;
+}
+
+/* Soft cyan glow — bottom left */
+.pl-bg-glow--bl {
+  width: 55vw;
+  height: 55vw;
+  bottom: -16vw;
+  left:   -16vw;
+  background: radial-gradient(
+    circle,
+    rgba(91, 231, 255, 0.16) 0%,
+    rgba(91, 231, 255, 0.05) 45%,
+    transparent 70%
+  );
+  filter: blur(100px);
+  animation: pl-drift-bl 12s ease-in-out infinite alternate;
+}
+
+/* Faint centre indigo pulse */
+.pl-bg-glow--center {
+  width: 45vw;
+  height: 45vw;
+  top:  50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgba(106, 92, 255, 0.08) 0%,
+    transparent 65%
+  );
+  filter: blur(80px);
+  animation: pl-drift-center 14s ease-in-out infinite alternate;
+}
+
+@keyframes pl-drift-tr {
+  0%   { transform: translate(0, 0)     scale(1);    }
+  100% { transform: translate(-3vw, 4vw) scale(1.08); }
+}
+@keyframes pl-drift-bl {
+  0%   { transform: translate(0, 0)    scale(1);    }
+  100% { transform: translate(4vw, -3vw) scale(1.06); }
+}
+@keyframes pl-drift-center {
+  0%   { transform: translate(-50%, -50%) scale(1);    opacity: 0.6; }
+  100% { transform: translate(-50%, -50%) scale(1.18); opacity: 1;   }
+}
+
+/* ── Animated grain ── */
+.pl-noise {
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+  opacity: 0.028;
+  pointer-events: none;
+  z-index: 1;
+  animation: pl-noise-flicker 0.12s steps(3) infinite;
+}
+
+@keyframes pl-noise-flicker {
+  0%   { transform: translate(0,    0);    }
+  33%  { transform: translate(-4px, 3px);  }
+  66%  { transform: translate(3px, -4px);  }
+  100% { transform: translate(-2px, -2px); }
+}
+
+/* ── Vignette ── */
+.pl-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    transparent 38%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
   pointer-events: none;
   z-index: 2;
 }
 
-/* Center Content */
-.preloader-content {
-  position: relative;
+/* ═══════════════════════════════════════════════
+   DIAGONAL GLASS PANELS
+   Each panel is a triangle using clip-path.
+   Glass material: dark tinted, backdrop-blur,
+   thin tinted border, soft edge glow.
+   ═══════════════════════════════════════════════ */
+.pl-panel {
+  position: absolute;
+  /* Extend beyond viewport so seam never shows a gap */
+  inset: -2px;
+  background: rgba(14, 18, 28, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(80, 160, 255, 0.15);
+  will-change: transform;
+  z-index: 10;
+  overflow: visible;
+}
+
+/*
+  The diagonal cut runs roughly corner-to-corner.
+  top panel  = upper-right triangle
+  bot panel  = lower-left triangle
+  A 3 % overshoot on each point hides any sub-pixel gap.
+*/
+.pl-panel--top {
+  clip-path: polygon(
+    -3% -3%,
+    103% -3%,
+    103% 103%,
+    -3% -3%
+  );
+}
+
+.pl-panel--bottom {
+  clip-path: polygon(
+    -3% -3%,
+    103% 103%,
+    -3% 103%
+  );
+}
+
+/* ─────────────────────────────────────────────────
+   LASER EDGE
+   A thin element positioned along the diagonal seam
+   of each panel. It glows with the #59E6FF cyan.
+   Visible: when split begins — draws attention to
+   the split line so the user clearly sees it opening.
+───────────────────────────────────────────────── */
+.pl-laser {
+  position: absolute;
+  /*
+    Rotate 45° and span the full diagonal length.
+    Positioned through the centre of the panel.
+    width: 141vw covers the full diagonal of any viewport (sqrt(2)×100vw).
+  */
+  top: 50%;
+  left: 50%;
+  width: 141.5vw;         /* ~√2 × 100vw covers any screen diagonal */
+  height: 1.5px;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  background: linear-gradient(
+    90deg,
+    transparent       0%,
+    rgba(89, 230, 255, 0.0)  15%,
+    rgba(89, 230, 255, 0.9)  45%,
+    rgba(89, 230, 255, 1.0)  50%,
+    rgba(89, 230, 255, 0.9)  55%,
+    rgba(89, 230, 255, 0.0)  85%,
+    transparent       100%
+  );
+  box-shadow:
+    0 0  4px 1px rgba(89, 230, 255, 0.9),
+    0 0 12px 3px rgba(89, 230, 255, 0.5),
+    0 0 28px 6px rgba(63, 140, 255, 0.25),
+    0 0 60px 12px rgba(63, 140, 255, 0.10);
+  pointer-events: none;
+  z-index: 12;
+  /* Subtle breathing pulse while panels are stationary */
+  animation: pl-laser-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes pl-laser-pulse {
+  0%, 100% { opacity: 0.65; }
+  50%       { opacity: 1;   }
+}
+
+/* ═══════════════════════════════════════════════
+   CENTRE CONTENT
+   Logo + energy line sit above the panels.
+   ═══════════════════════════════════════════════ */
+.pl-center {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 10;
-  text-align: center;
-  gap: 20px;
-  max-width: 90%;
+  z-index: 20;
+  gap: 24px;
+  pointer-events: none;
 }
 
-/* Main Brand Title with character-by-character styling */
-.preloader-title {
-  font-family: var(--font-headings);
-  font-weight: 800;
-  font-size: clamp(1.4rem, 6.5vw, 5.5rem);
-  line-height: 1;
-  letter-spacing: -0.04em;
-  color: var(--color-text-primary);
-  display: flex;
-  flex-wrap: nowrap;
+/* ── Logo wrapper ── */
+.pl-logo-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
+  will-change: opacity, transform, filter;
+}
+
+/* Outer ambient light — large diffuse halo */
+.pl-logo-ambient {
+  position: absolute;
+  width:  260px;
+  height: 260px;
+  top:  50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(91, 231, 255, 0.10) 0%,
+    rgba(63, 140, 255, 0.05) 45%,
+    transparent 70%
+  );
+  filter: blur(32px);
+  z-index: 0;
+  animation: pl-ambient-breathe 4s ease-in-out infinite;
+}
+
+@keyframes pl-ambient-breathe {
+  0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1);    }
+  50%       { opacity: 1;   transform: translate(-50%, -50%) scale(1.12); }
+}
+
+/* Inner glow ring — tighter, more defined */
+.pl-logo-glow {
+  position: absolute;
+  inset: -20px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(91, 231, 255, 0.18) 0%,
+    rgba(63, 140, 255, 0.08) 50%,
+    transparent 70%
+  );
+  filter: blur(14px);
+  z-index: 1;
+  animation: pl-glow-pulse 2.8s ease-in-out infinite;
+}
+
+@keyframes pl-glow-pulse {
+  0%, 100% { opacity: 0.7; transform: scale(1);    }
+  50%       { opacity: 1;   transform: scale(1.08); }
+}
+
+/* The logo image */
+.pl-logo-img {
+  height: 88px;   /* Larger on preloader; shrinks during travel to 46px */
+  width:  auto;
+  object-fit: contain;
+  position: relative;
+  z-index: 2;
   user-select: none;
-  margin: 0;
-  white-space: nowrap;
+  /* Cyan drop-shadow glow — stronger than before */
+  filter:
+    drop-shadow(0 0  8px rgba(91, 231, 255, 0.70))
+    drop-shadow(0 0 22px rgba(63, 140, 255, 0.40))
+    drop-shadow(0 0 48px rgba(63, 140, 255, 0.18));
 }
 
-.preloader-title-char {
-  display: inline-block;
-  white-space: pre;
-}
-
-/* Slogan Area (where StaggeredTextCycle will live) */
-.preloader-slogan-wrapper {
-  height: 24px;
+/* ═══════════════════════════════════════════════
+   ENERGY LINE
+   Thin glowing bar that expands from the centre
+   beneath the logo — signals "system initialising".
+   ═══════════════════════════════════════════════ */
+.pl-line-track {
+  width: min(400px, 72vw);
+  height: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.85;
+  overflow: visible;
 }
 
-.preloader-slogan {
-  font-family: var(--font-mono);
-  font-size: 1rem;
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  color: var(--color-text-secondary);
+.pl-energy-line {
+  width: 100%;
+  height: 1.5px;
+  border-radius: 99px;
+  transform-origin: center center;
+  will-change: transform, opacity;
+  background: linear-gradient(
+    90deg,
+    transparent              0%,
+    rgba(91, 231, 255, 0.3) 12%,
+    rgba(91, 231, 255, 1.0) 50%,
+    rgba(91, 231, 255, 0.3) 88%,
+    transparent             100%
+  );
+  box-shadow:
+    0 0  5px 2px rgba(91, 231, 255, 0.70),
+    0 0 14px 4px rgba(91, 231, 255, 0.30),
+    0 0 30px 8px rgba(63, 140, 255, 0.15);
 }
 
-/* Responsive Scaling */
-@media (max-width: 768px) {
-  .preloader-slogan {
-    font-size: 0.85rem;
-  }
-  .preloader-glow-bl {
-    width: 520px;
-    height: 520px;
-    left: -260px;
-    bottom: -260px;
-  }
-  .preloader-glow-tr {
-    width: 520px;
-    height: 520px;
-    right: -260px;
-    top: -260px;
-  }
+/* ═══════════════════════════════════════════════
+   SKIP BUTTON
+   ═══════════════════════════════════════════════ */
+.pl-skip {
+  position: absolute;
+  bottom: 28px;
+  right:  28px;
+  z-index: 30;
+  background: rgba(14, 18, 28, 0.6);
+  border: 1px solid rgba(91, 231, 255, 0.20);
+  color: rgba(255, 255, 255, 0.45);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 7px 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
+  will-change: opacity;
 }
 
-@media (max-width: 480px) {
-  .preloader-glow-bl {
-    width: 400px;
-    height: 400px;
-    left: -200px;
-    bottom: -200px;
+.pl-skip:hover {
+  border-color: rgba(91, 231, 255, 0.55);
+  color: rgba(91, 231, 255, 0.95);
+  background: rgba(91, 231, 255, 0.06);
+}
+
+/* ═══════════════════════════════════════════════
+   FLYING LOGO
+   Fixed element — travels from preloader centre
+   to the navbar logo slot via JS-measured rects.
+   z-index above everything including the header.
+   ═══════════════════════════════════════════════ */
+.pl-flying-logo {
+  position: fixed;
+  top:  0;
+  left: 0;
+  z-index: 199999;
+  pointer-events: none;
+  will-change: transform, width, height;
+  filter: drop-shadow(0 0 8px rgba(91, 231, 255, 0.40));
+}
+
+/* ═══════════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .pl-noise,
+  .pl-bg-glow,
+  .pl-logo-ambient,
+  .pl-logo-glow,
+  .pl-laser {
+    animation: none !important;
   }
-  .preloader-glow-tr {
-    width: 400px;
-    height: 400px;
-    right: -200px;
-    top: -200px;
+  .pl-root * {
+    transition: none !important;
   }
 }

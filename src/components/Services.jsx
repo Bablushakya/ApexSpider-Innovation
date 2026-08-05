@@ -5,98 +5,40 @@ import './Services.css';
 export default function Services() {
   const premiumEase = [0.16, 1, 0.3, 1];
   const sectionRef = useRef(null);
-  const sliderRef = useRef(null);
+  const trackRef = useRef(null);
 
+  // Continuous pixel scroll — 1px every 10ms (= 100px/sec), never pauses
   useEffect(() => {
-    const section = sectionRef.current;
-    const slider = sliderRef.current;
-    if (!section || !slider) return;
+    const track = trackRef.current;
+    if (!track) return;
 
-    let hasAligned = false;
+    let offset = 0;
+    let rafId = null;
+    let lastTime = null;
+    // Move 1px per 10ms → 100px per second
+    const PX_PER_MS = 0.1;
 
-    // Convert vertical wheel scrolls to horizontal motion inside the container
-    const onWheel = (e) => {
-      if (e.deltaY === 0) return;
-      
-      const isScrollingRight = e.deltaY > 0;
-      const isAtEnd = slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 15;
-      const isAtStart = slider.scrollLeft <= 15;
+    const step = (timestamp) => {
+      if (lastTime === null) lastTime = timestamp;
+      const delta = timestamp - lastTime;
+      lastTime = timestamp;
 
-      // Reset alignment when reaching edges to allow new scroll captures to re-center
-      if (isAtEnd || isAtStart) {
-        hasAligned = false;
+      offset += delta * PX_PER_MS;
+
+      // Half the total track width = width of one full set of cards
+      const halfWidth = track.scrollWidth / 2;
+      if (offset >= halfWidth) {
+        offset -= halfWidth; // seamless jump back — no visible cut
       }
 
-      // Only scroll slider horizontally if bounds are not reached (to let page scroll breathe)
-      if ((isScrollingRight && !isAtEnd) || (!isScrollingRight && !isAtStart)) {
-        e.preventDefault();
-
-        // Smoothly center the section in the viewport on the first scroll inside the section
-        if (!hasAligned) {
-          section.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          hasAligned = true;
-        }
-
-        slider.scrollBy({
-          left: e.deltaY * 1.5,
-          behavior: 'auto'
-        });
-      }
+      track.style.transform = `translateX(-${offset}px)`;
+      rafId = requestAnimationFrame(step);
     };
 
-    const handleMouseLeave = () => {
-      hasAligned = false;
-    };
-
-    section.addEventListener('wheel', onWheel, { passive: false });
-    section.addEventListener('mouseleave', handleMouseLeave);
-    return () => {
-      section.removeEventListener('wheel', onWheel);
-      section.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, []);
-
-  // Autoplay Slider mechanism (pauses on hover anywhere in the section)
-  useEffect(() => {
-    const el = sliderRef.current;
-    const section = sectionRef.current;
-    if (!el || !section) return;
-
-    let autoplayId;
-    let isHovered = false;
-
-    const startAutoplay = () => {
-      autoplayId = setInterval(() => {
-        if (isHovered) return;
-        
-        const firstCard = el.querySelector('.service-card-wrapper');
-        const cardWidth = firstCard ? firstCard.getBoundingClientRect().width : 352;
-        const maxScroll = el.scrollWidth - el.clientWidth;
-        
-        if (el.scrollLeft >= maxScroll - 15) {
-          el.scrollTo({ left: 0, behavior: 'smooth' });
-        } else {
-          el.scrollBy({ left: cardWidth, behavior: 'smooth' });
-        }
-      }, 3500);
-    };
-
-    const stopAutoplay = () => {
-      if (autoplayId) clearInterval(autoplayId);
-    };
-
-    const handleMouseEnter = () => { isHovered = true; };
-    const handleMouseLeave = () => { isHovered = false; };
-
-    section.addEventListener('mouseenter', handleMouseEnter);
-    section.addEventListener('mouseleave', handleMouseLeave);
-    
-    startAutoplay();
+    rafId = requestAnimationFrame(step);
 
     return () => {
-      stopAutoplay();
-      section.removeEventListener('mouseenter', handleMouseEnter);
-      section.removeEventListener('mouseleave', handleMouseLeave);
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);
 
@@ -168,38 +110,78 @@ export default function Services() {
     }
   ];
 
-  // Animation variants
-  const gridContainerVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.08
-      }
-    }
-  };
+  // Render a single card — used for both original & duplicate sets
+  const renderCard = (service, index, isDuplicate = false) => (
+    <div
+      key={isDuplicate ? `dup-${index}` : index}
+      className="service-card-wrapper"
+      aria-hidden={isDuplicate ? 'true' : undefined}
+    >
+      <div className="premium-service-card">
+        {/* Header: Icon & Title */}
+        <div className="service-card-header">
+          <div className="service-icon-wrapper">
+            {service.icon}
+          </div>
+          <h3 className="service-title">{service.title}</h3>
+        </div>
 
-  const cardVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: 35, 
-      filter: "blur(5px)" 
-    },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      filter: "blur(0px)",
-      transition: { 
-        duration: 0.8, 
-        ease: premiumEase
-      }
-    }
-  };
+        {/* Body: Desc & Bullets */}
+        <div className="service-card-body">
+          <p className="service-desc">{service.desc}</p>
+          <ul className="service-bullets">
+            {service.bullets.map((bullet, idx) => (
+              <li key={idx} className="service-bullet-item">
+                <svg className="bullet-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                {bullet}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Footer: CTAs */}
+        <div className="service-card-footer">
+          <button
+            className="btn-card-inquire"
+            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+            title="Inquire Now"
+          >
+            <span>Inquire Now</span>
+            <svg className="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </button>
+
+          <button
+            className="btn-card-secondary"
+            title="Quick Inquiry"
+            onClick={() => {
+              const contactInput = document.getElementById('message');
+              if (contactInput) {
+                contactInput.focus();
+                contactInput.value = `Hi, I am interested in your "${service.title}" services. Please share details.`;
+                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+              } else {
+                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+          >
+            <svg className="svg" xmlns="http://www.w3.org/2000/svg" width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <section ref={sectionRef} className="services-section section-padding" id="services">
       <div className="container">
         {/* Section Title Header */}
-        <motion.div 
+        <motion.div
           className="section-header"
           initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
           whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -210,82 +192,15 @@ export default function Services() {
           <h2>Our Services & Solutions</h2>
           <p>We deliver robust technical architectures and refined user interfaces to fuel product velocity.</p>
         </motion.div>
+      </div>
 
-        {/* Services Slider Container */}
-        <motion.div 
-          ref={sliderRef}
-          className="services-slider-container"
-          variants={gridContainerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-8%" }}
-        >
-          {servicesList.map((service, index) => (
-            <motion.div 
-              key={index} 
-              className="service-card-wrapper"
-              variants={cardVariants}
-            >
-              <div className="premium-service-card">
-                {/* Header: Icon & Title */}
-                <div className="service-card-header">
-                  <div className="service-icon-wrapper">
-                    {service.icon}
-                  </div>
-                  <h3 className="service-title">{service.title}</h3>
-                </div>
-
-                {/* Body: Desc & Bullets */}
-                <div className="service-card-body">
-                  <p className="service-desc">{service.desc}</p>
-                  <ul className="service-bullets">
-                    {service.bullets.map((bullet, idx) => (
-                      <li key={idx} className="service-bullet-item">
-                        <svg className="bullet-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                          <polyline points="20 6 9 17 4 12" />
-                        </svg>
-                        {bullet}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Footer: CTAs */}
-                <div className="service-card-footer">
-                  <button 
-                    className="btn-card-inquire"
-                    onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                    title="Inquire Now"
-                  >
-                    <span>Inquire Now</span>
-                    <svg className="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <polyline points="9 18 15 12 9 6" />
-                    </svg>
-                  </button>
-
-                  <button 
-                    className="btn-card-secondary"
-                    title="Quick Inquiry"
-                    onClick={() => {
-                      const contactInput = document.getElementById('message');
-                      if (contactInput) {
-                        contactInput.focus();
-                        contactInput.value = `Hi, I am interested in your "${service.title}" services. Please share details.`;
-                        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                      } else {
-                        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                      }
-                    }}
-                  >
-                    <svg className="svg" xmlns="http://www.w3.org/2000/svg" width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+      {/* Marquee Slider — full-width, outside container so cards bleed edge-to-edge */}
+      <div className="services-marquee-viewport">
+        {/* track holds originals + duplicates for seamless infinite loop */}
+        <div ref={trackRef} className="services-marquee-track">
+          {servicesList.map((s, i) => renderCard(s, i, false))}
+          {servicesList.map((s, i) => renderCard(s, i, true))}
+        </div>
       </div>
     </section>
   );
