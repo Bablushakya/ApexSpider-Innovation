@@ -1,32 +1,37 @@
-/* Services Horizontal Slider and Snapping Container */
-.services-slider-container {
-  display: flex;
-  flex-direction: row;
-  gap: 32px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  padding: 40px 24px;
-  margin: 0 -24px;
+/* ── Marquee viewport: clips overflow, adds fade edges ── */
+.services-marquee-viewport {
+  overflow: hidden;
   position: relative;
-  z-index: 10;
-  -webkit-overflow-scrolling: touch;
+  padding: 48px 0;
+  /* Soft fade on left & right edges so cards blend in/out smoothly */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
 }
 
-/* Hide scrollbars */
-.services-slider-container::-webkit-scrollbar {
-  display: none;
-}
-.services-slider-container {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+/* ── Track: holds original + duplicate cards side by side ── */
+.services-marquee-track {
+  display: flex;
+  gap: 32px;
+  width: max-content;
+  will-change: transform;
 }
 
-/* Snapping alignment wrapper */
+/* ── Card wrapper ── */
 .service-card-wrapper {
   flex-shrink: 0;
-  scroll-snap-align: center;
-  padding: 12px; /* Space for the scale & translateY hover offset */
+  padding: 12px; /* breathing room for hover lift */
 }
 
 /* Premium Card Base */

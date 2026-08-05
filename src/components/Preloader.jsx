@@ -1,215 +1,318 @@
-import React, { useEffect, useState, startTransition } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { motion } from 'framer-motion';
+import iconLogo  from '../assets/logo/icon_logo.png';
+import whiteLogo from '../assets/logo/white_logo.png';
 import './Preloader.css';
 
-// -------------------------------------------------------------
-// Sub-Component: StaggeredTextCycle (Recreated from Framer source)
-// -------------------------------------------------------------
-function StaggeredTextCycle({
-  texts = ["Hello", "World", "Framer"],
-  interval = 1700,
-  staggerDelay = 0.01,
-  duration = 0.2,
-  entryYOffset = 40,
-  exitYOffset = -40,
-  loop = true,
-  className = ""
-}) {
-  const [currentIndex, setCurrentIndex] = useState(0);
+/*
+  ╔══════════════════════════════════════════════════════════════╗
+  ║  CINEMATIC PRELOADER — Apex Spider Innovation               ║
+  ║  Award-worthy. Premium. Intentional.                        ║
+  ╠══════════════════════════════════════════════════════════════╣
+  ║  TIMELINE                                                   ║
+  ║  0.00s  Background alive (#090B12 + drifting glows)         ║
+  ║  0.30s  icon_logo materialises — centre screen              ║
+  ║  0.85s  Energy line expands from centre                     ║
+  ║  1.25s  Energy line fades                                   ║
+  ║  1.40s  Glass panels begin diagonal split                   ║
+  ║         Laser edge glows on the moving seam                 ║
+  ║  2.05s  Panels fully off-screen                             ║
+  ║  2.10s  icon_logo flies from centre → navbar slot           ║
+  ║  2.45s  Logo lands, nav items stagger in                    ║
+  ║  2.65s  Hero content stages in                              ║
+  ╚══════════════════════════════════════════════════════════════╝
+*/
 
+// ── Easing ──────────────────────────────────────────────────
+const EASE_OUT_EXPO = [0.16, 1, 0.3, 1];
+const EASE_CINEMATIC = [0.76, 0, 0.24, 1];   // deep deceleration, premium feel
+
+// ── Phase state machine ─────────────────────────────────────
+const PHASE = {
+  IDLE:        'idle',
+  LOGO_IN:     'logo_in',
+  ENERGY_LINE: 'energy_line',
+  SPLIT:       'split',
+  LOGO_TRAVEL: 'logo_travel',
+  DONE:        'done',
+};
+
+export default function Preloader({ onComplete, onNavReady, onHeroReady, logoNavRef }) {
+  const [phase,       setPhase]       = useState(PHASE.IDLE);
+  const [linePhase,   setLinePhase]   = useState('hidden'); // hidden | expand | fade
+  const [panelGone,   setPanelGone]   = useState(false);
+  const [logoStyle,   setLogoStyle]   = useState(null);
+  const [logoFlying,  setLogoFlying]  = useState(false);
+  const [showSkip,    setShowSkip]    = useState(false);
+
+  const centerLogoRef  = useRef(null);
+  const prefersReduced = useRef(
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+
+  // ── Skip ─────────────────────────────────────────────────
+  const skipAll = useCallback(() => {
+    setPhase(PHASE.DONE);
+    setPanelGone(true);
+    setLogoFlying(false);
+    setLogoStyle(null);
+    document.body.style.overflow = '';
+    sessionStorage.setItem('preloader_done', '1');
+    onComplete?.();
+    onNavReady?.();
+    setTimeout(() => onHeroReady?.(), 80);
+  }, [onComplete, onNavReady, onHeroReady]);
+
+  // ── Session guard & skip-button delay ────────────────────
   useEffect(() => {
-    const timer = setInterval(() => {
-      startTransition(() => {
-        setCurrentIndex((prev) => {
-          const nextIndex = prev + 1;
-          if (!loop && nextIndex >= texts.length) {
-            return prev;
-          }
-          return nextIndex % texts.length;
-        });
+    if (prefersReduced.current) { skipAll(); return; }
+    if (sessionStorage.getItem('preloader_done')) { skipAll(); return; }
+
+    document.body.style.overflow = 'hidden';
+    const t = setTimeout(() => setShowSkip(true), 1000);
+    return () => clearTimeout(t);
+  }, [skipAll]);
+
+  // ── Main timeline ─────────────────────────────────────────
+  useEffect(() => {
+    if (prefersReduced.current) return;
+    if (sessionStorage.getItem('preloader_done')) return;
+
+    const timers = [];
+    const at = (fn, ms) => timers.push(setTimeout(fn, ms));
+
+    at(() => setPhase(PHASE.LOGO_IN), 300);
+
+    at(() => {
+      setPhase(PHASE.ENERGY_LINE);
+      setLinePhase('expand');
+    }, 850);
+
+    at(() => setLinePhase('fade'), 1250);
+
+    at(() => setPhase(PHASE.SPLIT), 1400);
+
+    // Panels fully out — page visible
+    at(() => {
+      setPanelGone(true);
+      document.body.style.overflow = '';
+    }, 2050);
+
+    // Measure + launch flying logo
+    at(() => {
+      const fromEl = centerLogoRef.current;
+      const toEl   = logoNavRef?.current;
+
+      if (!fromEl || !toEl) {
+        onComplete?.();
+        onNavReady?.();
+        setTimeout(() => onHeroReady?.(), 80);
+        return;
+      }
+
+      const fr = fromEl.getBoundingClientRect();
+      const tr = toEl.getBoundingClientRect();
+
+      setLogoStyle({
+        x:      fr.left,
+        y:      fr.top,
+        size:   fr.height,
+        toX:    tr.left,
+        toY:    tr.top + (tr.height - 46) / 2,
+        toSize: 46,
       });
-    }, interval);
+      setLogoFlying(true);
+      setPhase(PHASE.LOGO_TRAVEL);
+    }, 2100);
 
-    return () => clearInterval(timer);
-  }, [texts.length, interval, loop]);
+    // Nav stagger starts
+    at(() => {
+      onComplete?.();
+      onNavReady?.();
+    }, 2450);
 
-  const currentText = texts[currentIndex] || "";
-  const textParts = currentText.split("");
+    // Hero reveals
+    at(() => {
+      onHeroReady?.();
+      sessionStorage.setItem('preloader_done', '1');
+    }, 2650);
+
+    // Cleanup flying logo DOM node
+    at(() => {
+      setLogoFlying(false);
+      setLogoStyle(null);
+      setPhase(PHASE.DONE);
+    }, 2800);
+
+    return () => timers.forEach(clearTimeout);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const logoVisible =
+    phase === PHASE.LOGO_IN ||
+    phase === PHASE.ENERGY_LINE ||
+    phase === PHASE.SPLIT;
 
   return (
-    <div style={{ position: 'relative', display: 'inline-flex', overflow: 'hidden', width: 'max-content' }} className={className}>
-      <AnimatePresence mode="wait">
-        <motion.p
-          key={currentIndex}
-          style={{ display: "flex", margin: 0 }}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-        >
-          {textParts.map((char, index) => (
-            <motion.span
-              key={`${currentIndex}-${index}`}
-              variants={{
-                hidden: { opacity: 0, y: entryYOffset },
-                visible: {
-                  opacity: 1,
-                  y: 0,
-                  transition: {
-                    delay: index * staggerDelay,
-                    duration: duration
+    <>
+      {/* ═══ GLASS PANELS + BACKGROUND ═══ */}
+      {!panelGone && (
+        <div className="pl-root" aria-hidden="true">
+
+          {/* ── Live background ── */}
+          <div className="pl-bg">
+            <div className="pl-bg-glow pl-bg-glow--tr" />
+            <div className="pl-bg-glow pl-bg-glow--bl" />
+            <div className="pl-bg-glow pl-bg-glow--center" />
+            <div className="pl-noise" />
+            <div className="pl-vignette" />
+          </div>
+
+          {/* ── Glass panel: TOP-RIGHT half ── */}
+          <motion.div
+            className="pl-panel pl-panel--top"
+            initial={false}
+            animate={
+              phase === PHASE.SPLIT
+                ? {
+                    x: '42vw',
+                    y: '-42vh',
+                    transition: { duration: 0.72, ease: EASE_CINEMATIC },
                   }
-                },
-                exit: {
-                  opacity: 0,
-                  y: exitYOffset,
-                  transition: {
-                    delay: index * staggerDelay,
-                    duration: duration
+                : {}
+            }
+            onAnimationComplete={() => {
+              if (phase === PHASE.SPLIT) setPanelGone(true);
+            }}
+          >
+            {/* Laser edge — the diagonal seam that glows */}
+            <div className="pl-laser" />
+          </motion.div>
+
+          {/* ── Glass panel: BOTTOM-LEFT half ── */}
+          <motion.div
+            className="pl-panel pl-panel--bottom"
+            initial={false}
+            animate={
+              phase === PHASE.SPLIT
+                ? {
+                    x: '-42vw',
+                    y: '42vh',
+                    transition: { duration: 0.72, ease: EASE_CINEMATIC },
                   }
-                }
-              }}
-              style={{ display: "inline-block", whiteSpace: "pre" }}
+                : {}
+            }
+          >
+            {/* Laser edge on the bottom panel */}
+            <div className="pl-laser" />
+          </motion.div>
+
+          {/* ── Centre: logo + energy line ── */}
+          <div className="pl-center">
+
+            <motion.div
+              className="pl-logo-wrap"
+              ref={centerLogoRef}
+              initial={{ opacity: 0, scale: 0.88, filter: 'blur(12px)' }}
+              animate={
+                logoVisible
+                  ? {
+                      opacity: 1,
+                      scale:   1,
+                      filter:  'blur(0px)',
+                      transition: { duration: 0.55, ease: EASE_OUT_EXPO },
+                    }
+                  : {}
+              }
             >
-              {char}
-            </motion.span>
-          ))}
-        </motion.p>
-      </AnimatePresence>
-    </div>
+              {/* Outer ambient light */}
+              <div className="pl-logo-ambient" />
+              {/* Inner glow ring */}
+              <div className="pl-logo-glow" />
+              {/* The icon logo — white_logo variant so it pops on dark bg */}
+              <img
+                src={whiteLogo}
+                alt="Apex Spider Innovation"
+                className="pl-logo-img"
+                draggable={false}
+              />
+            </motion.div>
+
+            {/* Energy line */}
+            <div className="pl-line-track">
+              <motion.div
+                className="pl-energy-line"
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={
+                  linePhase === 'expand'
+                    ? {
+                        scaleX: 1,
+                        opacity: 1,
+                        transition: { duration: 0.45, ease: EASE_OUT_EXPO },
+                      }
+                    : linePhase === 'fade'
+                    ? {
+                        opacity: 0,
+                        transition: { duration: 0.3, ease: 'easeOut' },
+                      }
+                    : {}
+                }
+              />
+            </div>
+
+          </div>
+
+          {/* ── Skip ── */}
+          <motion.button
+            className="pl-skip"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: showSkip ? 1 : 0 }}
+            transition={{ duration: 0.5 }}
+            onClick={skipAll}
+            aria-label="Skip intro"
+          >
+            Skip intro
+          </motion.button>
+
+        </div>
+      )}
+
+      {/* ═══ FLYING LOGO — travels centre → navbar ═══ */}
+      {logoFlying && logoStyle && (
+        <FlyingLogo logoStyle={logoStyle} />
+      )}
+    </>
   );
 }
 
-// -------------------------------------------------------------
-// Main Component: Preloader
-// -------------------------------------------------------------
-export default function Preloader({ onComplete }) {
-  const brandName = "Apex Spider Innovation";
-  const brandChars = brandName.split("");
-
-  useEffect(() => {
-    // Lock scroll on mount
-    document.body.style.overflow = 'hidden';
-
-    // Calculate dynamic duration based on device size
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-    const loadDuration = isMobile ? 1800 : 2500;
-
-    // Auto-complete loading and start exit transition
-    const timer = setTimeout(() => {
-      onComplete();
-    }, loadDuration);
-
-    return () => {
-      clearTimeout(timer);
-      document.body.style.overflow = '';
-    };
-  }, [onComplete]);
-
-  // Framer animation configs
-  const containerVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.05,
-        delayChildren: 0.4
-      }
-    }
-  };
-
-  const charVariants = {
-    hidden: {
-      opacity: 0.001,
-      filter: "blur(10px)",
-      scale: 3,
-      skewY: 3,
-      x: 100,
-      y: 0
-    },
-    visible: {
-      opacity: 1,
-      filter: "blur(0px)",
-      scale: 1,
-      skewY: 0,
-      x: 0,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 400,
-        damping: 40,
-        mass: 1
-      }
-    }
-  };
+/* ─────────────────────────────────────────────────────────────
+   FlyingLogo
+   Fixed element that physically moves from the preloader
+   centre position to the exact navbar logo slot.
+   Uses icon_logo (same as navbar) so the swap is invisible.
+───────────────────────────────────────────────────────────── */
+function FlyingLogo({ logoStyle }) {
+  const { x, y, size, toX, toY, toSize } = logoStyle;
 
   return (
     <motion.div
-      className="preloader-overlay"
-      initial={{ y: 0 }}
-      exit={{ 
-        y: '-100vh',
-        transition: { duration: 1.0, ease: [0.76, 0, 0.24, 1] }
+      className="pl-flying-logo"
+      style={{ width: size, height: size }}
+      initial={{ x, y }}
+      animate={{
+        x:      toX,
+        y:      toY,
+        width:  toSize,
+        height: toSize,
       }}
-      onClick={onComplete}
-      style={{ cursor: 'pointer' }}
+      transition={{ duration: 0.48, ease: [0.16, 1, 0.3, 1] }}
     >
-      {/* Visual cybernetic backdrop */}
-      <div className="preloader-grid" />
-      <div className="preloader-glow-bl" />
-      <div className="preloader-glow-tr" />
-
-      <div className="preloader-content" style={{ pointerEvents: 'none' /* ensure text select doesn't block click */ }}>
-        {/* Main Title Entrance Animation */}
-        <motion.h1 
-          className="preloader-title"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {brandChars.map((char, index) => (
-            <motion.span
-              key={index}
-              variants={charVariants}
-              className="preloader-title-char"
-            >
-              {char}
-            </motion.span>
-          ))}
-        </motion.h1>
-
-        {/* Scrolling Slogans Cycle */}
-        <div className="preloader-slogan-wrapper">
-          <StaggeredTextCycle
-            texts={[
-              "We Craft Digital Experiences",
-              "We Build, Optimize, and Scale",
-              "ApexSpider Innovation"
-            ]}
-            className="preloader-slogan"
-            interval={1700}
-            staggerDelay={0.01}
-            duration={0.2}
-            entryYOffset={25}
-            exitYOffset={-25}
-          />
-        </div>
-
-        {/* Click to skip hint (fade-in after 0.8s delay) */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.35 }}
-          transition={{ delay: 0.8, duration: 0.5 }}
-          style={{ 
-            fontFamily: 'var(--font-mono)', 
-            fontSize: '0.62rem', 
-            color: 'var(--color-text-secondary)',
-            letterSpacing: '0.1em',
-            marginTop: '20px',
-            textTransform: 'uppercase'
-          }}
-        >
-          [ Tap anywhere to skip ]
-        </motion.div>
-      </div>
+      <img
+        src={iconLogo}
+        alt=""
+        style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+        draggable={false}
+      />
     </motion.div>
   );
 }
