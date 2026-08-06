@@ -103,6 +103,7 @@
   animation: pl-noise-shift 0.15s steps(2) infinite;
   pointer-events: none;
   z-index: 1;
+  animation: pl-noise-flicker 0.12s steps(3) infinite;
 }
 
 @keyframes pl-noise-shift {
