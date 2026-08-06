@@ -1,7 +1,7 @@
 import React, { useState, useEffect, forwardRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Header.css';
-import logoImg from '../assets/logo/icon_logo.png';
+import logoImg from '../assets/ApexSpiderLogo.png';
 
 /*
   Header accepts two props from App:
