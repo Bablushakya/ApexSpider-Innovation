@@ -10,7 +10,7 @@ import './Header.css';
   - logoNavRef: forwarded ref — preloader reads this to fly the logo here
 */
 const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
-  const [isScrolled, setIsScrolled]             = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const premiumEase = [0.16, 1, 0.3, 1];
@@ -18,39 +18,30 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [isMobileMenuOpen]);
 
-  const closeMobileMenu = useCallback(() => setIsMobileMenuOpen(false), []);
+  const closeMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(false);
+  }, []);
 
-  // Nav item entrance: opacity + y slide
+  // Navigation animation
   const navItemVariants = {
-    hidden:  { opacity: 0, y: -12 },
-    visible: (i) => ({
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5, ease: premiumEase, delay: i * 0.08 },
-    }),
-  };
-
-  // CTA button entrance (appears after last nav item)
-  const ctaVariants = {
-    hidden:  { opacity: 0, y: -12 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5, ease: premiumEase, delay: NAV_LINKS.length * 0.08 },
+    hidden: {
+      opacity: 0,
+      y: -12,
     },
-  };
-
-  // Nav item entrance: opacity + y slide
-  const navItemVariants = {
-    hidden:  { opacity: 0, y: -12 },
     visible: (i) => ({
       opacity: 1,
       y: 0,
@@ -62,26 +53,32 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
     }),
   };
 
-  // CTA button entrance (appears after last nav item)
-  // const ctaVariants = {
-  //   hidden:  { opacity: 0, y: -12 },
-  //   visible: {
-  //     opacity: 1,
-  //     y: 0,
-  //     transition: {
-  //       duration: 0.5,
-  //       ease: premiumEase,
-  //       delay: navLinks.length * 0.08,
-  //     },
-  //   },
-  // };
+  // CTA animation
+  const ctaVariants = {
+    hidden: {
+      opacity: 0,
+      y: -12,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: premiumEase,
+        delay: NAV_LINKS.length * 0.08,
+      },
+    },
+  };
 
   return (
     <header className={`site-header ${isScrolled ? 'scrolled' : ''}`} role="banner">
       <div className="container header-container">
 
-        {/* ── Brand Logo — links to #hero (home anchor) ── */}
-        <a href="#hero" className="brand-logo" aria-label={`${BRAND.name} — return to top`}>
+        <a
+          href="#hero"
+          className="brand-logo"
+          aria-label={`${BRAND.name} — return to top`}
+        >
           <motion.img
             ref={logoNavRef}
             src={logoImg}
@@ -91,11 +88,14 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
             height="46"
             initial={{ opacity: 0 }}
             animate={{ opacity: navReady ? 1 : 0 }}
-            transition={{ duration: 0.18, ease: 'easeOut', delay: 0.05 }}
+            transition={{
+              duration: 0.18,
+              ease: 'easeOut',
+              delay: 0.05,
+            }}
           />
         </a>
 
-        {/* ── Desktop Navigation ── */}
         <nav className="desktop-nav" aria-label="Main navigation">
           <ul className="nav-list" role="list">
             {NAV_LINKS.map((link, i) => (
@@ -114,7 +114,6 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
           </ul>
         </nav>
 
-        {/* ── Action Button ── */}
         <div className="header-actions">
           <motion.a
             href="#contact"
@@ -126,7 +125,6 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
             Start Project
           </motion.a>
 
-          {/* Mobile Menu Toggle */}
           <button
             className={`mobile-menu-toggle ${isMobileMenuOpen ? 'open' : ''}`}
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
@@ -141,7 +139,6 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
         </div>
       </div>
 
-      {/* ── Mobile Navigation Drawer ── */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -150,7 +147,10 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
             initial={{ opacity: 0, x: '100%' }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
-            transition={{ duration: 0.35, ease: premiumEase }}
+            transition={{
+              duration: 0.35,
+              ease: premiumEase,
+            }}
             aria-modal="false"
           >
             <nav className="mobile-nav" aria-label="Mobile navigation">
@@ -160,7 +160,11 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
                     key={link.name}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.06, duration: 0.4, ease: premiumEase }}
+                    transition={{
+                      delay: i * 0.06,
+                      duration: 0.4,
+                      ease: premiumEase,
+                    }}
                   >
                     <a
                       href={link.href}
@@ -171,10 +175,15 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
                     </a>
                   </motion.li>
                 ))}
+
                 <motion.li
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: NAV_LINKS.length * 0.06, duration: 0.4, ease: premiumEase }}
+                  transition={{
+                    delay: NAV_LINKS.length * 0.06,
+                    duration: 0.4,
+                    ease: premiumEase,
+                  }}
                 >
                   <a
                     href="#contact"
