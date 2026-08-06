@@ -63,18 +63,18 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
   };
 
   // CTA button entrance (appears after last nav item)
-  const ctaVariants = {
-    hidden:  { opacity: 0, y: -12 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: premiumEase,
-        delay: navLinks.length * 0.08,
-      },
-    },
-  };
+  // const ctaVariants = {
+  //   hidden:  { opacity: 0, y: -12 },
+  //   visible: {
+  //     opacity: 1,
+  //     y: 0,
+  //     transition: {
+  //       duration: 0.5,
+  //       ease: premiumEase,
+  //       delay: navLinks.length * 0.08,
+  //     },
+  //   },
+  // };
 
   return (
     <header className={`site-header ${isScrolled ? 'scrolled' : ''}`} role="banner">
