@@ -38,7 +38,7 @@ export function AnimatedTitleFM({ open = true }) {
       }}
     >
       <div className="animated-line-mask" style={{ overflow: "hidden", width: "100%", display: "flex", justifyContent: "center" }}>
-        <motion.h1 className="hero-title" variants={lineVariants} style={{ margin: 0, lineHeight: 1.15 }}>
+        <motion.h1 id="hero-heading" className="hero-title" variants={lineVariants} style={{ margin: 0, lineHeight: 1.15 }}>
           We build <span className="text-gradient-cyan">scalable software</span>
         </motion.h1>
       </div>

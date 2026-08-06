@@ -1,7 +1,8 @@
-import React, { useState, useEffect, forwardRef } from 'react';
+import React, { useState, useEffect, useCallback, forwardRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { NAV_LINKS, BRAND } from '../constants/brand';
+import logoImg from '../assets/ApexSpiderLogo.png';
 import './Header.css';
-import logoImg from '../assets/logo/icon_logo.png';
 
 /*
   Header accepts two props from App:
@@ -9,7 +10,7 @@ import logoImg from '../assets/logo/icon_logo.png';
   - logoNavRef: forwarded ref — preloader reads this to fly the logo here
 */
 const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
-  const [isScrolled, setIsScrolled]         = useState(false);
+  const [isScrolled, setIsScrolled]             = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const premiumEase = [0.16, 1, 0.3, 1];
@@ -25,14 +26,27 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
     return () => { document.body.style.overflow = ''; };
   }, [isMobileMenuOpen]);
 
-  const navLinks = [
-    { name: 'Services', href: '#services'    },
-    { name: 'Value',    href: '#value-props' },
-    { name: 'Process',  href: '#process'     },
-    { name: 'Work',     href: '#work'        },
-    { name: 'About',    href: '#about'       },
-    { name: 'FAQs',     href: '#faq'         },
-  ];
+  const closeMobileMenu = useCallback(() => setIsMobileMenuOpen(false), []);
+
+  // Nav item entrance: opacity + y slide
+  const navItemVariants = {
+    hidden:  { opacity: 0, y: -12 },
+    visible: (i) => ({
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: premiumEase, delay: i * 0.08 },
+    }),
+  };
+
+  // CTA button entrance (appears after last nav item)
+  const ctaVariants = {
+    hidden:  { opacity: 0, y: -12 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: premiumEase, delay: NAV_LINKS.length * 0.08 },
+    },
+  };
 
   // Nav item entrance: opacity + y slide
   const navItemVariants = {
@@ -63,19 +77,18 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
   };
 
   return (
-    <header className={`site-header ${isScrolled ? 'scrolled' : ''}`}>
+    <header className={`site-header ${isScrolled ? 'scrolled' : ''}`} role="banner">
       <div className="container header-container">
 
-        {/* ── Brand Logo ── */}
-        {/* logoNavRef lets the preloader measure where to fly the logo */}
-        <a href="#" className="brand-logo" aria-label="Apex Spider Innovation Home">
+        {/* ── Brand Logo — links to #hero (home anchor) ── */}
+        <a href="#hero" className="brand-logo" aria-label={`${BRAND.name} — return to top`}>
           <motion.img
             ref={logoNavRef}
             src={logoImg}
-            alt="Apex Spider Innovation Logo"
+            alt={BRAND.logo.alt}
             className="logo-img"
-            /* Logo starts invisible — preloader's flying logo "lands" here,
-               then this fades in seamlessly at the end of the flight */
+            width="46"
+            height="46"
             initial={{ opacity: 0 }}
             animate={{ opacity: navReady ? 1 : 0 }}
             transition={{ duration: 0.18, ease: 'easeOut', delay: 0.05 }}
@@ -83,9 +96,9 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
         </a>
 
         {/* ── Desktop Navigation ── */}
-        <nav className="desktop-nav" aria-label="Main Navigation">
-          <ul className="nav-list">
-            {navLinks.map((link, i) => (
+        <nav className="desktop-nav" aria-label="Main navigation">
+          <ul className="nav-list" role="list">
+            {NAV_LINKS.map((link, i) => (
               <motion.li
                 key={link.name}
                 custom={i}
@@ -116,13 +129,14 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
           {/* Mobile Menu Toggle */}
           <button
             className={`mobile-menu-toggle ${isMobileMenuOpen ? 'open' : ''}`}
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
+            onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+            aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-nav"
           >
-            <span className="hamburger-bar" />
-            <span className="hamburger-bar" />
-            <span className="hamburger-bar" />
+            <span className="hamburger-bar" aria-hidden="true" />
+            <span className="hamburger-bar" aria-hidden="true" />
+            <span className="hamburger-bar" aria-hidden="true" />
           </button>
         </div>
       </div>
@@ -131,15 +145,17 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
+            id="mobile-nav"
             className="mobile-nav-overlay active"
             initial={{ opacity: 0, x: '100%' }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
             transition={{ duration: 0.35, ease: premiumEase }}
+            aria-modal="false"
           >
-            <nav className="mobile-nav" aria-label="Mobile Navigation">
-              <ul className="mobile-nav-list">
-                {navLinks.map((link, i) => (
+            <nav className="mobile-nav" aria-label="Mobile navigation">
+              <ul className="mobile-nav-list" role="list">
+                {NAV_LINKS.map((link, i) => (
                   <motion.li
                     key={link.name}
                     initial={{ opacity: 0, y: 20 }}
@@ -149,7 +165,7 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
                     <a
                       href={link.href}
                       className="mobile-nav-link"
-                      onClick={() => setIsMobileMenuOpen(false)}
+                      onClick={closeMobileMenu}
                     >
                       {link.name}
                     </a>
@@ -158,12 +174,12 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
                 <motion.li
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: navLinks.length * 0.06, duration: 0.4, ease: premiumEase }}
+                  transition={{ delay: NAV_LINKS.length * 0.06, duration: 0.4, ease: premiumEase }}
                 >
                   <a
                     href="#contact"
                     className="btn btn-primary mobile-cta"
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    onClick={closeMobileMenu}
                   >
                     Start Project
                   </a>
