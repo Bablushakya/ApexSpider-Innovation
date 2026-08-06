@@ -1,0 +1,44 @@
+.not-found-page {
+  min-height: 100vh;
+  background-color: var(--color-bg-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+}
+
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 480px;
+}
+
+.not-found-code {
+  font-family: var(--font-headings);
+  font-size: 8rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--color-accent-teal) 0%, var(--color-accent-indigo) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.not-found-page h1 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.not-found-page p {
+  color: var(--color-text-secondary);
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.not-found-cta {
+  margin-top: 8px;
+}

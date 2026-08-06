@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { motion, animate, useMotionValue } from 'framer-motion';
+import { motion } from 'framer-motion';
 import logoImg from '../assets/ApexSpiderLogo.png';
 import './Preloader.css';
 
@@ -49,6 +49,15 @@ export default function Preloader({ onComplete, onNavReady, onHeroReady, logoNav
     window.matchMedia('(prefers-reduced-motion: reduce)').matches
   );
 
+  // Store callbacks as refs so the timeline effect can use them
+  // without them being listed as reactive dependencies
+  const onCompleteRef  = useRef(onComplete);
+  const onNavReadyRef  = useRef(onNavReady);
+  const onHeroReadyRef = useRef(onHeroReady);
+  useEffect(() => { onCompleteRef.current  = onComplete;  }, [onComplete]);
+  useEffect(() => { onNavReadyRef.current  = onNavReady;  }, [onNavReady]);
+  useEffect(() => { onHeroReadyRef.current = onHeroReady; }, [onHeroReady]);
+
   // ── Skip handler ──
   const skipAll = useCallback(() => {
     setPhase(PHASE.DONE);
@@ -56,10 +65,10 @@ export default function Preloader({ onComplete, onNavReady, onHeroReady, logoNav
     setLogoFlying(false);
     setLogoStyle(null);
     document.body.style.overflow = '';
-    onComplete?.();
-    onNavReady?.();
-    setTimeout(() => onHeroReady?.(), 80);
-  }, [onComplete, onNavReady, onHeroReady]);
+    onCompleteRef.current?.();
+    onNavReadyRef.current?.();
+    setTimeout(() => onHeroReadyRef.current?.(), 80);
+  }, []);
 
   // ── Skip button visibility ──
   const [showSkip, setShowSkip] = useState(false);
@@ -111,9 +120,9 @@ export default function Preloader({ onComplete, onNavReady, onHeroReady, logoNav
       const navEl    = logoNavRef?.current;
       if (!centerEl || !navEl) {
         // Fallback — just finish
-        onComplete?.();
-        onNavReady?.();
-        setTimeout(() => onHeroReady?.(), 80);
+        onCompleteRef.current?.();
+        onNavReadyRef.current?.();
+        setTimeout(() => onHeroReadyRef.current?.(), 80);
         return;
       }
 
@@ -135,13 +144,13 @@ export default function Preloader({ onComplete, onNavReady, onHeroReady, logoNav
 
     // Nav items appear
     add(() => {
-      onComplete?.();   // hides the preloader overlay
-      onNavReady?.();   // triggers nav stagger
+      onCompleteRef.current?.();   // hides the preloader overlay
+      onNavReadyRef.current?.();   // triggers nav stagger
     }, 2300);
 
     // Hero content starts revealing
     add(() => {
-      onHeroReady?.();
+      onHeroReadyRef.current?.();
       sessionStorage.setItem('preloader_done', '1');
     }, 2500);
 
@@ -153,19 +162,18 @@ export default function Preloader({ onComplete, onNavReady, onHeroReady, logoNav
     }, 2600);
 
     return () => timers.forEach(clearTimeout);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [logoNavRef]); // logoNavRef is a stable ref object — listed to satisfy exhaustive-deps
 
   // ── Don't render overlay once fully done ──
-  const overlayVisible = phase !== PHASE.DONE && !panelGone;
-  const logoVisible    = phase === PHASE.LOGO_IN ||
-                         phase === PHASE.ENERGY_LINE ||
-                         phase === PHASE.SPLIT;
+  const logoVisible = phase === PHASE.LOGO_IN ||
+                      phase === PHASE.ENERGY_LINE ||
+                      phase === PHASE.SPLIT;
 
   return (
     <>
       {/* ──────── OVERLAY PANELS (diagonal split) ──────── */}
       {!panelGone && (
-        <div className="pl-root" aria-hidden="true">
+        <div className="pl-root" aria-hidden="true" role="presentation">
           {/* Ambient background — alive but not distracting */}
           <div className="pl-bg">
             <div className="pl-bg-glow pl-bg-glow--a" />

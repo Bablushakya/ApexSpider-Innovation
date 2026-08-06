@@ -1,4 +1,5 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, lazy, Suspense } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Header    from './components/Header';
 import Hero      from './components/Hero';
 import Services  from './components/Services';
@@ -11,6 +12,55 @@ import FAQ       from './components/FAQ';
 import ContactCTA  from './components/ContactCTA';
 import Footer    from './components/Footer';
 import Preloader from './components/Preloader';
+
+// Lazy-load legal and utility pages — they are never in the initial bundle
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const Terms         = lazy(() => import('./pages/Terms'));
+const Security      = lazy(() => import('./pages/Security'));
+const NotFound      = lazy(() => import('./pages/NotFound'));
+
+/** Full one-page marketing site */
+function HomePage({ logoNavRef, navReady, heroReady }) {
+  return (
+    <>
+      <Header ref={logoNavRef} navReady={navReady} />
+      <main id="main-content">
+        <Hero       heroReady={heroReady} />
+        <Services   />
+        <ValueProps />
+        <Process    />
+        <CaseStudy  />
+        <About      />
+        <Testimonials />
+        <FAQ        />
+        <ContactCTA />
+      </main>
+      <Footer />
+    </>
+  );
+}
+
+/** Page-level loading fallback */
+function PageLoader() {
+  return (
+    <div
+      role="status"
+      aria-label="Loading page"
+      style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'hsl(224, 40%, 7%)',
+        color: 'hsl(210, 40%, 98%)',
+        fontFamily: 'Inter, sans-serif',
+        fontSize: '0.95rem',
+      }}
+    >
+      Loading…
+    </div>
+  );
+}
 
 export default function App() {
   /*
@@ -32,53 +82,84 @@ export default function App() {
   */
   const logoNavRef = useRef(null);
 
-  // Called when diagonal panels are fully gone → remove preloader from DOM
   const handlePreloaderComplete = useCallback(() => {
     setShowPreloader(false);
   }, []);
 
-  // Called when logo lands in navbar → fade in nav items
   const handleNavReady = useCallback(() => {
     setNavReady(true);
   }, []);
 
-  // Called ~200ms after nav → start hero content staging
   const handleHeroReady = useCallback(() => {
     setHeroReady(true);
   }, []);
 
   return (
     <>
-      {/* Cinematic preloader — unmounts itself after onComplete */}
-      {showPreloader && (
-        <Preloader
-          onComplete={handlePreloaderComplete}
-          onNavReady={handleNavReady}
-          onHeroReady={handleHeroReady}
-          logoNavRef={logoNavRef}
+      {/* Skip-to-content link for keyboard / screen-reader users */}
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+
+      <Routes>
+        {/* ── Home page with cinematic preloader ── */}
+        <Route
+          path="/"
+          element={
+            <>
+              {showPreloader && (
+                <Preloader
+                  onComplete={handlePreloaderComplete}
+                  onNavReady={handleNavReady}
+                  onHeroReady={handleHeroReady}
+                  logoNavRef={logoNavRef}
+                />
+              )}
+              <HomePage
+                logoNavRef={logoNavRef}
+                navReady={navReady}
+                heroReady={heroReady}
+              />
+            </>
+          }
         />
-      )}
 
-      {/* Main site — always rendered (behind preloader panels) so
-          getBoundingClientRect works for the logo morph */}
-      <Header
-        ref={logoNavRef}
-        navReady={navReady}
-      />
+        {/* ── Legal pages — lazy loaded ── */}
+        <Route
+          path="/privacy"
+          element={
+            <Suspense fallback={<PageLoader />}>
+              <PrivacyPolicy />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/terms"
+          element={
+            <Suspense fallback={<PageLoader />}>
+              <Terms />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/security"
+          element={
+            <Suspense fallback={<PageLoader />}>
+              <Security />
+            </Suspense>
+          }
+        />
 
-      <main>
-        <Hero       heroReady={heroReady} />
-        <Services   />
-        <ValueProps />
-        <Process    />
-        <CaseStudy  />
-        <About      />
-        <Testimonials />
-        <FAQ        />
-        <ContactCTA />
-      </main>
-
-      <Footer />
+        {/* ── 404 catch-all ── */}
+        <Route
+          path="*"
+          element={
+            <Suspense fallback={<PageLoader />}>
+              <NotFound />
+            </Suspense>
+          }
+        />
+      </Routes>
     </>
   );
 }

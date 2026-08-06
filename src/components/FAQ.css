@@ -10,7 +10,6 @@
 
 .faq-item {
   padding: 24px;
-  cursor: pointer;
   border-color: rgba(255, 255, 255, 0.05);
 }
 
@@ -71,8 +70,15 @@
   transition: grid-template-rows 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.faq-answer.open {
+/* When hidden attribute is removed and open class added */
+.faq-answer:not([hidden]).open {
   grid-template-rows: 1fr;
+}
+
+/* Override hidden to still allow grid animation */
+.faq-answer[hidden] {
+  display: grid;
+  grid-template-rows: 0fr;
 }
 
 .faq-answer-content {

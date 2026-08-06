@@ -319,7 +319,43 @@ button {
 }
 
 /* Accessibility focus state */
-a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
   outline: 2px solid var(--color-accent-teal);
   outline-offset: 4px;
+}
+
+/* Skip-to-content link — hidden until focused */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 999999;
+  padding: 10px 20px;
+  background: var(--color-accent-teal);
+  color: var(--color-bg-deep);
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 0 0 8px 8px;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: none;
+}
+
+/* Reduced motion: disable all transitions/animations globally */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

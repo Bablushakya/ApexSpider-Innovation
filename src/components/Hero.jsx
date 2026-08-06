@@ -23,7 +23,7 @@ export default function Hero({ heroReady = false }) {
   });
 
   return (
-    <section className="hero-section" id="hero">
+    <section className="hero-section" id="hero" aria-labelledby="hero-heading">
       {/* Background glow horizon */}
       <GlowHorizonFM variant="top" />
 
@@ -33,7 +33,7 @@ export default function Hero({ heroReady = false }) {
 
           {/* Badge — first in */}
           <motion.div className="hero-badge" {...stagger(0)}>
-            <span className="badge-tag">Now in Beta</span>
+            <span className="badge-tag">Custom Software Studio</span>
             <span className="badge-text">Scalable Solutions for Modern Teams</span>
           </motion.div>
 
@@ -63,11 +63,11 @@ export default function Hero({ heroReady = false }) {
 
           {/* Social proof — 360ms after title */}
           <motion.div className="hero-social-proof" {...stagger(0.36)}>
-            <p className="social-proof-title">Trusted by growing teams worldwide</p>
+            <p className="social-proof-title">Trusted by growing engineering teams</p>
             <div className="social-proof-logos">
-              <span className="proof-logo">Enterprise Beta</span>
-              <span className="proof-logo">SaaS Alpha</span>
-              <span className="proof-logo">Digital Delta</span>
+              <span className="proof-logo">Orbyx Labs</span>
+              <span className="proof-logo">NovaSphere</span>
+              <span className="proof-logo">Stackpoint</span>
             </div>
           </motion.div>
 
