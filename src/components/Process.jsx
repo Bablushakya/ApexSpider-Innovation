@@ -20,9 +20,9 @@ export default function Process() {
     },
     {
       num: '03',
-      phase: 'Engineer',
-      label: 'Agile Implementation',
-      desc: 'Coding custom solutions in sprints with daily checks, lint audits, automated test suites, and strict version control.'
+      phase: 'Develop',
+      label: 'Development',
+      desc: 'Our developers transform approved designs into high-performance digital solutions using clean architecture, secure coding practices, version control, continuous testing, and agile methodologies to ensure scalable and reliable products.'
     },
     {
       num: '04',

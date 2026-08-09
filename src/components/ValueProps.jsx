@@ -62,11 +62,11 @@ export default function ValueProps() {
       desc: 'We architect systems with fail-safes and optimized querying to ensure reliability under heavy operational loads.'
     },
     {
-      metric: '10',
-      metricSuffix: 'x',
-      metricLabel: 'Process Speedup',
-      title: 'Workflow Automation',
-      desc: 'Connect separate tools and operations into unified triggered pipelines, eliminating manual bottlenecks.'
+      metric: '99',
+      metricSuffix: '+',
+      metricLabel: 'Projects Optimised',
+      title: 'Web Development',
+      desc: 'We build high-performance websites and web applications focused on speed, responsiveness, SEO, security, and exceptional user experience using modern development technologies.'
     },
     {
       metric: '1:1',

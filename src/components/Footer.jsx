@@ -18,7 +18,7 @@ export default function Footer() {
               src={logoImg}
               alt={BRAND.logo.alt}
               className="footer-logo-img"
-              width="42"
+              width="140"
               height="42"
             />
           </a>
