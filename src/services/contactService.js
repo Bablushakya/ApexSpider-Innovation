@@ -2,16 +2,18 @@
  * Contact form API service layer.
  *
  * Strategy:
- *   1. Uses Web3Forms (free, no backend required) via VITE_WEB3FORMS_ACCESS_KEY env var.
- *   2. Falls back gracefully if the key is missing — returns a descriptive error.
+ *   1. Uses EmailJS (client-side email service) for sending contact form submissions.
+ *   2. Requires VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, and VITE_EMAILJS_PUBLIC_KEY.
+ *   3. Falls back gracefully if environment variables are missing.
  *
  * To activate:
- *   1. Create a free account at https://web3forms.com
- *   2. Get your access key
- *   3. Add VITE_WEB3FORMS_ACCESS_KEY=<your-key> to your .env file
+ *   1. Create a free account at https://www.emailjs.com
+ *   2. Add an email service (Gmail, Outlook, etc.) in EmailJS dashboard
+ *   3. Create an email template with variables: {{name}}, {{email}}, {{projectType}}, {{message}}
+ *   4. Add your Service ID, Template ID, and Public Key to your .env file
  */
 
-const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
+import emailjs from '@emailjs/browser';
 
 /**
  * @typedef {Object} ContactFormData
@@ -28,65 +30,70 @@ const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
  */
 
 /**
- * Submits a contact inquiry to Web3Forms.
+ * Submits a contact inquiry via EmailJS.
  *
  * @param {ContactFormData} formData
  * @returns {Promise<SubmitResult>}
  */
 export async function submitContactForm(formData) {
-  const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+  const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+  const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+  const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-  if (!accessKey) {
-    // Development fallback — surface a clear message instead of silently failing
+  // Check if EmailJS credentials are configured
+  if (!serviceId || !templateId || !publicKey) {
     console.warn(
-      '[ContactService] VITE_WEB3FORMS_ACCESS_KEY is not set. ' +
-        'Add it to your .env file to enable real form submission. ' +
-        'See https://web3forms.com for a free key.'
+      '[ContactService] EmailJS credentials are not set. ' +
+        'Add VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, and VITE_EMAILJS_PUBLIC_KEY to your .env file. ' +
+        'See https://www.emailjs.com for setup instructions.'
     );
-    // Simulate success in dev so the UI can be tested
+    
+    // Simulate success in development so the UI can be tested
     await new Promise((resolve) => setTimeout(resolve, 900));
     return {
       success: true,
       message:
-        'Message received! (Running in demo mode — set VITE_WEB3FORMS_ACCESS_KEY in .env for live delivery.)',
+        'Message received! (Running in demo mode — configure EmailJS credentials in .env for live delivery.)',
     };
   }
 
   try {
-    const payload = {
-      access_key: accessKey,
-      subject: `New Project Inquiry — ${formData.projectType} from ${formData.name}`,
-      from_name: formData.name,
+    // Prepare template parameters for EmailJS
+    const templateParams = {
+      name: formData.name,
       email: formData.email,
-      message: `
-Project Category: ${formData.projectType}
-
-${formData.message}
-      `.trim(),
-      // Honeypot — leave blank to avoid spam
-      botcheck: '',
+      projectType: formData.projectType,
+      message: formData.message,
     };
 
-    const response = await fetch(WEB3FORMS_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify(payload),
-    });
+    // Send email using EmailJS
+    const response = await emailjs.send(
+      serviceId,
+      templateId,
+      templateParams,
+      {
+        publicKey: publicKey,
+      }
+    );
 
-    const data = await response.json();
-
-    if (data.success) {
-      return { success: true, message: 'Inquiry received. We will be in touch within 24 hours.' };
+    // EmailJS returns a response with status 200 on success
+    if (response.status === 200) {
+      return {
+        success: true,
+        message: 'Thank you! Your message has been sent successfully. Our team will get back to you shortly.',
+      };
     }
 
     return {
       success: false,
-      message: data.message ?? 'Submission failed. Please try emailing us directly.',
+      message: 'Something went wrong while sending your message. Please try again later.',
     };
-  } catch {
+  } catch (error) {
+    console.error('[ContactService] EmailJS error:', error);
+    
     return {
       success: false,
-      message: 'Network error. Please check your connection or email us directly.',
+      message: 'Something went wrong while sending your message. Please try again later.',
     };
   }
 }
