@@ -52,7 +52,19 @@
   color: var(--color-accent-teal);
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+
+.work-client-label {
+  font-size: 0.82rem;
+  color: var(--color-text-secondary);
   margin-bottom: 12px;
+  font-family: var(--font-mono);
+}
+
+.work-client-label strong {
+  color: var(--color-text-primary);
+  font-weight: 600;
 }
 
 .work-card-title {
@@ -113,18 +125,19 @@
   border-radius: 4px;
 }
 
-.work-action-btn {
+.work-live-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  margin-top: 4px;
 }
 
-.work-action-btn svg {
+.work-live-btn svg {
   transition: var(--transition-smooth);
 }
 
-.work-action-btn:hover svg {
-  transform: translateX(4px);
+.work-live-btn:hover svg {
+  transform: translate(2px, -2px);
 }
 
 /* Responsiveness */

@@ -8,28 +8,20 @@ import './Testimonials.css';
 ───────────────────────────────────────────────────────── */
 const TESTIMONIALS = [
   {
-    name:    'Ravi Menon',
-    role:    'Head of Engineering · Orbyx Labs',
-    initials: 'RM',
-    accent:  '#00ffff',
+    name:     'Kim',
+    role:     'Founder · Elevation by Kim',
+    initials: 'K',
+    accent:   '#00ffff',
     quote:
-      'ApexSpider delivered a polished React dashboard that our team integrated without friction. The component architecture was clean, well-documented, and easy to extend. Highly recommended for serious product work.',
+      'The Apex Spider team delivered exactly what we envisioned for our India Sourcing Trip page. The design is clean, responsive, and professionally built. Communication was excellent throughout the project.',
   },
   {
-    name:    'Sarah Ellington',
-    role:    'VP of Product · NovaSphere',
-    initials: 'SE',
-    accent:  '#6366f1',
+    name:     'India Heritage Travel',
+    role:     'Travel & Tourism',
+    initials: 'IH',
+    accent:   '#6366f1',
     quote:
-      'The collaboration was transparent and technically rigorous throughout. They identified performance bottlenecks we had missed and delivered a 40 % faster load time. The resulting interface became the foundation of our internal tooling.',
-  },
-  {
-    name:    'James Okafor',
-    role:    'CTO · Stackpoint Systems',
-    initials: 'JO',
-    accent:  '#10b981',
-    quote:
-      'Exceptional attention to accessibility and design detail. Every component met WCAG standards, and the animation work felt premium without impacting performance. A dependable engineering partner.',
+      'Apex Spider Innovation transformed our website with a modern design and significantly improved our SEO foundation. Their technical expertise and ongoing support have been valuable for our digital growth.',
   },
 ];
 
@@ -123,7 +115,7 @@ export default function Testimonials() {
         >
           <span className="tag">Testimonials</span>
           <h2 id="testimonials-heading">What Clients Say</h2>
-          <p>Feedback from engineering leads and product teams we have worked with.</p>
+          <p>Honest feedback from the clients we have built real products for.</p>
         </motion.div>
 
         {/* ── Carousel wrapper ── */}

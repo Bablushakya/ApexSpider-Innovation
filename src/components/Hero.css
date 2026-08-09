@@ -5,8 +5,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 140px;
-  padding-bottom: 100px;
+  padding-top: 100px;
+  padding-bottom: 80px;
   overflow: hidden;
   background-color: var(--color-bg-deep);
 }
@@ -17,11 +17,28 @@
   align-items: center;
   text-align: center;
   position: relative;
-  z-index: 10;
+  z-index: 1;
   width: 100%;
 }
 
-/* Badge styling */
+/* ── Glow horizon — behind all content ── */
+.hero-glow-wrapper {
+  position: absolute;
+  inset: 0;
+  /* Glow animates y:-100% → y:-50% relative to this wrapper.
+     Placing wrapper at top:50% means the arc rim lands right
+     at the bottom half of the hero section — clean planet effect. */
+  top: 25%;
+  bottom: -39%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-glow {
+  pointer-events: none;
+}
+
+/* ── Badge ── */
 .hero-badge {
   display: inline-flex;
   align-items: center;
@@ -49,14 +66,16 @@
   color: var(--color-text-secondary);
 }
 
-/* Text layouts */
+/* ── Content ── */
 .hero-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   max-width: 840px;
   width: 100%;
-  margin-bottom: 48px;
+  position: relative;
+  z-index: 2;
+  margin-top: -40px;
 }
 
 .hero-title {
@@ -76,496 +95,49 @@
   line-height: 1.6;
 }
 
+/* ── CTAs ── */
 .hero-actions {
   display: flex;
   gap: 16px;
-  margin-bottom: 48px;
   justify-content: center;
 }
 
-/* Proof styling */
-.hero-social-proof {
-  border-top: 1px solid var(--border-glass);
-  padding-top: 24px;
-  width: 100%;
-  max-width: 480px;
-}
-
-.social-proof-title {
-  font-size: 0.8rem;
-  font-family: var(--font-mono);
-  color: var(--color-text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 12px;
-}
-
-.social-proof-logos {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 24px;
-  opacity: 0.6;
-  justify-content: center;
-}
-
-.proof-logo {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  letter-spacing: -0.01em;
-}
-
-/* Dashboard Mockup Styling */
-.hero-visual {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  max-width: 760px;
-  position: relative;
-  z-index: 12;
-  margin-top: 20px;
-}
-
-.mock-dashboard {
-  width: 100%;
-  max-width: 720px;
-  aspect-ratio: 16/10;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 16px;
-  background: var(--color-bg-card);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 
-    0 30px 60px rgba(0, 0, 0, 0.6),
-    0 0 100px rgba(73, 34, 229, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transform: perspective(1000px) rotateX(12deg);
-  transform-origin: top center;
-  transition: var(--transition-smooth);
-}
-
-.mock-dashboard:hover {
-  transform: perspective(1000px) rotateX(0deg) translateY(-8px);
-  border-color: var(--color-accent-teal);
-  box-shadow: 
-    0 40px 80px rgba(0, 0, 0, 0.7),
-    0 0 80px rgba(0, 255, 255, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-.dashboard-header {
-  height: 40px;
-  background: rgba(15, 23, 42, 0.8);
-  border-bottom: 1px solid var(--border-glass);
-  display: flex;
-  align-items: center;
-  padding: 0 16px;
-  position: relative;
-}
-
-.window-dots {
-  display: flex;
-  gap: 6px;
-}
-
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-}
-
-.dot-red { background-color: #ef4444; }
-.dot-yellow { background-color: #f59e0b; }
-.dot-green { background-color: #10b981; }
-
-.dashboard-address {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--color-text-secondary);
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.03);
-  padding: 2px 16px;
-  border-radius: 4px;
-  border: 1px solid var(--border-glass);
-  white-space: nowrap;
-}
-
-.dashboard-body {
-  display: flex;
-  flex: 1;
-}
-
-.mock-sidebar {
-  width: 52px;
-  background: rgba(10, 18, 35, 0.6);
-  border-right: 1px solid var(--border-glass);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 14px 0;
-  gap: 14px;
-}
-
-.sidebar-item {
-  width: 30px;
-  height: 30px;
-  border-radius: 7px;
-  background: rgba(255, 255, 255, 0.04);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(255, 255, 255, 0.3);
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
-
-.sidebar-item svg {
-  width: 14px;
-  height: 14px;
-  flex-shrink: 0;
-}
-
-.sidebar-item:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.sidebar-item.active {
-  background: var(--color-accent-teal-muted);
-  border: 1px solid rgba(0, 255, 255, 0.35);
-  color: var(--color-accent-teal);
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.15);
-}
-
-.mock-main {
-  flex: 1;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  background: rgba(15, 23, 42, 0.3);
-}
-
-.mock-metrics-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-
-.mock-metric-card {
-  background: rgba(255, 255, 255, 0.025);
-  border: 1px solid var(--border-glass);
-  border-radius: 10px;
-  padding: 12px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  transition: border-color 0.3s ease;
-}
-
-.mock-metric-card:hover {
-  border-color: rgba(0, 255, 255, 0.2);
-}
-
-/* Top row: label + badge */
-.metric-card-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 4px;
-}
-
-.metric-label {
-  font-size: 0.62rem;
-  font-family: var(--font-mono);
-  color: var(--color-text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-}
-
-.metric-value {
-  font-size: 1.3rem;
-  font-family: var(--font-headings);
-  font-weight: 700;
-  color: var(--color-text-primary);
-  line-height: 1.1;
-}
-
-.metric-unit {
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  margin-left: 2px;
-}
-
-/* Status badge with pulsing dot */
-.metric-status-badge {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 0.58rem;
-  font-family: var(--font-mono);
-  color: #10b981;
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  padding: 2px 6px;
-  border-radius: 99px;
-  white-space: nowrap;
-}
-
-.status-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.pulse-green {
-  background: #10b981;
-  animation: pulseStatusDot 1.8s ease-in-out infinite;
-}
-
-@keyframes pulseStatusDot {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(16,185,129,0.5); }
-  50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(16,185,129,0); }
-}
-
-/* Auto tag badge */
-.metric-tag-badge {
-  font-size: 0.55rem;
-  font-family: var(--font-mono);
-  color: var(--color-accent-indigo);
-  background: var(--color-accent-indigo-muted);
-  border: 1px solid rgba(99, 102, 241, 0.3);
-  padding: 2px 5px;
-  border-radius: 3px;
-  letter-spacing: 0.05em;
-}
-
-/* Trend text */
-.metric-trend {
-  font-size: 0.6rem;
-  font-family: var(--font-mono);
-}
-
-.metric-up { color: #10b981; }
-.metric-down { color: #ef4444; }
-
-/* Progress bar */
-.metric-progress-bar {
-  height: 3px;
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 99px;
-  overflow: hidden;
-  margin-top: 4px;
-}
-
-.metric-progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--color-accent-teal), var(--color-accent-indigo));
-  border-radius: 99px;
-}
-
-/* Sparkline mini chart */
-.sparkline-svg {
-  width: 100%;
-  height: 20px;
-  display: block;
-  margin-top: 2px;
-}
-
-.mock-chart-container {
-  flex: 1;
-  background: rgba(255, 255, 255, 0.01);
-  border: 1px solid var(--border-glass);
-  border-radius: 10px;
-  padding: 14px 14px 10px;
-  display: flex;
-  flex-direction: column;
-}
-
-.chart-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.chart-title {
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  letter-spacing: -0.01em;
-}
-
-/* Legend row: dots + labels */
-.chart-legend-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.chart-legend-label {
-  font-size: 0.58rem;
-  font-family: var(--font-mono);
-  color: var(--color-text-secondary);
-}
-
-.legend-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.legend-dot.sm {
-  width: 5px;
-  height: 5px;
-}
-
-.teal-dot  { background: var(--color-accent-teal); }
-.indigo-dot { background: var(--color-accent-indigo); }
-
-/* Chart area with tooltip positioning context */
-.chart-area-wrap {
-  position: relative;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.mock-svg-chart {
-  width: 100%;
-  flex: 1;
-  display: block;
-}
-
-/* Floating glassmorphic tooltip */
-.chart-tooltip {
-  position: absolute;
-  top: 2px;
-  left: 52%;
-  transform: translateX(-50%);
-  background: rgba(15, 23, 42, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(0, 255, 255, 0.2);
-  border-radius: 7px;
-  padding: 7px 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  min-width: 80px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 12px rgba(0, 255, 255, 0.07);
-  pointer-events: none;
-  z-index: 5;
-}
-
-.tooltip-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.tooltip-label {
-  font-size: 0.6rem;
-  font-family: var(--font-mono);
-  color: var(--color-text-secondary);
-  flex: 1;
-}
-
-.tooltip-value {
-  font-size: 0.65rem;
-  font-family: var(--font-mono);
-  font-weight: 600;
-  color: var(--color-text-primary);
-}
-
-/* Responsiveness */
+/* ── Responsive ── */
 @media (max-width: 1024px) {
   .hero-section {
-    padding-top: 120px;
+    padding-top: 90px;
+    padding-bottom: 60px;
   }
-
-  .hero-title {
-    font-size: 3.2rem;
-  }
-
-  .hero-description {
-    max-width: 520px;
-    font-size: 1.1rem;
-  }
-
-  .mock-dashboard {
-    max-width: 580px;
-    transform: perspective(1000px) rotateX(8deg);
-  }
+  .hero-content { margin-top: -30px; }
+  .hero-title { font-size: 3.2rem; }
+  .hero-description { max-width: 520px; font-size: 1.1rem; }
 }
 
 @media (max-width: 768px) {
   .hero-section {
-    padding-top: 100px;
+    padding-top: 80px;
+    padding-bottom: 48px;
   }
-
-  .hero-title {
-    font-size: 2.5rem;
-  }
-
-  .hero-description {
-    font-size: 1rem;
-    margin-bottom: 32px;
-  }
-
-  .hero-actions {
-    margin-bottom: 36px;
-  }
-
-  .mock-dashboard {
-    max-width: 100%;
-    transform: none;
-  }
-
-  .mock-dashboard:hover {
-    transform: translateY(-4px);
-  }
-}
-
-@media (max-width: 580px) {
-  .mock-sidebar {
-    display: none;
-  }
-  .mock-main {
-    padding: 16px;
-    gap: 12px;
-  }
-  .mock-metric-card {
-    padding: 12px;
-  }
+  .hero-content { margin-top: -20px; }
+  .hero-title { font-size: 2.5rem; }
+  .hero-description { font-size: 1rem; margin-bottom: 32px; }
 }
 
 @media (max-width: 480px) {
-  .hero-title {
-    font-size: 2.1rem;
+  .hero-section {
+    padding-top: 70px;
+    padding-bottom: 40px;
   }
-  
+  .hero-content { margin-top: -10px; }
+  .hero-title { font-size: 2.1rem; }
   .hero-actions {
     flex-direction: column;
     gap: 12px;
     width: 100%;
     max-width: 280px;
   }
-  
   .hero-actions .btn {
     width: 100%;
-  }
-
-  .mock-metrics-row {
-    grid-template-columns: 1fr;
+    justify-content: center;
   }
 }

@@ -16,7 +16,7 @@ const SERVICE_LIST = [
       </svg>
     ),
     title: 'Custom Software Development',
-    desc: 'High-performance applications engineered to address unique enterprise requirements.',
+    desc: 'High-performance applications engineered to address unique business requirements with clean, scalable architecture.',
     bullets: ['Scalable backend architectures', 'Cloud-native deployment pipelines', 'Secure database integrations'],
   },
   {
@@ -26,8 +26,8 @@ const SERVICE_LIST = [
       </svg>
     ),
     title: 'Web Application Design',
-    desc: 'Bespoke web applications featuring modern frameworks and interactive visual states.',
-    bullets: ['Robust multi-tenant systems', 'Real-time charting & telemetry', 'Smooth interface state updates'],
+    desc: 'Bespoke web applications built with modern frameworks, responsive layouts, and interactive visual states.',
+    bullets: ['Robust multi-tenant systems', 'Real-time data & dashboards', 'Smooth interface state updates'],
   },
   {
     icon: (
@@ -37,29 +37,34 @@ const SERVICE_LIST = [
       </svg>
     ),
     title: 'UI/UX Design',
-    desc: 'User-centered design systems crafted for visual clarity, accessibility, and high adoption.',
+    desc: 'User-centered design systems crafted for visual clarity, accessibility, and high adoption rates.',
     bullets: ['High-fidelity mockup prototypes', 'Structured design component tokens', 'Intuitive user journey flows'],
   },
   {
     icon: (
+      /* Mobile + Code icon: smartphone with code brackets */
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-        <polyline points="22 4 12 14.01 9 11.01" />
+        <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+        <line x1="12" y1="18" x2="12.01" y2="18" />
       </svg>
     ),
-    title: 'Automation Solutions',
-    desc: 'Streamline operational workflows through triggered pipelines and legacy system syncs.',
-    bullets: ['Custom event trigger chains', 'Secure API proxy integrations', 'Batch data ETL synchronization'],
+    title: 'App Development',
+    desc: 'Fast, scalable, and secure Android, iOS, and cross-platform mobile applications optimised for performance and long-term growth.',
+    bullets: ['Android & iOS Development', 'Cross-platform Apps', 'Firebase & API Integration', 'App Maintenance'],
   },
   {
     icon: (
+      /* Analytics / AI icon: bar chart with upward trend */
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        <line x1="18" y1="20" x2="18" y2="10" />
+        <line x1="12" y1="20" x2="12" y2="4" />
+        <line x1="6" y1="20" x2="6" y2="14" />
+        <line x1="2" y1="20" x2="22" y2="20" />
       </svg>
     ),
-    title: 'Branding & Digital Presence',
-    desc: 'Establish market presence with consistent visual standards and premium layouts.',
-    bullets: ['Unified asset typography rules', 'Scalable vector logo frameworks', 'High-impact landing experiences'],
+    title: 'Data Analysis & Data Science',
+    desc: 'Transform business data into meaningful insights through analytics, visualisation, machine learning, and predictive models.',
+    bullets: ['Business Analytics', 'Interactive Dashboards', 'Machine Learning', 'Python Automation'],
   },
   {
     icon: (
@@ -68,16 +73,12 @@ const SERVICE_LIST = [
         <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
       </svg>
     ),
-    title: 'Technical Support',
-    desc: 'Maintain operational uptime and software health with continuous monitoring systems.',
+    title: 'Technical Support & Maintenance',
+    desc: 'Keep your digital products healthy with continuous monitoring, proactive updates, and rapid issue resolution.',
     bullets: ['Automated server diagnostics', 'Proactive patch deployments', 'Uptime monitoring dashboards'],
   },
 ];
 
-/**
- * A single service card — rendered for both originals and duplicates.
- * Duplicate cards are aria-hidden so screen readers only see the set once.
- */
 function ServiceCard({ service, isDuplicate }) {
   return (
     <div
@@ -114,16 +115,12 @@ function ServiceCard({ service, isDuplicate }) {
         </div>
 
         <div className="service-card-footer">
-          {/*
-            Using <a> instead of <button> for better SEO, keyboard nav,
-            and right-click "open in new tab" support.
-          */}
           <a
             href="#contact"
             className="btn-card-inquire"
-            aria-label={`Inquire about ${service.title}`}
+            aria-label={`Explore ${service.title}`}
           >
-            <span>Inquire Now</span>
+            <span>Explore Service</span>
             <svg
               className="btn-arrow"
               viewBox="0 0 24 24"
@@ -143,10 +140,9 @@ function ServiceCard({ service, isDuplicate }) {
             aria-label={`Quick inquiry for ${service.title}`}
           >
             <svg
-              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
               width={18}
               height={18}
-              viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
               strokeWidth={2}
@@ -164,12 +160,11 @@ function ServiceCard({ service, isDuplicate }) {
 }
 
 export default function Services() {
-  const sectionRef  = useRef(null);
-  const trackRef    = useRef(null);
-  const isVisible   = useIntersectionObserver(sectionRef, '0px', 0);
+  const sectionRef     = useRef(null);
+  const trackRef       = useRef(null);
+  const isVisible      = useIntersectionObserver(sectionRef, '0px', 0);
   const prefersReduced = useReducedMotion();
 
-  // Stable ref so RAF callback can read latest isVisible without restart
   const isVisibleRef = useRef(isVisible);
   useEffect(() => { isVisibleRef.current = isVisible; }, [isVisible]);
 
@@ -180,23 +175,20 @@ export default function Services() {
     let offset   = 0;
     let rafId    = null;
     let lastTime = null;
-    const PX_PER_MS = 0.1; // 100 px / second
+    const PX_PER_MS = 0.1;
 
     const step = (timestamp) => {
-      // Pause when section is not in view or user prefers reduced motion
       if (!isVisibleRef.current) {
         lastTime = null;
         rafId = requestAnimationFrame(step);
         return;
       }
-
       if (lastTime === null) lastTime = timestamp;
       const delta = timestamp - lastTime;
       lastTime = timestamp;
 
       offset += delta * PX_PER_MS;
 
-      // Seamless loop: half the total track width = one full set of cards
       const halfWidth = track.scrollWidth / 2;
       if (offset >= halfWidth) offset -= halfWidth;
 
@@ -209,7 +201,6 @@ export default function Services() {
   }, []);
 
   useEffect(() => {
-    // Skip animation entirely for reduced-motion preference
     if (prefersReduced) return;
     return startMarquee();
   }, [prefersReduced, startMarquee]);
@@ -232,28 +223,21 @@ export default function Services() {
           <span className="tag">Capabilities</span>
           <h2 id="services-heading">Our Services &amp; Solutions</h2>
           <p>
-            We deliver robust technical architectures and refined user interfaces to fuel
-            product velocity.
+            End-to-end digital solutions — from web and mobile development to data science
+            and ongoing technical support.
           </p>
         </motion.div>
       </div>
 
-      {/*
-        Marquee — full-width outside container so cards bleed edge-to-edge.
-        The track holds originals + duplicates for seamless infinite loop.
-        Duplicate cards are aria-hidden so screen readers encounter each card once.
-      */}
       <div
         className="services-marquee-viewport"
         aria-label="Services carousel"
         role="region"
       >
         <div ref={trackRef} className="services-marquee-track" aria-atomic="false">
-          {/* Original set — visible to screen readers */}
           {SERVICE_LIST.map((s, i) => (
             <ServiceCard key={i} service={s} isDuplicate={false} />
           ))}
-          {/* Duplicate set — hidden from AT for seamless visual loop */}
           {SERVICE_LIST.map((s, i) => (
             <ServiceCard key={`dup-${i}`} service={s} isDuplicate={true} />
           ))}
