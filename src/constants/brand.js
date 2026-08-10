@@ -15,9 +15,10 @@ export const BRAND = {
     support: 'info@apexspiderinnovation.com',
   },
   social: {
+    youtube: 'https://www.youtube.com/@ApexSpiderInnovation',
+    instagram: 'https://www.instagram.com/apex_spider_innovation/',
+    linkedin: 'https://www.linkedin.com/company/apexspider-innovation',
     twitter: 'https://twitter.com/apexspider',
-    linkedin: 'https://linkedin.com/company/apexspider-innovation',
-    github: 'https://github.com/apexspider-innovation',
   },
   logo: {
     alt: 'ApexSpider Innovation Logo',
