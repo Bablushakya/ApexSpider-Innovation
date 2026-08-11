@@ -24,9 +24,9 @@ const NotFound      = lazy(() => import('./pages/NotFound'));
 function HomePage({ logoNavRef, navReady, heroReady, onOpenInquiry }) {
   return (
     <>
-      <Header ref={logoNavRef} navReady={navReady} />
+      <Header ref={logoNavRef} navReady={navReady} onOpenInquiry={onOpenInquiry} />
       <main id="main-content">
-        <Hero       heroReady={heroReady} onOpenInquiry={onOpenInquiry} />
+        <Hero       heroReady={heroReady} />
         <Services   />
         <ValueProps />
         <Process    />
