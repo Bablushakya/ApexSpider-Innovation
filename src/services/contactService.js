@@ -21,6 +21,9 @@ import emailjs from '@emailjs/browser';
  * @property {string} email
  * @property {string} projectType
  * @property {string} message
+ * @property {string} [phone] - Optional phone/WhatsApp number
+ * @property {string} [company] - Optional company/organization name
+ * @property {string} [budget] - Optional budget range
  */
 
 /**
@@ -78,6 +81,9 @@ export async function submitContactForm(formData) {
       email: formData.email,
       projectType: formData.projectType,
       message: formData.message,
+      phone: formData.phone || 'Not provided',
+      company: formData.company || 'Not provided',
+      budget: formData.budget || 'Not specified',
     };
 
     // Send email using EmailJS

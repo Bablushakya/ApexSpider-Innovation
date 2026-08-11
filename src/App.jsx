@@ -12,6 +12,7 @@ import FAQ       from './components/FAQ';
 import ContactCTA  from './components/ContactCTA';
 import Footer    from './components/Footer';
 import Preloader from './components/Preloader';
+import ProjectInquiryModal from './components/ProjectInquiryModal';
 
 // Lazy-load legal and utility pages — they are never in the initial bundle
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
@@ -20,12 +21,12 @@ const Security      = lazy(() => import('./pages/Security'));
 const NotFound      = lazy(() => import('./pages/NotFound'));
 
 /** Full one-page marketing site */
-function HomePage({ logoNavRef, navReady, heroReady }) {
+function HomePage({ logoNavRef, navReady, heroReady, onOpenInquiry }) {
   return (
     <>
       <Header ref={logoNavRef} navReady={navReady} />
       <main id="main-content">
-        <Hero       heroReady={heroReady} />
+        <Hero       heroReady={heroReady} onOpenInquiry={onOpenInquiry} />
         <Services   />
         <ValueProps />
         <Process    />
@@ -74,6 +75,9 @@ export default function App() {
   const [showPreloader, setShowPreloader] = useState(true);
   const [navReady,      setNavReady]      = useState(false);
   const [heroReady,     setHeroReady]     = useState(false);
+  
+  // Project Inquiry Modal state
+  const [isInquiryOpen, setIsInquiryOpen] = useState(false);
 
   /*
     logoNavRef is forwarded into <Header> so that the
@@ -94,12 +98,26 @@ export default function App() {
     setHeroReady(true);
   }, []);
 
+  const openInquiryModal = useCallback(() => {
+    setIsInquiryOpen(true);
+  }, []);
+
+  const closeInquiryModal = useCallback(() => {
+    setIsInquiryOpen(false);
+  }, []);
+
   return (
     <>
       {/* Skip-to-content link for keyboard / screen-reader users */}
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
+
+      {/* Project Inquiry Modal */}
+      <ProjectInquiryModal 
+        isOpen={isInquiryOpen} 
+        onClose={closeInquiryModal} 
+      />
 
       <Routes>
         {/* ── Home page with cinematic preloader ── */}
@@ -119,6 +137,7 @@ export default function App() {
                 logoNavRef={logoNavRef}
                 navReady={navReady}
                 heroReady={heroReady}
+                onOpenInquiry={openInquiryModal}
               />
             </>
           }

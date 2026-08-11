@@ -111,6 +111,16 @@ button {
   }
 }
 
+@media (max-width: 360px) {
+  .section-padding {
+    padding: 56px 0;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+}
+
 /* Ambient Background Blobs */
 .glow-blob {
   position: absolute;

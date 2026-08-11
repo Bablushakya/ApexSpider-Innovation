@@ -82,78 +82,98 @@
   .value-blob {
     display: none;
   }
-  
+
   .value-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 14px;
     width: 100%;
     max-width: 100%;
   }
-  
+
   .value-card {
     padding: 20px 18px;
     border-radius: 14px;
     box-shadow: var(--shadow-premium);
   }
-  
+
+  /* ── Stack badge below metric number so the number has breathing room ── */
   .metric-header {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    margin-bottom: 14px;
     width: 100%;
   }
 
   .metric-number {
-    font-size: 2.25rem; /* 36px - prominent but not oversized */
+    font-size: 2.75rem; /* 44px — keep number as clear visual anchor */
+    line-height: 1;
   }
-  
+
   .metric-badge {
-    font-size: 0.72rem;
-    padding: 4px 10px;
+    font-size: 0.7rem;
+    padding: 3px 9px;
     border-radius: 4px;
   }
-  
+
   .value-title {
-    font-size: 1.125rem; /* 18px */
-    margin-bottom: 8px;
+    font-size: 1.0625rem; /* 17px */
+    margin-bottom: 6px;
+    font-weight: 600;
   }
-  
+
   .value-desc {
-    font-size: 0.9rem; /* ~14.4px */
-    line-height: 1.55;
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.6;
+    color: var(--color-text-secondary);
   }
 }
 
 @media (max-width: 480px) {
   .value-grid {
-    gap: 14px;
+    gap: 12px;
   }
-  
+
   .value-card {
     padding: 18px 16px;
     border-radius: 12px;
   }
-  
+
   .metric-header {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    gap: 5px;
   }
-  
+
   .metric-number {
-    font-size: 2rem; /* 32px */
+    font-size: 2.5rem; /* 40px */
   }
-  
+
   .metric-badge {
-    font-size: 0.68rem;
-    padding: 3px 8px;
+    font-size: 0.675rem;
+    padding: 2px 8px;
   }
-  
+
   .value-title {
-    font-size: 1.05rem; /* 17px */
+    font-size: 1rem; /* 16px */
+    margin-bottom: 4px;
   }
-  
+
   .value-desc {
-    font-size: 0.86rem;
+    font-size: 0.84375rem; /* ~13.5px */
+  }
+}
+
+@media (max-width: 360px) {
+  .value-card {
+    padding: 16px 14px;
+  }
+
+  .metric-number {
+    font-size: 2.25rem; /* 36px */
+  }
+
+  .value-title {
+    font-size: 0.9375rem; /* 15px */
   }
 }
