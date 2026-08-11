@@ -53,23 +53,6 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
     }),
   };
 
-  // CTA animation
-  const ctaVariants = {
-    hidden: {
-      opacity: 0,
-      y: -12,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: premiumEase,
-        delay: NAV_LINKS.length * 0.08,
-      },
-    },
-  };
-
   return (
     <header className={`site-header ${isScrolled ? 'scrolled' : ''}`} role="banner">
       <div className="container header-container">
@@ -114,17 +97,8 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
           </ul>
         </nav>
 
+        {/* Desktop Start Project button removed - now only in Hero on mobile */}
         <div className="header-actions">
-          <motion.a
-            href="#contact"
-            className="btn btn-primary btn-header"
-            variants={ctaVariants}
-            initial="hidden"
-            animate={navReady ? 'visible' : 'hidden'}
-          >
-            Start Project
-          </motion.a>
-
           <button
             className={`mobile-menu-toggle ${isMobileMenuOpen ? 'open' : ''}`}
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
@@ -176,23 +150,7 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
                   </motion.li>
                 ))}
 
-                <motion.li
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    delay: NAV_LINKS.length * 0.06,
-                    duration: 0.4,
-                    ease: premiumEase,
-                  }}
-                >
-                  <a
-                    href="#contact"
-                    className="btn btn-primary mobile-cta"
-                    onClick={closeMobileMenu}
-                  >
-                    Start Project
-                  </a>
-                </motion.li>
+                {/* Mobile CTA removed - users access Start Project via section CTAs */}
               </ul>
             </nav>
           </motion.div>

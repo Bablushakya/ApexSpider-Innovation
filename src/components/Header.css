@@ -194,12 +194,7 @@
   color: var(--color-accent-teal);
 }
 
-.mobile-cta {
-  width: 220px;
-  margin-top: 12px;
-  text-align: center;
-  min-height: 48px;
-}
+/* Mobile CTA removed - users access Start Project via section CTAs */
 
 /* Responsive Rules for Header */
 @media (max-width: 1024px) {
@@ -269,9 +264,5 @@
   
   .mobile-nav-link {
     font-size: 1.25rem;
-  }
-  
-  .mobile-cta {
-    width: 200px;
   }
 }

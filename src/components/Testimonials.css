@@ -212,88 +212,112 @@
 /* ── Responsive ───────────────────────────────────────── */
 @media (max-width: 768px) {
   .tc-wrapper {
-    padding: 24px 20px 20px;
-    border-radius: 16px;
+    /* ── Flatten card wrapper on mobile — less boxing ── */
+    padding: 20px 16px 16px;
+    border-radius: 14px;
     background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.06);
+    /* Remove the inner glow on mobile */
+    backdrop-filter: none;
   }
 
   .tc-arrow {
-    width: 40px;
-    height: 40px;
-    min-height: 40px;
+    width: 36px;
+    height: 36px;
+    min-height: 36px;
     transition: background 0.2s ease, color 0.2s ease;
   }
 
-  .tc-arrow--prev { left: 8px; }
-  .tc-arrow--next { right: 8px; }
+  .tc-arrow--prev { left: 6px; }
+  .tc-arrow--next { right: 6px; }
 
+  /* Use a content-appropriate min-height — no more empty gaps */
   .tc-slide-area {
-    min-height: 220px; /* Reduced from 300-340px to prevent empty vertical gap */
+    min-height: 190px;
   }
 
   .tc-quote p {
-    font-size: 0.9rem; /* ~14.4px */
-    line-height: 1.6;
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.65;
   }
 
   .tc-name {
-    font-size: 1.05rem; /* ~17px */
+    font-size: 1rem; /* 16px */
+    font-weight: 600;
   }
-  
+
   .tc-role {
-    font-size: 0.72rem;
-    margin-bottom: 12px;
+    font-size: 0.7rem;
+    margin-bottom: 10px;
   }
-  
+
   .tc-avatar {
-    width: 56px;
-    height: 56px;
-    font-size: 0.9rem;
+    width: 52px;
+    height: 52px;
+    font-size: 0.875rem;
   }
 
   .tc-avatar-wrap {
     margin-bottom: 10px;
   }
-  
+
   .tc-quote-badge {
-    width: 24px;
-    height: 24px;
-    font-size: 0.85rem;
-    left: calc(50% - 30px);
+    width: 22px;
+    height: 22px;
+    font-size: 0.8rem;
+    left: calc(50% - 28px);
   }
 
   .tc-dots {
-    margin-top: 18px;
+    margin-top: 14px;
     gap: 8px;
   }
 
   .tc-dot {
-    min-height: 24px; /* Expand touch area for dot tabs */
+    min-height: 28px; /* larger touch target */
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    padding: 4px;
   }
 }
 
 @media (max-width: 480px) {
   .tc-wrapper {
-    padding: 20px 14px 16px;
+    padding: 18px 14px 14px;
+    border-radius: 12px;
   }
-  
+
+  /* Hide arrows — use dots on small phones */
   .tc-arrow {
-    display: none; /* Hide side arrows on small screens; use dots/swipe */
+    display: none;
   }
-  
-  .tc-slide-area {
-    min-height: 210px;
-  }
-  
-  .tc-quote {
-    max-width: 100%;
-  }
-  
+
   .tc-quote p {
-    font-size: 0.86rem;
-    line-height: 1.55;
+    font-size: 0.84375rem; /* ~13.5px */
+    line-height: 1.6;
+  }
+
+  .tc-avatar {
+    width: 48px;
+    height: 48px;
+  }
+
+  .tc-dots {
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .tc-wrapper {
+    padding: 16px 12px 12px;
+  }
+
+  .tc-quote p {
+    font-size: 0.8125rem; /* 13px */
+  }
+
+  .tc-name {
+    font-size: 0.9375rem; /* 15px */
   }
 }
