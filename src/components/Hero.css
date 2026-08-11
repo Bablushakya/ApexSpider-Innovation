@@ -203,26 +203,3 @@
     font-size: 1.75rem; /* 28px for extra small devices */
   }
 }
-
-/* Mobile-only Start Project button in Hero */
-.hero-start-project-mobile {
-  display: none;
-}
-
-@media (max-width: 1024px) {
-  .hero-start-project-mobile {
-    display: inline-flex;
-    width: 100%;
-    min-height: 52px;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-start-project-mobile {
-    min-height: 50px;
-    font-size: 0.95rem;
-  }
-}

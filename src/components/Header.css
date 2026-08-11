@@ -102,6 +102,24 @@
   gap: 16px;
 }
 
+/* Start Project Button in Header */
+.header-start-project {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  padding: 10px 20px;
+  white-space: nowrap;
+}
+
+.header-start-project svg {
+  transition: transform 0.3s ease;
+}
+
+.header-start-project:hover svg {
+  transform: translateX(4px);
+}
+
 .btn-header {
   padding: 8px 20px;
   font-size: 0.85rem;
@@ -194,7 +212,35 @@
   color: var(--color-accent-teal);
 }
 
-/* Mobile CTA removed - users access Start Project via section CTAs */
+/* Mobile Start Project CTA */
+.mobile-nav-cta {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.mobile-start-project {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  max-width: 280px;
+  padding: 11px 22px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.mobile-start-project svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+
+.mobile-start-project:hover svg {
+  transform: translateX(4px);
+}
 
 /* Responsive Rules for Header */
 @media (max-width: 1024px) {
@@ -206,7 +252,7 @@
     display: flex;
   }
   
-  .btn-header {
+  .header-start-project {
     display: none;
   }
 }
@@ -234,6 +280,12 @@
   
   .mobile-nav-link {
     font-size: 1.4rem;
+  }
+  
+  .mobile-start-project {
+    max-width: 260px;
+    padding: 10px 20px;
+    font-size: 0.875rem;
   }
 }
 
@@ -264,5 +316,20 @@
   
   .mobile-nav-link {
     font-size: 1.25rem;
+  }
+  
+  .mobile-nav-cta {
+    margin-top: 16px;
+  }
+  
+  .mobile-start-project {
+    max-width: 240px;
+    padding: 9px 18px;
+    font-size: 0.85rem;
+  }
+  
+  .mobile-start-project svg {
+    width: 15px;
+    height: 15px;
   }
 }

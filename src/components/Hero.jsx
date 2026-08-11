@@ -4,7 +4,7 @@ import GlowHorizonFM from './ui/GlowHorizonFM';
 import { AnimatedTitleFM } from './ui/AnimatedTitleFM';
 import './Hero.css';
 
-export default function Hero({ heroReady = false, onOpenInquiry }) {
+export default function Hero({ heroReady = false }) {
   const premiumEase = [0.16, 1, 0.3, 1];
 
   const stagger = (delay = 0) => ({
@@ -72,29 +72,6 @@ export default function Hero({ heroReady = false, onOpenInquiry }) {
             <a href="#work" className="btn btn-secondary">
               View Our Work
             </a>
-            {/* Mobile-only Start Project button */}
-            <button 
-              onClick={onOpenInquiry} 
-              className="btn btn-primary hero-start-project-mobile"
-              aria-label="Start your project with us"
-            >
-              Start Project
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                aria-hidden="true"
-              >
-                <path
-                  d="M5 12h14M12 5l7 7-7 7"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
           </motion.div>
 
         </div>

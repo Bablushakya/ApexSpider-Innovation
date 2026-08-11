@@ -5,11 +5,12 @@ import logoImg from '../assets/ApexSpiderLogo.png';
 import './Header.css';
 
 /*
-  Header accepts two props from App:
+  Header accepts three props from App:
   - navReady: boolean — when true, stagger-animate nav items in
   - logoNavRef: forwarded ref — preloader reads this to fly the logo here
+  - onOpenInquiry: function — opens project inquiry modal
 */
-const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
+const Header = forwardRef(function Header({ navReady = false, onOpenInquiry }, logoNavRef) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -97,8 +98,36 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
           </ul>
         </nav>
 
-        {/* Desktop Start Project button removed - now only in Hero on mobile */}
-        <div className="header-actions">
+        {/* Desktop Start Project button */}
+        <motion.div 
+          className="header-actions"
+          initial={{ opacity: 0, y: -12 }}
+          animate={navReady ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
+          transition={{ duration: 0.5, ease: premiumEase, delay: NAV_LINKS.length * 0.08 }}
+        >
+          <button
+            onClick={onOpenInquiry}
+            className="btn btn-primary header-start-project"
+            aria-label="Start your project with us"
+          >
+            Start Project
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              aria-hidden="true"
+            >
+              <path
+                d="M5 12h14M12 5l7 7-7 7"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+          
           <button
             className={`mobile-menu-toggle ${isMobileMenuOpen ? 'open' : ''}`}
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
@@ -110,7 +139,7 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
             <span className="hamburger-bar" aria-hidden="true" />
             <span className="hamburger-bar" aria-hidden="true" />
           </button>
-        </div>
+        </motion.div>
       </div>
 
       <AnimatePresence>
@@ -150,7 +179,43 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
                   </motion.li>
                 ))}
 
-                {/* Mobile CTA removed - users access Start Project via section CTAs */}
+                {/* Mobile Start Project CTA */}
+                <motion.li
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    delay: NAV_LINKS.length * 0.06,
+                    duration: 0.4,
+                    ease: premiumEase,
+                  }}
+                  className="mobile-nav-cta"
+                >
+                  <button
+                    onClick={() => {
+                      closeMobileMenu();
+                      onOpenInquiry();
+                    }}
+                    className="btn btn-primary mobile-start-project"
+                    aria-label="Start your project with us"
+                  >
+                    Start Project
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M5 12h14M12 5l7 7-7 7"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </motion.li>
               </ul>
             </nav>
           </motion.div>
