@@ -76,3 +76,67 @@
     padding: 32px;
   }
 }
+
+@media (max-width: 768px) {
+  /* Hide decorative blob on mobile */
+  .value-blob {
+    display: none;
+  }
+  
+  .value-grid {
+    gap: 20px;
+  }
+  
+  .value-card {
+    padding: 28px 24px;
+  }
+  
+  .metric-number {
+    font-size: 3rem;
+  }
+  
+  .metric-badge {
+    font-size: 0.7rem;
+    padding: 3px 8px;
+  }
+  
+  .value-title {
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+  }
+  
+  .value-desc {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .value-grid {
+    gap: 16px;
+  }
+  
+  .value-card {
+    padding: 24px 20px;
+  }
+  
+  .metric-header {
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .metric-number {
+    font-size: 2.5rem;
+  }
+  
+  .metric-badge {
+    font-size: 0.68rem;
+  }
+  
+  .value-title {
+    font-size: 1.1rem;
+  }
+  
+  .value-desc {
+    font-size: 0.88rem;
+  }
+}

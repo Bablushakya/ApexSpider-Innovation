@@ -192,15 +192,108 @@
   .about-title {
     font-size: 2rem;
   }
+  
+  .tech-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .about-blob {
+    display: none; /* Remove decorative blob on mobile */
+  }
+  
+  .about-title {
+    font-size: 1.8rem;
+  }
+  
+  .about-text {
+    font-size: 1rem;
+  }
+  
+  .tech-stack-container {
+    padding: 24px 16px;
+    background: rgba(15, 23, 42, 0.3); /* Lighter background on mobile */
+  }
+  
+  .tech-grid-title {
+    font-size: 1.2rem;
+  }
+  
+  .tech-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  
+  .tech-item {
+    padding: 10px 6px;
+  }
+  
+  .tech-name {
+    font-size: 0.7rem;
+  }
 }
 
 @media (max-width: 480px) {
+  .about-title {
+    font-size: 1.6rem;
+    margin-bottom: 16px;
+  }
+  
+  .about-text {
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+  }
+  
+  .standard-item {
+    gap: 12px;
+  }
+  
+  .standard-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 0.7rem;
+  }
+  
+  .standard-title {
+    font-size: 0.95rem;
+  }
+  
+  .standard-desc {
+    font-size: 0.85rem;
+  }
+  
   .tech-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
   }
+  
   .tech-stack-container {
-    padding: 28px 16px;
+    padding: 20px 12px;
   }
+  
+  .tech-grid-title {
+    font-size: 1.1rem;
+  }
+  
+  .tech-grid-subtitle {
+    font-size: 0.8rem;
+    margin-bottom: 16px;
+  }
+  
+  .tech-item {
+    padding: 8px 6px;
+    border-radius: 8px;
+  }
+  
+  .tech-name {
+    font-size: 0.68rem;
+  }
+  
+  .tech-category-badge {
+    display: none; /* Hide category badge on small mobile */
+  }
+  
   .tech-filter-row {
     gap: 6px;
   }

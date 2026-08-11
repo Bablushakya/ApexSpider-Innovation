@@ -23,7 +23,7 @@ export const BRAND = {
   logo: {
     alt: 'ApexSpider Innovation Logo',
   },
-  founded: '2024',
+  founded: '2026',
 };
 
 export const SITE_META = {
