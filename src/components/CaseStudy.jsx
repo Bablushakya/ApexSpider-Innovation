@@ -78,7 +78,7 @@ export default function CaseStudy() {
           <span className="tag">Client Work</span>
           <h2 id="work-heading">Our Work</h2>
           <p>
-            Real projects delivered for real clients — explore the work we have built
+            Real projects delivered for real clients - explore the work we have built
             and the results we have achieved together.
           </p>
         </motion.div>
