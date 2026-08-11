@@ -238,96 +238,114 @@
 }
 
 /* Responsiveness mapping */
-@media (max-width: 1024px) {
-  .services-slider-container {
-    gap: 24px;
-    padding: 30px 16px;
-  }
-}
-
 @media (max-width: 768px) {
-  /* Simpler fade on mobile */
+  /* Convert marquee viewport into a normal block container on mobile */
   .services-marquee-viewport {
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      black 5%,
-      black 95%,
-      transparent 100%
-    );
-    mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      black 5%,
-      black 95%,
-      transparent 100%
-    );
-    padding: 32px 0;
+    -webkit-mask-image: none;
+    mask-image: none;
+    overflow: visible;
+    padding: 0;
+  }
+  
+  /* Hide marquee duplicate cards on mobile */
+  .service-card-wrapper[aria-hidden="true"] {
+    display: none;
+  }
+
+  /* Single-column vertical stack layout with 16-20px equal spacing */
+  .services-marquee-track {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 16px;
+    transform: none !important;
+  }
+
+  .service-card-wrapper {
+    width: 100%;
+    padding: 0;
+    flex-shrink: 1;
   }
   
   .premium-service-card {
-    width: 280px;
-    height: 390px;
-    padding: 24px 18px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Simpler shadow */
+    width: 100%;
+    height: auto;
+    min-height: unset;
+    padding: 20px 18px;
+    border-radius: 14px;
+    box-shadow: var(--shadow-premium);
+    gap: 16px;
   }
   
   /* Disable hover effects on mobile */
   .premium-service-card:hover {
     transform: none;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-premium);
+    border-color: var(--border-glass);
   }
   
-  .service-title {
-    font-size: 1.1rem;
-  }
-  
-  .service-desc {
-    font-size: 0.82rem;
-  }
-}
-
-@media (max-width: 640px) {
-  .services-slider-container {
-    gap: 16px;
-    padding: 20px 12px;
-  }
-  
-  .services-marquee-track {
-    gap: 20px;
-  }
-  
-  .premium-service-card {
-    width: 270px;
-    height: 380px;
-    padding: 22px 16px;
+  .service-card-header {
+    margin-bottom: 12px;
+    gap: 14px;
   }
   
   .service-icon-wrapper {
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
   }
-  
+
   .service-icon-wrapper svg {
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
   }
   
   .service-title {
-    font-size: 1.08rem;
+    font-size: 1.125rem; /* 18px */
   }
   
   .service-desc {
-    font-size: 0.82rem;
-    margin-bottom: 16px;
+    font-size: 0.88rem; /* ~14px */
+    line-height: 1.5;
+    margin-bottom: 14px;
   }
-  
+
   .service-bullets {
     gap: 8px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
-  
+
   .service-bullet-item {
-    font-size: 0.8rem;
+    font-size: 0.82rem;
+  }
+
+  .service-card-footer {
+    padding-top: 14px;
+    gap: 10px;
+  }
+
+  .btn-card-inquire {
+    min-height: 44px;
+    font-size: 0.88rem;
+  }
+
+  .btn-card-secondary {
+    min-height: 44px;
+    width: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .premium-service-card {
+    padding: 18px 16px;
+    border-radius: 12px;
+  }
+
+  .service-title {
+    font-size: 1.05rem; /* 17px */
+  }
+
+  .service-desc {
+    font-size: 0.85rem;
   }
 }

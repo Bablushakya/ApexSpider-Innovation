@@ -84,59 +84,76 @@
   }
   
   .value-grid {
-    gap: 20px;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    width: 100%;
+    max-width: 100%;
   }
   
   .value-card {
-    padding: 28px 24px;
+    padding: 20px 18px;
+    border-radius: 14px;
+    box-shadow: var(--shadow-premium);
   }
   
+  .metric-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+    width: 100%;
+  }
+
   .metric-number {
-    font-size: 3rem;
+    font-size: 2.25rem; /* 36px - prominent but not oversized */
   }
   
   .metric-badge {
-    font-size: 0.7rem;
-    padding: 3px 8px;
+    font-size: 0.72rem;
+    padding: 4px 10px;
+    border-radius: 4px;
   }
   
   .value-title {
-    font-size: 1.15rem;
-    margin-bottom: 10px;
+    font-size: 1.125rem; /* 18px */
+    margin-bottom: 8px;
   }
   
   .value-desc {
-    font-size: 0.9rem;
+    font-size: 0.9rem; /* ~14.4px */
+    line-height: 1.55;
   }
 }
 
 @media (max-width: 480px) {
   .value-grid {
-    gap: 16px;
+    gap: 14px;
   }
   
   .value-card {
-    padding: 24px 20px;
+    padding: 18px 16px;
+    border-radius: 12px;
   }
   
   .metric-header {
-    gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
   
   .metric-number {
-    font-size: 2.5rem;
+    font-size: 2rem; /* 32px */
   }
   
   .metric-badge {
     font-size: 0.68rem;
+    padding: 3px 8px;
   }
   
   .value-title {
-    font-size: 1.1rem;
+    font-size: 1.05rem; /* 17px */
   }
   
   .value-desc {
-    font-size: 0.88rem;
+    font-size: 0.86rem;
   }
 }

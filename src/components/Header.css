@@ -108,13 +108,19 @@
 }
 
 /* Mobile Toggle Hamburger button */
+/* Mobile Toggle Hamburger button */
 .mobile-menu-toggle {
   display: none;
   flex-direction: column;
-  justify-content: space-between;
-  width: 24px;
-  height: 18px;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 10px 8px;
+  margin-right: -8px;
   z-index: 110;
+  box-sizing: border-box;
 }
 
 .hamburger-bar {
@@ -127,7 +133,7 @@
 
 /* Open states for hamburger bars */
 .mobile-menu-toggle.open .hamburger-bar:nth-child(1) {
-  transform: translateY(8px) rotate(45deg);
+  transform: translateY(7px) rotate(45deg);
 }
 
 .mobile-menu-toggle.open .hamburger-bar:nth-child(2) {
@@ -135,7 +141,7 @@
 }
 
 .mobile-menu-toggle.open .hamburger-bar:nth-child(3) {
-  transform: translateY(-8px) rotate(-45deg);
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 /* Mobile Nav Overlay Drawer */
@@ -167,17 +173,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 28px;
+  gap: 20px;
   list-style: none;
   width: 100%;
-  padding: 0 40px;
+  padding: 0 20px;
 }
 
 .mobile-nav-link {
   font-family: var(--font-headings);
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 600;
   color: var(--color-text-secondary);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
 }
 
 .mobile-nav-link:hover {
@@ -185,9 +195,10 @@
 }
 
 .mobile-cta {
-  width: 200px;
-  margin-top: 16px;
+  width: 220px;
+  margin-top: 12px;
   text-align: center;
+  min-height: 48px;
 }
 
 /* Responsive Rules for Header */
@@ -207,33 +218,7 @@
 
 @media (max-width: 768px) {
   .site-header {
-    height: 80px;
-  }
-  
-  .site-header.scrolled {
-    height: 65px;
-  }
-  
-  .logo-img {
-    height: 40px;
-  }
-  
-  .brand-name {
-    font-size: 1.2rem;
-  }
-  
-  .mobile-nav-overlay {
-    padding: 100px 20px 40px 20px;
-  }
-  
-  .mobile-nav-link {
-    font-size: 1.6rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .site-header {
-    height: 70px;
+    height: 72px;
   }
   
   .site-header.scrolled {
@@ -241,33 +226,52 @@
   }
   
   .logo-img {
-    height: 36px;
+    height: 38px;
+  }
+  
+  .brand-name {
+    font-size: 1.2rem;
+  }
+  
+  .mobile-nav-overlay {
+    padding: 90px 18px 32px 18px;
+  }
+  
+  .mobile-nav-link {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header {
+    height: 64px;
+  }
+  
+  .site-header.scrolled {
+    height: 56px;
+  }
+  
+  .logo-img {
+    height: 34px;
   }
   
   .brand-name {
     font-size: 1.1rem;
   }
   
-  .mobile-menu-toggle {
-    width: 22px;
-    height: 16px;
-  }
-  
   .mobile-nav-overlay {
-    padding: 90px 16px 32px 16px;
+    padding: 80px 16px 28px 16px;
   }
   
   .mobile-nav-list {
-    gap: 24px;
-    padding: 0 20px;
+    gap: 16px;
   }
   
   .mobile-nav-link {
-    font-size: 1.4rem;
+    font-size: 1.25rem;
   }
   
   .mobile-cta {
-    width: 180px;
-    margin-top: 12px;
+    width: 200px;
   }
 }
