@@ -111,7 +111,7 @@ export default function Process() {
                 </div>
                 
                 <div className="glass-panel step-content-card">
-                  <h3 className="step-title">{step.label}</h3>
+                  <h3 className="step-title" data-category={step.phase}>{step.label}</h3>
                   <p className="step-desc">{step.desc}</p>
                 </div>
               </motion.div>
