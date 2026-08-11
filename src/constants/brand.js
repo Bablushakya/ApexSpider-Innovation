@@ -11,8 +11,8 @@ export const BRAND = {
     'ApexSpider Innovation develops premium custom software, scalable web applications, and intelligent digital systems for next-gen startups and growing enterprises.',
   url: 'https://www.apexspiderinnovation.com',
   email: {
-    primary: 'info@apexspiderinnovation.com',
-    support: 'info@apexspiderinnovation.com',
+    primary: 'info.apexspiderinnovation@gmail.com',
+    support: 'info.apexspiderinnovation@gmail.com',
   },
   social: {
     youtube: 'https://www.youtube.com/@ApexSpiderInnovation',
