@@ -212,105 +212,80 @@
 /* ── Responsive ───────────────────────────────────────── */
 @media (max-width: 768px) {
   .tc-wrapper {
-    padding: 40px 60px 32px;
+    padding: 24px 20px 20px;
     border-radius: 16px;
-    /* Lighter background on mobile */
     background: rgba(255, 255, 255, 0.02);
   }
 
   .tc-arrow {
-    width: 36px;
-    height: 36px;
-    /* Disable complex transitions on mobile */
+    width: 40px;
+    height: 40px;
+    min-height: 40px;
     transition: background 0.2s ease, color 0.2s ease;
-  }
-
-  .tc-arrow--prev { left: 12px; }
-  .tc-arrow--next { right: 12px; }
-
-  .tc-slide-area {
-    min-height: 300px;
-  }
-
-  .tc-quote p {
-    font-size: 0.92rem;
-    line-height: 1.7;
-  }
-
-  .tc-name {
-    font-size: 1.1rem;
-  }
-  
-  .tc-role {
-    font-size: 0.72rem;
-  }
-  
-  .tc-avatar {
-    width: 64px;
-    height: 64px;
-    font-size: 0.95rem;
-  }
-  
-  .tc-quote-badge {
-    width: 26px;
-    height: 26px;
-    font-size: 0.95rem;
-    left: calc(50% - 34px);
-  }
-}
-
-@media (max-width: 640px) {
-  .tc-wrapper {
-    padding: 36px 50px 32px;
-    border-radius: 14px;
-  }
-
-  .tc-arrow {
-    width: 34px;
-    height: 34px;
   }
 
   .tc-arrow--prev { left: 8px; }
   .tc-arrow--next { right: 8px; }
 
   .tc-slide-area {
-    min-height: 320px;
+    min-height: 220px; /* Reduced from 300-340px to prevent empty vertical gap */
   }
 
   .tc-quote p {
-    font-size: 0.88rem;
+    font-size: 0.9rem; /* ~14.4px */
+    line-height: 1.6;
   }
 
   .tc-name {
-    font-size: 1.05rem;
+    font-size: 1.05rem; /* ~17px */
   }
   
+  .tc-role {
+    font-size: 0.72rem;
+    margin-bottom: 12px;
+  }
+  
+  .tc-avatar {
+    width: 56px;
+    height: 56px;
+    font-size: 0.9rem;
+  }
+
+  .tc-avatar-wrap {
+    margin-bottom: 10px;
+  }
+  
+  .tc-quote-badge {
+    width: 24px;
+    height: 24px;
+    font-size: 0.85rem;
+    left: calc(50% - 30px);
+  }
+
   .tc-dots {
-    margin-top: 28px;
-    gap: 6px;
+    margin-top: 18px;
+    gap: 8px;
   }
-  
+
   .tc-dot {
-    width: 7px;
-    height: 7px;
-  }
-  
-  .tc-dot--active {
-    width: 20px;
+    min-height: 24px; /* Expand touch area for dot tabs */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
 @media (max-width: 480px) {
   .tc-wrapper {
-    padding: 32px 16px 28px;
+    padding: 20px 14px 16px;
   }
   
   .tc-arrow {
-    display: none; /* Hide arrows on very small screens */
+    display: none; /* Hide side arrows on small screens; use dots/swipe */
   }
   
   .tc-slide-area {
-    min-height: 340px;
+    min-height: 210px;
   }
   
   .tc-quote {
@@ -319,5 +294,6 @@
   
   .tc-quote p {
     font-size: 0.86rem;
+    line-height: 1.55;
   }
 }

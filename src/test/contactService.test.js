@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import emailjs from '@emailjs/browser';
 import { submitContactForm } from '../services/contactService';
 
 const VALID_FORM = {
@@ -10,8 +11,11 @@ const VALID_FORM = {
 
 describe('submitContactForm', () => {
   beforeEach(() => {
-    vi.stubEnv('VITE_WEB3FORMS_ACCESS_KEY', '');
+    vi.stubEnv('VITE_EMAILJS_SERVICE_ID', '');
+    vi.stubEnv('VITE_EMAILJS_TEMPLATE_ID', '');
+    vi.stubEnv('VITE_EMAILJS_PUBLIC_KEY', '');
   });
+
   afterEach(() => {
     vi.unstubAllEnvs();
     vi.restoreAllMocks();
@@ -24,31 +28,26 @@ describe('submitContactForm', () => {
     expect(result.message).toContain('demo mode');
   });
 
-  it('returns error on network failure when key is set', async () => {
-    vi.stubEnv('VITE_WEB3FORMS_ACCESS_KEY', 'fake-key');
-    vi.spyOn(globalThis, 'fetch').mockRejectedValueOnce(new Error('Network error'));
+  it('returns error on network failure when credentials are set', async () => {
+    vi.stubEnv('VITE_EMAILJS_SERVICE_ID', 'service_123');
+    vi.stubEnv('VITE_EMAILJS_TEMPLATE_ID', 'template_123');
+    vi.stubEnv('VITE_EMAILJS_PUBLIC_KEY', 'public_123');
+    vi.spyOn(emailjs, 'send').mockRejectedValueOnce(new Error('Network error'));
+
     const result = await submitContactForm(VALID_FORM);
     expect(result.success).toBe(false);
-    expect(result.message).toMatch(/network error/i);
+    expect(result.message).toContain('Something went wrong');
   });
 
-  it('returns error when API returns failure', async () => {
-    vi.stubEnv('VITE_WEB3FORMS_ACCESS_KEY', 'fake-key');
-    vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce({
-      json: async () => ({ success: false, message: 'Invalid key' }),
-    });
-    const result = await submitContactForm(VALID_FORM);
-    expect(result.success).toBe(false);
-    expect(result.message).toBe('Invalid key');
-  });
+  it('returns success when API returns status 200', async () => {
+    vi.stubEnv('VITE_EMAILJS_SERVICE_ID', 'service_123');
+    vi.stubEnv('VITE_EMAILJS_TEMPLATE_ID', 'template_123');
+    vi.stubEnv('VITE_EMAILJS_PUBLIC_KEY', 'public_123');
+    vi.spyOn(emailjs, 'send').mockResolvedValueOnce({ status: 200, text: 'OK' });
 
-  it('returns success when API returns success', async () => {
-    vi.stubEnv('VITE_WEB3FORMS_ACCESS_KEY', 'fake-key');
-    vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce({
-      json: async () => ({ success: true }),
-    });
     const result = await submitContactForm(VALID_FORM);
     expect(result.success).toBe(true);
-    expect(result.message).toContain('24 hours');
+    expect(result.message).toContain('sent successfully');
   });
 });
+

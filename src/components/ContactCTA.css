@@ -222,11 +222,15 @@
   line-height: 1.5;
 }
 
+.form-input {
+  min-height: 48px;
+}
+
 /* Responsiveness */
 @media (max-width: 1024px) {
   .contact-container {
     grid-template-columns: 1fr;
-    gap: 48px;
+    gap: 40px;
   }
   
   .contact-title {
@@ -245,80 +249,68 @@
     display: none;
   }
   
-  .contact-title {
-    font-size: 2rem;
-    margin-bottom: 16px;
+  .contact-container {
+    gap: 32px;
   }
-  
-  .contact-desc {
-    font-size: 1rem;
-    margin-bottom: 32px;
-  }
-  
-  .contact-email-link {
-    font-size: 1.3rem;
-  }
-  
-  .contact-card {
-    padding: 36px 28px;
-  }
-}
 
-@media (max-width: 640px) {
   .contact-title {
-    font-size: 1.8rem;
+    font-size: 1.625rem; /* 26px */
+    margin-top: 8px;
+    margin-bottom: 12px;
   }
   
   .contact-desc {
-    font-size: 0.95rem;
-  }
-  
-  .contact-email-link {
-    font-size: 1.2rem;
-  }
-  
-  .contact-card {
-    padding: 28px 20px;
-  }
-  
-  .info-title {
-    font-size: 0.75rem;
-  }
-  
-  .email-fallback {
-    font-size: 0.8rem;
-  }
-  
-  .contact-status-note {
-    padding: 5px 12px;
-  }
-  
-  .status-text {
-    font-size: 0.75rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .contact-title {
-    font-size: 1.6rem;
-  }
-  
-  .contact-desc {
-    font-size: 0.9rem;
-    margin-bottom: 28px;
+    font-size: 0.95rem; /* ~15px */
+    margin-bottom: 24px;
+    line-height: 1.6;
   }
   
   .contact-info-block {
     margin-bottom: 24px;
   }
-  
+
   .contact-email-link {
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     word-break: break-word;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
   }
   
   .contact-card {
-    padding: 24px 16px;
+    padding: 20px 18px;
+    border-radius: 14px;
+    box-shadow: var(--shadow-premium);
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .btn-submit {
+    min-height: 48px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-title {
+    font-size: 1.5rem; /* 24px */
+    margin-bottom: 10px;
+  }
+  
+  .contact-desc {
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
+  
+  .contact-email-link {
+    font-size: 1.1rem;
+  }
+  
+  .contact-card {
+    padding: 18px 16px;
+    border-radius: 12px;
   }
   
   .form-success-message h3 {
@@ -326,12 +318,12 @@
   }
   
   .form-success-message p {
-    font-size: 0.9rem;
+    font-size: 0.88rem;
   }
   
   .success-icon {
-    width: 54px;
-    height: 54px;
-    font-size: 1.8rem;
+    width: 50px;
+    height: 50px;
+    font-size: 1.6rem;
   }
 }

@@ -110,8 +110,8 @@
   
   .process-grid {
     grid-template-columns: 1fr;
-    gap: 40px;
-    max-width: 550px;
+    gap: 28px;
+    max-width: 600px;
     margin: 0 auto;
   }
   
@@ -119,7 +119,7 @@
     flex-direction: row;
     text-align: left;
     align-items: flex-start;
-    gap: 24px;
+    gap: 20px;
   }
   
   .step-badge-wrapper {
@@ -130,73 +130,131 @@
   }
   
   .step-number-circle {
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 }
 
 @media (max-width: 768px) {
-  /* Disable hover effects on mobile */
+  /* Subtle vertical continuous timeline connector on mobile */
+  .process-timeline::before {
+    content: '';
+    position: absolute;
+    top: 24px;
+    bottom: 24px;
+    left: 22px;
+    width: 2px;
+    background-image: linear-gradient(to bottom, var(--color-accent-teal) 40%, var(--border-glass) 100%);
+    background-size: 100% 12px;
+    z-index: 1;
+    opacity: 0.4;
+  }
+
+  .process-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+  }
+
+  .process-step {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+    gap: 14px;
+    width: 100%;
+  }
+
   .process-step:hover .step-number-circle {
     transform: none;
     box-shadow: var(--shadow-premium);
   }
   
-  .process-grid {
-    gap: 32px;
+  .step-badge-wrapper {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0;
+    flex-shrink: 0;
+    z-index: 2;
+    width: 46px;
   }
-  
+
+  .step-number-circle {
+    width: 44px;
+    height: 44px;
+    margin-bottom: 4px;
+    background: var(--color-bg-deep);
+    border: 2px solid var(--color-accent-teal);
+    box-shadow: var(--shadow-premium);
+  }
+
+  .step-num {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--color-accent-teal);
+  }
+
+  .step-phase {
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+  }
+
   .step-content-card {
-    padding: 24px 20px;
+    flex: 1;
+    padding: 18px 16px;
+    border-radius: 14px;
+    box-shadow: var(--shadow-premium);
+    height: auto;
   }
-  
+
   .step-title {
-    font-size: 1.05rem;
+    font-size: 1.05rem; /* ~17px */
+    margin-bottom: 6px;
+    font-weight: 600;
   }
-  
+
   .step-desc {
-    font-size: 0.86rem;
+    font-size: 0.88rem; /* ~14px */
+    line-height: 1.55;
+    color: var(--color-text-secondary);
   }
 }
 
-@media (max-width: 580px) {
-  .process-step {
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
-    gap: 16px;
+@media (max-width: 480px) {
+  .process-timeline::before {
+    left: 20px;
   }
-  
+
   .step-badge-wrapper {
-    margin-bottom: 8px;
+    width: 40px;
   }
-  
-  .process-grid {
-    gap: 28px;
-  }
-  
-  .step-content-card {
-    padding: 20px 16px;
-  }
-  
+
   .step-number-circle {
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
   }
-  
+
   .step-num {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
-  
+
   .step-phase {
-    font-size: 0.7rem;
+    display: none; /* Hide micro phase tag on tiny screens to avoid crowding */
   }
-  
+
+  .step-content-card {
+    padding: 16px 14px;
+    border-radius: 12px;
+  }
+
   .step-title {
     font-size: 1rem;
-    margin-bottom: 10px;
+    margin-bottom: 4px;
   }
-  
+
   .step-desc {
-    font-size: 0.84rem;
+    font-size: 0.85rem;
   }
 }
