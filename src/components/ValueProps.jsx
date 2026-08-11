@@ -62,8 +62,8 @@ export default function ValueProps() {
       desc: 'We architect systems with fail-safes and optimized querying to ensure reliability under heavy operational loads.'
     },
     {
-      metric: '99',
-      metricSuffix: '+',
+      metric: '2',
+      // metricSuffix: '+',
       metricLabel: 'Projects Optimised',
       title: 'Web Development',
       desc: 'We build high-performance websites and web applications focused on speed, responsiveness, SEO, security, and exceptional user experience using modern development technologies.'
