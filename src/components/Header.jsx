@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, forwardRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { NAV_LINKS, BRAND } from '../constants/brand';
+import { EASE } from '../constants/animations';
 import logoImg from '../assets/ApexSpiderLogo.png';
 import './Header.css';
 
@@ -14,7 +15,6 @@ const Header = forwardRef(function Header({ navReady = false, onOpenInquiry }, l
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const premiumEase = [0.16, 1, 0.3, 1];
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -48,7 +48,7 @@ const Header = forwardRef(function Header({ navReady = false, onOpenInquiry }, l
       y: 0,
       transition: {
         duration: 0.5,
-        ease: premiumEase,
+        ease: EASE.premium,
         delay: i * 0.08,
       },
     }),
@@ -103,7 +103,7 @@ const Header = forwardRef(function Header({ navReady = false, onOpenInquiry }, l
           className="header-actions"
           initial={{ opacity: 0, y: -12 }}
           animate={navReady ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
-          transition={{ duration: 0.5, ease: premiumEase, delay: NAV_LINKS.length * 0.08 }}
+          transition={{ duration: 0.5, ease: EASE.premium, delay: NAV_LINKS.length * 0.08 }}
         >
           <button
             onClick={onOpenInquiry}
@@ -137,7 +137,7 @@ const Header = forwardRef(function Header({ navReady = false, onOpenInquiry }, l
             exit={{ opacity: 0, x: '100%' }}
             transition={{
               duration: 0.35,
-              ease: premiumEase,
+              ease: EASE.premium,
             }}
             aria-modal="false"
           >
@@ -151,7 +151,7 @@ const Header = forwardRef(function Header({ navReady = false, onOpenInquiry }, l
                     transition={{
                       delay: i * 0.06,
                       duration: 0.4,
-                      ease: premiumEase,
+                      ease: EASE.premium,
                     }}
                   >
                     <a
@@ -171,7 +171,7 @@ const Header = forwardRef(function Header({ navReady = false, onOpenInquiry }, l
                   transition={{
                     delay: NAV_LINKS.length * 0.06,
                     duration: 0.4,
-                    ease: premiumEase,
+                    ease: EASE.premium,
                   }}
                   className="mobile-nav-cta"
                 >

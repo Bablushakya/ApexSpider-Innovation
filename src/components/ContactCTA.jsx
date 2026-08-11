@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { BRAND } from '../constants/brand';
-import { submitContactForm } from '../services/contactService';
+import { EASE } from '../constants/animations';
+import { useContactForm } from '../hooks/useContactForm';
 import './ContactCTA.css';
 
 const PROJECT_TYPES = [
@@ -19,69 +20,27 @@ const INITIAL_FORM = {
   message:     '',
 };
 
-function validate(data) {
-  const errors = {};
-  if (!data.name.trim()) {
-    errors.name = 'Full name is required.';
-  }
-  if (!data.email.trim()) {
-    errors.email = 'Email address is required.';
-  } else if (!/\S+@\S+\.\S+/.test(data.email)) {
-    errors.email = 'Please enter a valid email address.';
-  }
-  if (!data.message.trim()) {
-    errors.message = 'Project description is required.';
-  } else if (data.message.trim().length < 10) {
-    errors.message = 'Please provide at least 10 characters.';
-  }
-  return errors;
-}
+/**
+ * Validation config for the ContactCTA form.
+ * Minimum 10-char message — intentionally shorter than the modal (20).
+ */
+const VALIDATION_CONFIG = {
+  minMessageLength: 10,
+  nameLabel:        'Full name',
+  messageLabel:     'Project description',
+  idPrefix:         '',
+};
 
 export default function ContactCTA() {
-  const premiumEase = [0.16, 1, 0.3, 1];
-
-  const [formData,     setFormData]     = useState(INITIAL_FORM);
-  const [errors,       setErrors]       = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitResult, setSubmitResult] = useState(null); // { success, message }
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    // Clear field-level error on change
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: '' }));
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formErrors = validate(formData);
-    if (Object.keys(formErrors).length > 0) {
-      setErrors(formErrors);
-      // Focus the first field with an error for screen readers
-      const firstErrorKey = Object.keys(formErrors)[0];
-      document.getElementById(firstErrorKey)?.focus();
-      return;
-    }
-
-    setIsSubmitting(true);
-    setErrors({});
-
-    const result = await submitContactForm(formData);
-    setIsSubmitting(false);
-    setSubmitResult(result);
-
-    if (result.success) {
-      setFormData(INITIAL_FORM);
-    }
-  };
-
-  const handleReset = () => {
-    setSubmitResult(null);
-    setFormData(INITIAL_FORM);
-    setErrors({});
-  };
+  const {
+    formData,
+    errors,
+    isSubmitting,
+    submitResult,
+    handleChange,
+    handleSubmit,
+    handleReset,
+  } = useContactForm(INITIAL_FORM, VALIDATION_CONFIG);
 
   return (
     <section
@@ -100,7 +59,7 @@ export default function ContactCTA() {
           initial={{ opacity: 0, y: 30, filter: 'blur(5px)' }}
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-10%' }}
-          transition={{ duration: 0.9, ease: premiumEase }}
+          transition={{ duration: 0.9, ease: EASE.premium }}
         >
           <span className="tag">Get In Touch</span>
           <h2 id="contact-heading" className="contact-title">
@@ -131,7 +90,7 @@ export default function ContactCTA() {
           initial={{ opacity: 0, y: 35, scale: 0.98, filter: 'blur(6px)' }}
           whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-10%' }}
-          transition={{ duration: 0.9, ease: premiumEase, delay: 0.15 }}
+          transition={{ duration: 0.9, ease: EASE.premium, delay: 0.15 }}
         >
           <div className="glass-panel contact-card">
             {submitResult?.success ? (
@@ -152,7 +111,12 @@ export default function ContactCTA() {
             ) : (
               /* ── Form ── */
               <form onSubmit={handleSubmit} noValidate aria-label="Project inquiry form">
-                {/* Error summary — only shown after a failed submit */}
+                {/* Accessible live region — announces submission state to screen readers */}
+                <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
+                  {isSubmitting && 'Submitting your inquiry, please wait…'}
+                </div>
+
+                {/* Error banner — only shown after a failed submit */}
                 {submitResult?.success === false && (
                   <div
                     className="form-error-banner"

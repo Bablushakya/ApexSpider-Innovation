@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { BRAND } from '../constants/brand';
+import { EASE } from '../constants/animations';
 import './FAQ.css';
 
 const FAQS = [
@@ -42,7 +42,6 @@ const FAQS = [
 ];
 
 export default function FAQ() {
-  const premiumEase   = [0.16, 1, 0.3, 1];
   const [activeIndex, setActiveIndex] = useState(null);
 
   const handleToggle = (index) => {
@@ -60,7 +59,7 @@ export default function FAQ() {
       opacity: 1,
       y: 0,
       filter: 'blur(0px)',
-      transition: { duration: 0.8, ease: premiumEase },
+      transition: { duration: 0.8, ease: EASE.premium },
     },
   };
 
@@ -77,7 +76,7 @@ export default function FAQ() {
           initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-10%' }}
-          transition={{ duration: 0.8, ease: premiumEase }}
+          transition={{ duration: 0.8, ease: EASE.premium }}
         >
           <span className="tag">Support</span>
           <h2 id="faq-heading">Frequently Asked Questions</h2>

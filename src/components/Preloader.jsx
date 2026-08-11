@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
+import { EASE } from '../constants/animations';
 import logoImg from '../assets/ApexSpiderLogo.png';
 import './Preloader.css';
 
@@ -18,9 +19,7 @@ import './Preloader.css';
   ──────────────────────────────────────────────────────
 */
 
-// ── Premium cubic-bezier easing (Apple keynote feel) ──
-const EASE_OUT_EXPO  = [0.16, 1, 0.3, 1];
-const EASE_IN_OUT    = [0.76, 0, 0.24, 1];
+// Animation easing values imported from constants/animations.js
 
 // ── Animation phases ──
 const PHASE = {
@@ -189,7 +188,7 @@ export default function Preloader({ onComplete, onNavReady, onHeroReady, logoNav
             initial={false}
             animate={
               phase === PHASE.SPLIT
-                ? { x: '40vw', y: '-40vh', transition: { duration: 0.65, ease: EASE_IN_OUT } }
+                ? { x: '40vw', y: '-40vh', transition: { duration: 0.65, ease: EASE.inOut } }
                 : {}
             }
             onAnimationComplete={() => {
@@ -203,7 +202,7 @@ export default function Preloader({ onComplete, onNavReady, onHeroReady, logoNav
             initial={false}
             animate={
               phase === PHASE.SPLIT
-                ? { x: '-40vw', y: '40vh', transition: { duration: 0.65, ease: EASE_IN_OUT } }
+                ? { x: '-40vw', y: '40vh', transition: { duration: 0.65, ease: EASE.inOut } }
                 : {}
             }
           />
@@ -218,7 +217,7 @@ export default function Preloader({ onComplete, onNavReady, onHeroReady, logoNav
               animate={
                 logoVisible
                   ? { opacity: 1, scale: 1, filter: 'blur(0px)',
-                      transition: { duration: 0.5, ease: EASE_OUT_EXPO } }
+                      transition: { duration: 0.5, ease: EASE.premium } }
                   : {}
               }
             >
@@ -235,7 +234,7 @@ export default function Preloader({ onComplete, onNavReady, onHeroReady, logoNav
                 animate={
                   linePhase === 'expand'
                     ? { scaleX: 1, opacity: 1,
-                        transition: { duration: 0.4, ease: EASE_OUT_EXPO } }
+                        transition: { duration: 0.4, ease: EASE.premium } }
                     : linePhase === 'fade'
                     ? { opacity: 0,
                         transition: { duration: 0.35, ease: 'easeOut' } }
@@ -271,7 +270,6 @@ export default function Preloader({ onComplete, onNavReady, onHeroReady, logoNav
 /* ── Flying Logo: animates from center screen to navbar slot ── */
 function FlyingLogo({ style }) {
   const { x, y, size, toX, toY, toSize } = style;
-  const EASE_OUT_EXPO = [0.16, 1, 0.3, 1];
 
   return (
     <motion.div
@@ -284,7 +282,7 @@ function FlyingLogo({ style }) {
         width:  toSize,
         height: toSize,
       }}
-      transition={{ duration: 0.45, ease: EASE_OUT_EXPO }}
+      transition={{ duration: 0.45, ease: EASE.premium }}
     >
       <img
         src={logoImg}

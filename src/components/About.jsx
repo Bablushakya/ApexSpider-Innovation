@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import './About.css';
 
-const premiumEase = [0.16, 1, 0.3, 1];
+import { EASE } from '../constants/animations';
 
 /* ── Core Capabilities ─────────────────────────────────── */
 const CAPABILITIES = [
@@ -66,7 +66,7 @@ const capabilityItemVariants = {
     opacity: 1,
     y: 0,
     filter: 'blur(0px)',
-    transition: { duration: 0.6, ease: premiumEase },
+    transition: { duration: 0.6, ease: EASE.premium },
   },
 };
 
@@ -88,7 +88,7 @@ export default function About() {
           initial={{ opacity: 0, y: 30, filter: 'blur(5px)' }}
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-10%' }}
-          transition={{ duration: 0.9, ease: premiumEase }}
+          transition={{ duration: 0.9, ease: EASE.premium }}
         >
           <span className="tag">Company</span>
           <h2 id="about-heading" className="about-title">
@@ -134,7 +134,7 @@ export default function About() {
           initial={{ opacity: 0, y: 35, scale: 0.98, filter: 'blur(6px)' }}
           whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-10%' }}
-          transition={{ duration: 0.9, ease: premiumEase, delay: 0.15 }}
+          transition={{ duration: 0.9, ease: EASE.premium, delay: 0.15 }}
         >
           <div className="capabilities-container glass-panel">
             <h3 className="capabilities-title">Our Capabilities</h3>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useReducedMotion } from '../hooks/useReducedMotion';
+import { EASE } from '../constants/animations';
 import './Testimonials.css';
 
 /* ─────────────────────────────────────────────────────────
@@ -95,7 +96,6 @@ export default function Testimonials() {
   const item = TESTIMONIALS[index];
 
   /* section-header entrance */
-  const premiumEase = [0.16, 1, 0.3, 1];
 
   return (
     <section
@@ -111,7 +111,7 @@ export default function Testimonials() {
           initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-10%' }}
-          transition={{ duration: 0.8, ease: premiumEase }}
+          transition={{ duration: 0.8, ease: EASE.premium }}
         >
           <span className="tag">Testimonials</span>
           <h2 id="testimonials-heading">What Clients Say</h2>
@@ -124,7 +124,7 @@ export default function Testimonials() {
           initial={{ opacity: 0, y: 30, filter: 'blur(6px)' }}
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-8%' }}
-          transition={{ duration: 0.9, ease: premiumEase, delay: 0.1 }}
+          transition={{ duration: 0.9, ease: EASE.premium, delay: 0.1 }}
           aria-roledescription="carousel"
           aria-label="Client testimonials"
         >

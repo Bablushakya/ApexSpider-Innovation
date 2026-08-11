@@ -25,6 +25,20 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px; /* Prevent elements from touching */
+}
+
+/* Ensure proper spacing on mobile */
+@media (max-width: 768px) {
+  .header-container {
+    gap: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-container {
+    gap: 4px;
+  }
 }
 
 /* Brand Logo */
@@ -102,11 +116,24 @@
   gap: 16px;
 }
 
+/* Tighter spacing on mobile */
+@media (max-width: 768px) {
+  .header-actions {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-actions {
+    gap: 8px;
+  }
+}
+
 /* Start Project Button in Header */
 .header-start-project {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   font-size: 0.8rem;
   padding: 8px 16px;
   white-space: nowrap;
@@ -118,6 +145,41 @@
 
 .header-start-project:hover svg {
   transform: translateX(4px);
+}
+
+/* Mobile Header Start Project Button - Compact Version */
+@media (max-width: 768px) {
+  .header-start-project {
+    font-size: 0.75rem;      /* 12px - Smaller text */
+    padding: 8px 12px;       /* Reduced padding */
+    min-height: 38px;        /* Smaller height */
+    width: auto;
+    max-width: 130px;        /* Narrower button */
+    gap: 3px;                /* Tighter gap */
+    letter-spacing: 0;
+    border-radius: 6px;      /* Smaller radius */
+  }
+}
+
+@media (max-width: 480px) {
+  .header-start-project {
+    font-size: 0.6875rem;    /* 11px - Even smaller */
+    padding: 7px 10px;       /* More compact padding */
+    min-height: 36px;
+    max-width: 120px;
+    gap: 2px;
+    border-radius: 6px;
+  }
+}
+
+@media (max-width: 360px) {
+  .header-start-project {
+    font-size: 0.625rem;     /* 10px - Smallest */
+    padding: 6px 9px;
+    min-height: 34px;
+    max-width: 110px;
+    gap: 2px;
+  }
 }
 
 .btn-header {
@@ -225,16 +287,16 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  width: 100%;
-  max-width: 280px;
-  padding: 11px 22px;
+  width: 10%;
+  max-width: 50px;
+  padding: 2px 7px;
   font-size: 0.9rem;
   font-weight: 500;
 }
 
 .mobile-start-project svg {
-  width: 16px;
-  height: 16px;
+  width: 5px;
+  height: 5px;
   transition: transform 0.3s ease;
 }
 
@@ -252,8 +314,9 @@
     display: flex;
   }
   
+  /* Keep header button visible on mobile - it's now compact */
   .header-start-project {
-    display: none;
+    display: flex;
   }
 }
 
@@ -267,7 +330,7 @@
   }
   
   .logo-img {
-    height: 38px;
+    height: 36px; /* Slightly smaller to balance with compact button */
   }
   
   .brand-name {
@@ -283,9 +346,9 @@
   }
   
   .mobile-start-project {
-    max-width: 180px;
-    padding: 6px 12px;
-    font-size: 0.7rem;
+    max-width: 260px;       /* ✅ Wider button */
+    padding: 12px 24px;     /* ✅ Better padding */
+    font-size: 0.95rem;     /* ✅ More readable (15.2px) */
   }
 }
 
@@ -299,7 +362,7 @@
   }
   
   .logo-img {
-    height: 34px;
+    height: 32px; /* Smaller logo for compact header */
   }
   
   .brand-name {
@@ -323,13 +386,13 @@
   }
   
   .mobile-start-project {
-    max-width: 100px;
-    padding: 2px 7px;
-    font-size: 0.35rem;
+    max-width: 240px;       /* ✅ Much wider */
+    padding: 11px 20px;     /* ✅ Proper touch target */
+    font-size: 0.9rem;      /* ✅ Readable (14.4px) */
   }
   
   .mobile-start-project svg {
-    width: 8px;
-    height: 8px;
+    width: 14px;            /* ✅ Visible icon */
+    height: 14px;
   }
 }
