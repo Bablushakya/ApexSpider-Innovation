@@ -221,8 +221,8 @@
   }
 
   .capabilities-container {
-    /* ── Flatten the outer wrapper — inner cards already provide visual separation ── */
-    padding: 0;
+    /* ── Flatten the outer wrapper — reduce nested container feeling ── */
+    padding: 24px 18px 20px;
     border-radius: 0;
     background: transparent;
     border: none;
@@ -230,42 +230,44 @@
   }
 
   .capabilities-title {
-    font-size: 1.0625rem; /* 17px */
-    margin-bottom: 4px;
-    font-weight: 600;
+    font-size: 1.125rem; /* 18px */
+    margin-bottom: 6px;
+    font-weight: 700;
+    text-align: center;
   }
 
   .capabilities-subtitle {
-    font-size: 0.84375rem; /* ~13.5px */
-    margin-bottom: 14px;
-    line-height: 1.5;
+    font-size: 0.875rem; /* 14px */
+    margin-bottom: 20px;
+    line-height: 1.6;
+    text-align: center;
   }
 
   .capabilities-grid {
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 14px;
   }
 
   .capability-card {
-    padding: 14px 16px;
-    border-radius: 10px;
+    /* ── VERTICAL LAYOUT: Icon + Title on top, Description below ── */
+    padding: 18px 16px;
+    border-radius: 14px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: flex-start;
-    gap: 14px;
-    /* ── Teal left-border accent instead of full surrounding box ── */
+    gap: 0;
     border: 1px solid var(--border-glass);
-    border-left: 3px solid rgba(0, 255, 255, 0.4);
-    background: rgba(255, 255, 255, 0.015);
+    background: rgba(15, 23, 42, 0.4);
   }
 
+  /* Icon + Title Row */
   .capability-icon {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-    margin-bottom: 0;
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    margin-bottom: 10px;
     flex-shrink: 0;
-    border-radius: 8px;
+    border-radius: 10px;
     background: var(--color-accent-teal-muted);
     color: var(--color-accent-teal);
     display: flex;
@@ -274,28 +276,31 @@
   }
 
   .capability-icon svg {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
   }
 
   .capability-title {
-    font-size: 0.9375rem; /* 15px */
-    margin-bottom: 3px;
+    font-size: 1.0625rem; /* 17px */
+    margin-bottom: 8px;
     font-weight: 600;
     color: var(--color-text-primary);
+    line-height: 1.3;
   }
 
   .capability-description {
-    font-size: 0.8125rem; /* 13px */
-    line-height: 1.5;
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.55;
     color: var(--color-text-secondary);
+    margin: 0;
   }
 
   /* Disable hover effects on mobile */
   .capability-card:hover {
     transform: none;
     border-color: var(--border-glass);
-    border-left-color: rgba(0, 255, 255, 0.4);
+    background: rgba(15, 23, 42, 0.4);
+    box-shadow: none;
   }
 
   .capability-card:hover .capability-icon {
@@ -317,20 +322,104 @@
     margin-bottom: 12px;
   }
 
-  .capability-card {
-    padding: 12px 14px;
+  .capabilities-container {
+    padding: 20px 16px 18px;
+  }
+
+  .capabilities-title {
+    font-size: 1.0625rem; /* 17px */
+  }
+
+  .capabilities-subtitle {
+    font-size: 0.8125rem; /* 13px */
+    margin-bottom: 18px;
+  }
+
+  .capabilities-grid {
     gap: 12px;
   }
 
+  .capability-card {
+    padding: 16px 14px;
+  }
+
   .capability-icon {
-    width: 32px;
-    height: 32px;
-    min-width: 32px;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    margin-bottom: 8px;
   }
 
   .capability-icon svg {
-    width: 14px;
-    height: 14px;
+    width: 17px;
+    height: 17px;
+  }
+
+  .capability-title {
+    font-size: 1rem; /* 16px */
+    margin-bottom: 7px;
+  }
+
+  .capability-description {
+    font-size: 0.8125rem; /* 13px */
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 360px) {
+  .capabilities-container {
+    padding: 18px 16px;
+  }
+
+  .capabilities-title {
+    font-size: 1rem; /* 16px */
+  }
+
+  .capabilities-subtitle {
+    font-size: 0.8125rem;
+  }
+
+  .capabilities-grid {
+    gap: 12px;
+  }
+
+  .capability-card {
+    padding: 14px 12px;
+  }
+
+  .capability-icon {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    margin-bottom: 8px;
+  }
+
+  .capability-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .capability-title {
+    font-size: 0.9375rem; /* 15px */
+    margin-bottom: 6px;
+  }
+
+  .capability-description {
+    font-size: 0.8125rem; /* 13px */
+  }
+}
+
+@media (max-width: 320px) {
+  .capabilities-container {
+    padding: 16px 14px;
+  }
+
+  .capabilities-grid {
+    gap: 10px;
+  }
+
+  .capability-card {
+    padding: 14px 12px;
   }
 
   .capability-title {
@@ -338,17 +427,7 @@
   }
 
   .capability-description {
-    font-size: 0.8rem;
-  }
-}
-
-@media (max-width: 360px) {
-  .capability-card {
-    padding: 10px 12px;
-    gap: 10px;
-  }
-
-  .capability-title {
-    font-size: 0.875rem; /* 14px */
+    font-size: 0.8125rem; /* 13px */
+    line-height: 1.5;
   }
 }
