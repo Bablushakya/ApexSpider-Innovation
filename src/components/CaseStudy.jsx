@@ -4,7 +4,7 @@ import kinImg from '../assets/Our work/Kin webiste.png';
 import heritageImg from '../assets/Our work/india heritage travel.png';
 import './CaseStudy.css';
 
-const premiumEase = [0.16, 1, 0.3, 1];
+import { EASE } from '../constants/animations';
 
 const caseStudies = [
   {
@@ -55,7 +55,7 @@ const cardVariants = {
     opacity: 1,
     y: 0,
     filter: 'blur(0px)',
-    transition: { duration: 0.9, ease: premiumEase },
+    transition: { duration: 0.9, ease: EASE.premium },
   },
 };
 
@@ -73,7 +73,7 @@ export default function CaseStudy() {
           initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-10%' }}
-          transition={{ duration: 0.8, ease: premiumEase }}
+          transition={{ duration: 0.8, ease: EASE.premium }}
         >
           <span className="tag">Client Work</span>
           <h2 id="work-heading">Our Work</h2>
@@ -115,7 +115,7 @@ export default function CaseStudy() {
                     initial={{ opacity: 0, scale: 1.04 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.8, ease: premiumEase, delay: 0.2 }}
+                    transition={{ duration: 0.8, ease: EASE.premium, delay: 0.2 }}
                   />
                 </div>
               </div>

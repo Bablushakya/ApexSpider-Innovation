@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { EASE } from '../constants/animations';
 import './ValueProps.css';
 
 // Custom sub-component to animate numeric metrics count-up dynamically on scroll
@@ -51,7 +52,6 @@ function AnimatedNumber({ value, duration = 1.6, delay = 0.1 }) {
 }
 
 export default function ValueProps() {
-  const premiumEase = [0.16, 1, 0.3, 1];
 
   const propsList = [
     {
@@ -98,7 +98,7 @@ export default function ValueProps() {
       filter: "blur(0px)",
       transition: { 
         duration: 0.85, 
-        ease: premiumEase
+        ease: EASE.premium
       }
     }
   };
@@ -114,7 +114,7 @@ export default function ValueProps() {
           initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
           whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           viewport={{ once: true, margin: "-10%" }}
-          transition={{ duration: 0.8, ease: premiumEase }}
+          transition={{ duration: 0.8, ease: EASE.premium }}
         >
           <span className="tag">Value Proposition</span>
           <h2>Why Choose Us</h2>

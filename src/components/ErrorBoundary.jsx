@@ -10,6 +10,9 @@
  *   </ErrorBoundary>
  */
 import { Component } from 'react';
+import { BRAND } from '../constants/brand';
+import { logger } from '../utils/logger';
+import { reportError } from '../utils/errorTracking';
 
 export default class ErrorBoundary extends Component {
   constructor(props) {
@@ -22,8 +25,9 @@ export default class ErrorBoundary extends Component {
   }
 
   componentDidCatch(error, info) {
-    // In production, wire this to an error-reporting service (e.g. Sentry)
-    console.error('[ErrorBoundary] Uncaught error:', error, info.componentStack);
+    // Log in development; forward to error-tracking service in production.
+    logger.error('[ErrorBoundary] Uncaught error:', error, info.componentStack);
+    reportError(error, { componentStack: info.componentStack });
   }
 
   render() {
@@ -64,10 +68,10 @@ export default class ErrorBoundary extends Component {
           <p style={{ color: 'hsl(215, 20%, 65%)', maxWidth: '400px', margin: 0 }}>
             An unexpected error occurred. Please refresh the page or contact us at{' '}
             <a
-              href="mailto:info@apexspiderinnovation.com"
+              href={`mailto:${BRAND.email.primary}`}
               style={{ color: 'hsl(180, 100%, 50%)' }}
             >
-              info@apexspiderinnovation.com
+              {BRAND.email.primary}
             </a>
             .
           </p>

@@ -14,6 +14,7 @@
  */
 
 import emailjs from '@emailjs/browser';
+import { logger } from '../utils/logger';
 
 /**
  * @typedef {Object} ContactFormData
@@ -21,9 +22,9 @@ import emailjs from '@emailjs/browser';
  * @property {string} email
  * @property {string} projectType
  * @property {string} message
- * @property {string} [phone] - Optional phone/WhatsApp number
+ * @property {string} [phone]   - Optional phone/WhatsApp number
  * @property {string} [company] - Optional company/organization name
- * @property {string} [budget] - Optional budget range
+ * @property {string} [budget]  - Optional budget range
  */
 
 /**
@@ -40,24 +41,23 @@ import emailjs from '@emailjs/browser';
  */
 export async function submitContactForm(formData) {
   // Get and trim environment variables (defensive against leading/trailing whitespace)
-  const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID?.trim();
+  const serviceId  = import.meta.env.VITE_EMAILJS_SERVICE_ID?.trim();
   const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID?.trim();
-  const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY?.trim();
+  const publicKey  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY?.trim();
 
   // Check if EmailJS credentials are configured
   if (!serviceId || !templateId || !publicKey) {
-    console.warn(
+    logger.warn(
       '[ContactService] EmailJS credentials are not set. ' +
         'Add VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, and VITE_EMAILJS_PUBLIC_KEY to your .env file. ' +
         'See https://www.emailjs.com for setup instructions.'
     );
-    
-    console.warn('[ContactService] Missing credentials:', {
-      hasServiceId: !!serviceId,
+    logger.warn('[ContactService] Missing credentials:', {
+      hasServiceId:  !!serviceId,
       hasTemplateId: !!templateId,
-      hasPublicKey: !!publicKey,
+      hasPublicKey:  !!publicKey,
     });
-    
+
     // Simulate success in demo mode so the UI can be tested
     await new Promise((resolve) => setTimeout(resolve, 900));
     return {
@@ -69,21 +69,21 @@ export async function submitContactForm(formData) {
 
   try {
     // Log that we're attempting to send (without exposing full credentials)
-    console.log('[ContactService] Attempting to send email via EmailJS...', {
-      serviceId: serviceId.substring(0, 8) + '...',
+    logger.log('[ContactService] Attempting to send email via EmailJS...', {
+      serviceId:  serviceId.substring(0, 8) + '...',
       templateId: templateId.substring(0, 8) + '...',
       hasPublicKey: !!publicKey,
     });
 
     // Prepare template parameters for EmailJS
     const templateParams = {
-      name: formData.name,
-      email: formData.email,
+      name:        formData.name,
+      email:       formData.email,
       projectType: formData.projectType,
-      message: formData.message,
-      phone: formData.phone || 'Not provided',
-      company: formData.company || 'Not provided',
-      budget: formData.budget || 'Not specified',
+      message:     formData.message,
+      phone:       formData.phone   || 'Not provided',
+      company:     formData.company || 'Not provided',
+      budget:      formData.budget  || 'Not specified',
     };
 
     // Send email using EmailJS
@@ -91,12 +91,10 @@ export async function submitContactForm(formData) {
       serviceId,
       templateId,
       templateParams,
-      {
-        publicKey: publicKey,
-      }
+      { publicKey }
     );
 
-    console.log('[ContactService] EmailJS response:', response);
+    logger.log('[ContactService] EmailJS response:', response);
 
     // EmailJS returns a response with status 200 on success
     if (response.status === 200) {
@@ -107,19 +105,19 @@ export async function submitContactForm(formData) {
     }
 
     // Unexpected response status
-    console.error('[ContactService] Unexpected response status:', response.status);
+    logger.error('[ContactService] Unexpected response status:', response.status);
     return {
       success: false,
       message: 'Something went wrong while sending your message. Please try again later.',
     };
   } catch (error) {
-    console.error('[ContactService] EmailJS error:', error);
-    console.error('[ContactService] Error details:', {
-      name: error.name,
+    logger.error('[ContactService] EmailJS error:', error);
+    logger.error('[ContactService] Error details:', {
+      name:    error.name,
       message: error.message,
-      text: error.text,
+      text:    error.text,
     });
-    
+
     return {
       success: false,
       message: 'Something went wrong while sending your message. Please try again later.',

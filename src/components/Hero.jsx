@@ -2,17 +2,17 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import GlowHorizonFM from './ui/GlowHorizonFM';
 import { AnimatedTitleFM } from './ui/AnimatedTitleFM';
+import { EASE } from '../constants/animations';
 import './Hero.css';
 
 export default function Hero({ heroReady = false }) {
-  const premiumEase = [0.16, 1, 0.3, 1];
 
   const stagger = (delay = 0) => ({
     initial:    { opacity: 0, y: 30, filter: 'blur(8px)' },
     animate:    heroReady
       ? { opacity: 1, y: 0, filter: 'blur(0px)' }
       : { opacity: 0, y: 30, filter: 'blur(8px)' },
-    transition: { duration: 0.7, ease: premiumEase, delay },
+    transition: { duration: 0.7, ease: EASE.premium, delay },
   });
 
   return (

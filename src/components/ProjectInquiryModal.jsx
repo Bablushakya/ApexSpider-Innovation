@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { submitContactForm } from '../services/contactService';
+import { EASE } from '../constants/animations';
+import { useContactForm } from '../hooks/useContactForm';
 import './ProjectInquiryModal.css';
 
 const PROJECT_TYPES = [
@@ -20,50 +21,40 @@ const BUDGET_RANGES = [
 ];
 
 const INITIAL_FORM = {
-  name: '',
-  email: '',
-  phone: '',
-  company: '',
+  name:        '',
+  email:       '',
+  phone:       '',
+  company:     '',
   projectType: 'Web Development',
-  budget: '',
-  message: '',
+  budget:      '',
+  message:     '',
 };
 
-function validate(data) {
-  const errors = {};
-  
-  if (!data.name.trim()) {
-    errors.name = 'Name is required.';
-  }
-  
-  if (!data.email.trim()) {
-    errors.email = 'Email is required.';
-  } else if (!/\S+@\S+\.\S+/.test(data.email)) {
-    errors.email = 'Please enter a valid email address.';
-  }
-  
-  if (!data.projectType) {
-    errors.projectType = 'Please select a project type.';
-  }
-  
-  if (!data.message.trim()) {
-    errors.message = 'Project details are required.';
-  } else if (data.message.trim().length < 20) {
-    errors.message = 'Please provide at least 20 characters describing your project.';
-  }
-  
-  return errors;
-}
+/**
+ * Validation config for the ProjectInquiryModal.
+ * Minimum 20-char message — intentionally stricter than the ContactCTA (10).
+ * The idPrefix matches the 'inquiry-' prefix used on all input IDs in this modal.
+ */
+const VALIDATION_CONFIG = {
+  minMessageLength:  20,
+  nameLabel:         'Name',
+  messageLabel:      'Project details',
+  requireProjectType: true,
+  idPrefix:          'inquiry-',
+};
 
 export default function ProjectInquiryModal({ isOpen, onClose }) {
-  const premiumEase = [0.16, 1, 0.3, 1];
-  
-  const [formData, setFormData] = useState(INITIAL_FORM);
-  const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitResult, setSubmitResult] = useState(null);
-  
-  const modalRef = useRef(null);
+  const {
+    formData,
+    errors,
+    isSubmitting,
+    submitResult,
+    handleChange,
+    handleSubmit,
+    handleReset,
+  } = useContactForm(INITIAL_FORM, VALIDATION_CONFIG);
+
+  const modalRef      = useRef(null);
   const firstInputRef = useRef(null);
 
   // Handle body scroll lock when modal is open
@@ -95,47 +86,6 @@ export default function ProjectInquiryModal({ isOpen, onClose }) {
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isOpen, onClose]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    
-    // Clear field-level error on change
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: '' }));
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    const formErrors = validate(formData);
-    if (Object.keys(formErrors).length > 0) {
-      setErrors(formErrors);
-      // Focus the first field with an error
-      const firstErrorKey = Object.keys(formErrors)[0];
-      document.getElementById(`inquiry-${firstErrorKey}`)?.focus();
-      return;
-    }
-
-    setIsSubmitting(true);
-    setErrors({});
-
-    // Submit with the existing contactService
-    const result = await submitContactForm(formData);
-    setIsSubmitting(false);
-    setSubmitResult(result);
-
-    if (result.success) {
-      setFormData(INITIAL_FORM);
-    }
-  };
-
-  const handleReset = () => {
-    setSubmitResult(null);
-    setFormData(INITIAL_FORM);
-    setErrors({});
-  };
-
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();
@@ -152,7 +102,7 @@ export default function ProjectInquiryModal({ isOpen, onClose }) {
             initial={{ y: '100%', opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: '100%', opacity: 0 }}
-            transition={{ duration: 0.4, ease: premiumEase }}
+            transition={{ duration: 0.4, ease: EASE.premium }}
             role="dialog"
             aria-modal="true"
             aria-labelledby="inquiry-modal-title"
@@ -188,7 +138,7 @@ export default function ProjectInquiryModal({ isOpen, onClose }) {
                   className="inquiry-success-state"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, ease: premiumEase }}
+                  transition={{ duration: 0.5, ease: EASE.premium }}
                   role="alert"
                   aria-live="assertive"
                 >
@@ -234,6 +184,11 @@ export default function ProjectInquiryModal({ isOpen, onClose }) {
                   </div>
 
                   <form onSubmit={handleSubmit} noValidate className="inquiry-form">
+                    {/* Accessible live region — announces submission state to screen readers */}
+                    <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
+                      {isSubmitting && 'Submitting your project request, please wait…'}
+                    </div>
+
                     {/* Error Banner */}
                     {submitResult?.success === false && (
                       <div className="inquiry-error-banner" role="alert" aria-live="assertive">

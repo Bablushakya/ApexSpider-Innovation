@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 import { useReducedMotion } from '../hooks/useReducedMotion';
+import { EASE } from '../constants/animations';
 import './Services.css';
 
-const premiumEase = [0.16, 1, 0.3, 1];
 
 const SERVICE_LIST = [
   {
@@ -218,7 +218,7 @@ export default function Services() {
           initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-10%' }}
-          transition={{ duration: 0.8, ease: premiumEase }}
+          transition={{ duration: 0.8, ease: EASE.premium }}
         >
           <span className="tag">Capabilities</span>
           <h2 id="services-heading">Our Services &amp; Solutions</h2>
