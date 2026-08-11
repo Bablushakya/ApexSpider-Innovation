@@ -4,55 +4,69 @@ import './About.css';
 
 const premiumEase = [0.16, 1, 0.3, 1];
 
-/* ── Real technology stack, grouped by category ─────────── */
-const TECH_CATEGORIES = [
+/* ── Core Capabilities ─────────────────────────────────── */
+const CAPABILITIES = [
   {
-    // label: 'Frontend',
-    items: ['React.js', 'Next.js', 'JavaScript', 'TypeScript', 'Tailwind CSS'],
+    id: 'web',
+    title: 'Web Development',
+    description: 'Modern, scalable websites and web applications.',
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="3" width="20" height="14" rx="2" />
+        <path d="M8 21h8M12 17v4" />
+      </svg>
+    ),
   },
   {
-    // label: 'Backend',
-    items: ['Node.js', 'Express.js', 'Python', 'FastAPI'],
+    id: 'mobile',
+    title: 'Mobile Development',
+    description: 'High-performance mobile applications with polished user experiences.',
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="5" y="2" width="14" height="20" rx="2" />
+        <path d="M12 18h.01" />
+      </svg>
+    ),
   },
   {
-    // label: 'Database',
-    items: ['MySQL', 'PostgreSQL', 'MongoDB'],
+    id: 'data',
+    title: 'Data Science & AI',
+    description: 'Data-driven solutions, analytics, predictive models, and AI-powered systems.',
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+        <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+        <line x1="12" y1="22.08" x2="12" y2="12" />
+      </svg>
+    ),
   },
-  // {
-  //   label: 'Cloud & Hosting',
-  //   items: ['Vercel', 'Netlify', 'AWS', 'Cloudflare'],
-  // },
-  // {
-  //   label: 'Dev Tools',
-  //   items: ['Git', 'GitHub', 'Docker', 'Postman', 'VS Code'],
-  // },
-  // {
-  //   label: 'Analytics & SEO',
-  //   items: ['Google Analytics', 'Search Console', 'Tag Manager', 'Ahrefs', 'SEMrush'],
-  // },
-  // {
-  //   label: 'UI Design',
-  //   items: ['Figma', 'Adobe XD', 'Photoshop'],
-  // },
+  {
+    id: 'design',
+    title: 'UI/UX & Product Design',
+    description: 'Clean, intuitive interfaces and user-focused digital experiences.',
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 19l7-7 3 3-7 7-3-3z" />
+        <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
+        <path d="M2 2l7.586 7.586" />
+        <circle cx="11" cy="11" r="2" />
+      </svg>
+    ),
+  },
 ];
 
-/* All items flattened for the animated grid */
-const ALL_ITEMS = TECH_CATEGORIES.flatMap((cat) =>
-  cat.items.map((name) => ({ name, category: cat.label }))
-);
-
-const techContainerVariants = {
-  hidden:  {},
-  visible: { transition: { staggerChildren: 0.04, delayChildren: 0.15 } },
+const capabilityContainerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08, delayChildren: 0.15 } },
 };
 
-const techItemVariants = {
-  hidden:  { opacity: 0, scale: 0.85, filter: 'blur(3px)' },
+const capabilityItemVariants = {
+  hidden: { opacity: 0, y: 20, filter: 'blur(3px)' },
   visible: {
     opacity: 1,
-    scale: 1,
+    y: 0,
     filter: 'blur(0px)',
-    transition: { duration: 0.55, ease: premiumEase },
+    transition: { duration: 0.6, ease: premiumEase },
   },
 };
 
@@ -114,7 +128,7 @@ export default function About() {
           </div>
         </motion.div>
 
-        {/* ── Right: Tech Stack ────────────────────────────── */}
+        {/* ── Right: Capabilities ──────────────────────────── */}
         <motion.div
           className="about-visual"
           initial={{ opacity: 0, y: 35, scale: 0.98, filter: 'blur(6px)' }}
@@ -122,36 +136,36 @@ export default function About() {
           viewport={{ once: true, margin: '-10%' }}
           transition={{ duration: 0.9, ease: premiumEase, delay: 0.15 }}
         >
-          <div className="tech-stack-container glass-panel">
-            <h3 className="tech-grid-title">Our Architecture Stack</h3>
-            <p className="tech-grid-subtitle">
-              Technologies we use to build, deploy, and scale your product.
+          <div className="capabilities-container glass-panel">
+            <h3 className="capabilities-title">Our Capabilities</h3>
+            <p className="capabilities-subtitle">
+              Services we use to design, build, and scale digital products.
             </p>
 
-            {/* Animated tech grid */}
+            {/* Capabilities grid */}
             <motion.div
-              className="tech-grid"
-              variants={techContainerVariants}
+              className="capabilities-grid"
+              variants={capabilityContainerVariants}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
             >
-              {ALL_ITEMS.map((tech, idx) => (
+              {CAPABILITIES.map((capability) => (
                 <motion.div
-                  key={idx}
-                  className="tech-item"
-                  title={tech.category}
-                  variants={techItemVariants}
+                  key={capability.id}
+                  className="capability-card"
+                  variants={capabilityItemVariants}
                   whileHover={{
-                    scale: 1.08,
-                    y: -3,
+                    y: -4,
                     borderColor: 'var(--color-accent-teal)',
-                    boxShadow: '0 4px 15px rgba(0, 255, 255, 0.15)',
                   }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                 >
-                  <span className="tech-name">{tech.name}</span>
-                  <span className="tech-category-badge">{tech.category}</span>
+                  <div className="capability-icon">
+                    {capability.icon}
+                  </div>
+                  <h4 className="capability-title">{capability.title}</h4>
+                  <p className="capability-description">{capability.description}</p>
                 </motion.div>
               ))}
             </motion.div>
