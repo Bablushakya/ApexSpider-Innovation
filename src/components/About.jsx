@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import './About.css';
 
@@ -7,33 +7,33 @@ const premiumEase = [0.16, 1, 0.3, 1];
 /* ── Real technology stack, grouped by category ─────────── */
 const TECH_CATEGORIES = [
   {
-    label: 'Frontend',
-    items: ['React.js', 'Next.js', 'JavaScript', 'TypeScript', 'HTML5', 'CSS3', 'Tailwind CSS'],
+    // label: 'Frontend',
+    items: ['React.js', 'Next.js', 'JavaScript', 'TypeScript', 'Tailwind CSS'],
   },
   {
-    label: 'Backend',
+    // label: 'Backend',
     items: ['Node.js', 'Express.js', 'Python', 'FastAPI'],
   },
   {
-    label: 'Database',
-    items: ['MySQL', 'PostgreSQL', 'MongoDB', 'Firebase', 'Supabase'],
+    // label: 'Database',
+    items: ['MySQL', 'PostgreSQL', 'MongoDB'],
   },
-  {
-    label: 'Cloud & Hosting',
-    items: ['Vercel', 'Netlify', 'AWS', 'Cloudflare'],
-  },
-  {
-    label: 'Dev Tools',
-    items: ['Git', 'GitHub', 'Docker', 'Postman', 'VS Code'],
-  },
-  {
-    label: 'Analytics & SEO',
-    items: ['Google Analytics', 'Search Console', 'Tag Manager', 'Ahrefs', 'SEMrush'],
-  },
-  {
-    label: 'UI Design',
-    items: ['Figma', 'Adobe XD', 'Photoshop'],
-  },
+  // {
+  //   label: 'Cloud & Hosting',
+  //   items: ['Vercel', 'Netlify', 'AWS', 'Cloudflare'],
+  // },
+  // {
+  //   label: 'Dev Tools',
+  //   items: ['Git', 'GitHub', 'Docker', 'Postman', 'VS Code'],
+  // },
+  // {
+  //   label: 'Analytics & SEO',
+  //   items: ['Google Analytics', 'Search Console', 'Tag Manager', 'Ahrefs', 'SEMrush'],
+  // },
+  // {
+  //   label: 'UI Design',
+  //   items: ['Figma', 'Adobe XD', 'Photoshop'],
+  // },
 ];
 
 /* All items flattened for the animated grid */
@@ -57,12 +57,6 @@ const techItemVariants = {
 };
 
 export default function About() {
-  const [activeCategory, setActiveCategory] = useState(null);
-
-  /* Determine which items are "active" for the hover filter */
-  const isHighlighted = (item) =>
-    activeCategory === null || item.category === activeCategory;
-
   return (
     <section
       className="about-section section-padding"
@@ -134,29 +128,6 @@ export default function About() {
               Technologies we use to build, deploy, and scale your product.
             </p>
 
-            {/* Category filter pills */}
-            <div className="tech-filter-row" role="group" aria-label="Filter by technology category">
-              <button
-                className={`tech-filter-pill${activeCategory === null ? ' active' : ''}`}
-                onClick={() => setActiveCategory(null)}
-                aria-pressed={activeCategory === null}
-              >
-                All
-              </button>
-              {TECH_CATEGORIES.map((cat) => (
-                <button
-                  key={cat.label}
-                  className={`tech-filter-pill${activeCategory === cat.label ? ' active' : ''}`}
-                  onClick={() =>
-                    setActiveCategory((prev) => (prev === cat.label ? null : cat.label))
-                  }
-                  aria-pressed={activeCategory === cat.label}
-                >
-                  {cat.label}
-                </button>
-              ))}
-            </div>
-
             {/* Animated tech grid */}
             <motion.div
               className="tech-grid"
@@ -171,7 +142,6 @@ export default function About() {
                   className="tech-item"
                   title={tech.category}
                   variants={techItemVariants}
-                  animate={{ opacity: isHighlighted(tech) ? 1 : 0.2 }}
                   whileHover={{
                     scale: 1.08,
                     y: -3,

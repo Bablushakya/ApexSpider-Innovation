@@ -38,6 +38,13 @@
   pointer-events: none;
 }
 
+/* Hide glow on mobile for cleaner experience */
+@media (max-width: 768px) {
+  .hero-glow-desktop-only {
+    display: none;
+  }
+}
+
 /* ── Badge ── */
 .hero-badge {
   display: inline-flex;
@@ -117,19 +124,56 @@
   .hero-section {
     padding-top: 80px;
     padding-bottom: 48px;
+    min-height: 90vh;
+    background: linear-gradient(135deg, var(--color-bg-deep) 0%, #0a0f1a 100%);
   }
-  .hero-content { margin-top: -20px; }
-  .hero-title { font-size: 2.5rem; }
-  .hero-description { font-size: 1rem; margin-bottom: 32px; }
+  .hero-content { 
+    margin-top: -20px;
+    padding: 0 20px;
+  }
+  .hero-title { 
+    font-size: 2.5rem;
+    line-height: 1.2;
+  }
+  .hero-description { 
+    font-size: 1rem;
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+  .hero-badge {
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 16px;
+    text-align: center;
+  }
 }
 
 @media (max-width: 480px) {
   .hero-section {
     padding-top: 70px;
     padding-bottom: 40px;
+    min-height: 85vh;
   }
-  .hero-content { margin-top: -10px; }
-  .hero-title { font-size: 2.1rem; }
+  .hero-content { 
+    margin-top: 0;
+    padding: 0 16px;
+  }
+  .hero-title { 
+    font-size: 2rem;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  .hero-description {
+    font-size: 0.95rem;
+    margin-bottom: 28px;
+  }
+  .hero-badge {
+    margin-bottom: 24px;
+    font-size: 0.8rem;
+  }
+  .badge-tag {
+    font-size: 0.75rem;
+  }
   .hero-actions {
     flex-direction: column;
     gap: 12px;
@@ -139,5 +183,7 @@
   .hero-actions .btn {
     width: 100%;
     justify-content: center;
+    font-size: 0.95rem;
+    padding: 12px 20px;
   }
 }

@@ -94,9 +94,19 @@ button {
   padding: 100px 0;
 }
 
+@media (max-width: 1024px) {
+  .section-padding {
+    padding: 80px 0;
+  }
+}
+
 @media (max-width: 768px) {
   .section-padding {
     padding: 60px 0;
+  }
+  
+  .container {
+    padding: 0 20px;
   }
 }
 
@@ -123,6 +133,24 @@ button {
   height: 450px;
 }
 
+/* Reduce blob size and blur on mobile for better performance */
+@media (max-width: 768px) {
+  .glow-blob {
+    filter: blur(60px);
+    opacity: 0.1;
+  }
+  
+  .glow-blob-teal {
+    width: 300px;
+    height: 300px;
+  }
+  
+  .glow-blob-indigo {
+    width: 320px;
+    height: 320px;
+  }
+}
+
 /* Glassmorphism Styles */
 .glass-panel {
   background: var(--color-bg-card);
@@ -138,6 +166,14 @@ button {
   border-color: var(--border-glass-hover);
   transform: translateY(-4px);
   box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+}
+
+/* Disable hover effects on mobile for better performance */
+@media (max-width: 768px) {
+  .glass-panel:hover {
+    transform: none;
+    box-shadow: var(--shadow-premium);
+  }
 }
 
 /* Gradient Texts */
@@ -255,6 +291,29 @@ button {
 @media (max-width: 768px) {
   .section-header h2 {
     font-size: 2rem;
+  }
+  
+  .section-header p {
+    font-size: 1rem;
+  }
+  
+  .section-header .tag {
+    font-size: 0.75rem;
+    padding: 5px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-header h2 {
+    font-size: 1.75rem;
+  }
+  
+  .section-header p {
+    font-size: 0.95rem;
+  }
+  
+  .section-header {
+    margin-bottom: 40px;
   }
 }
 

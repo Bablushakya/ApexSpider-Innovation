@@ -210,10 +210,59 @@
 }
 
 /* ── Responsive ───────────────────────────────────────── */
+@media (max-width: 768px) {
+  .tc-wrapper {
+    padding: 40px 60px 32px;
+    border-radius: 16px;
+    /* Lighter background on mobile */
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .tc-arrow {
+    width: 36px;
+    height: 36px;
+    /* Disable complex transitions on mobile */
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .tc-arrow--prev { left: 12px; }
+  .tc-arrow--next { right: 12px; }
+
+  .tc-slide-area {
+    min-height: 300px;
+  }
+
+  .tc-quote p {
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+
+  .tc-name {
+    font-size: 1.1rem;
+  }
+  
+  .tc-role {
+    font-size: 0.72rem;
+  }
+  
+  .tc-avatar {
+    width: 64px;
+    height: 64px;
+    font-size: 0.95rem;
+  }
+  
+  .tc-quote-badge {
+    width: 26px;
+    height: 26px;
+    font-size: 0.95rem;
+    left: calc(50% - 34px);
+  }
+}
+
 @media (max-width: 640px) {
   .tc-wrapper {
-    padding: 48px 20px 36px;
-    border-radius: 18px;
+    padding: 36px 50px 32px;
+    border-radius: 14px;
   }
 
   .tc-arrow {
@@ -229,10 +278,46 @@
   }
 
   .tc-quote p {
-    font-size: 0.9rem;
+    font-size: 0.88rem;
   }
 
   .tc-name {
     font-size: 1.05rem;
+  }
+  
+  .tc-dots {
+    margin-top: 28px;
+    gap: 6px;
+  }
+  
+  .tc-dot {
+    width: 7px;
+    height: 7px;
+  }
+  
+  .tc-dot--active {
+    width: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tc-wrapper {
+    padding: 32px 16px 28px;
+  }
+  
+  .tc-arrow {
+    display: none; /* Hide arrows on very small screens */
+  }
+  
+  .tc-slide-area {
+    min-height: 340px;
+  }
+  
+  .tc-quote {
+    max-width: 100%;
+  }
+  
+  .tc-quote p {
+    font-size: 0.86rem;
   }
 }

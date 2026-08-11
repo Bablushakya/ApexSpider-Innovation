@@ -213,21 +213,90 @@
   }
 }
 
+@media (max-width: 768px) {
+  /* Disable hover animations on mobile */
+  .work-card:hover {
+    transform: none;
+  }
+  
+  .work-card:hover .visual-svg {
+    transform: none;
+  }
+  
+  .work-card:hover .work-browser-mockup {
+    transform: none;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.08),
+      0 20px 60px rgba(0, 0, 0, 0.5),
+      0 4px 16px rgba(0, 0, 0, 0.4);
+  }
+  
+  .work-content-wrapper {
+    padding: 28px 20px;
+  }
+  
+  .work-card-title {
+    font-size: 1.6rem;
+  }
+  
+  .work-card-desc {
+    font-size: 0.92rem;
+  }
+  
+  .work-metrics-row {
+    gap: 24px;
+  }
+  
+  .work-metric-value {
+    font-size: 1.6rem;
+  }
+}
+
 @media (max-width: 480px) {
   .work-card-title {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+  }
+  
+  .work-card-desc {
+    font-size: 0.88rem;
+    margin-bottom: 20px;
   }
   
   .work-metrics-row {
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+  }
+  
+  .work-metric-value {
+    font-size: 1.5rem;
+  }
+  
+  .work-metric-label {
+    font-size: 0.68rem;
   }
   
   .work-visual-wrapper {
-    padding: 16px;
+    padding: 12px;
   }
 
   .work-project-img {
-    max-height: 200px;
+    max-height: 180px;
+  }
+  
+  .work-content-wrapper {
+    padding: 24px 16px;
+  }
+  
+  .work-techs-row {
+    gap: 6px;
+    margin-bottom: 24px;
+  }
+  
+  .work-tech-badge {
+    font-size: 0.7rem;
+    padding: 3px 10px;
   }
 }

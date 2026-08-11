@@ -24,8 +24,9 @@ export default function Hero({ heroReady = false }) {
         relative to this wrapper, so the effective rest position is
         25% + (-50%) = -25% from top → arc center lands near the bottom
         of the section and only the top arc rim is visible.
+        Hidden on mobile for cleaner experience.
       */}
-      <div className="hero-glow-wrapper" aria-hidden="true">
+      <div className="hero-glow-wrapper hero-glow-desktop-only" aria-hidden="true">
         <GlowHorizonFM variant="top" className="hero-glow" />
       </div>
 

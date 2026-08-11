@@ -134,6 +134,30 @@
   }
 }
 
+@media (max-width: 768px) {
+  /* Disable hover effects on mobile */
+  .process-step:hover .step-number-circle {
+    transform: none;
+    box-shadow: var(--shadow-premium);
+  }
+  
+  .process-grid {
+    gap: 32px;
+  }
+  
+  .step-content-card {
+    padding: 24px 20px;
+  }
+  
+  .step-title {
+    font-size: 1.05rem;
+  }
+  
+  .step-desc {
+    font-size: 0.86rem;
+  }
+}
+
 @media (max-width: 580px) {
   .process-step {
     flex-direction: column;
@@ -144,5 +168,35 @@
   
   .step-badge-wrapper {
     margin-bottom: 8px;
+  }
+  
+  .process-grid {
+    gap: 28px;
+  }
+  
+  .step-content-card {
+    padding: 20px 16px;
+  }
+  
+  .step-number-circle {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .step-num {
+    font-size: 1rem;
+  }
+  
+  .step-phase {
+    font-size: 0.7rem;
+  }
+  
+  .step-title {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+  
+  .step-desc {
+    font-size: 0.84rem;
   }
 }
