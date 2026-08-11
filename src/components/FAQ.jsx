@@ -5,25 +5,40 @@ import './FAQ.css';
 
 const FAQS = [
   {
-    q: 'What is the typical development timeline?',
-    a: 'We engineer prototypes in 2–4 week iteration sprints, while larger custom enterprise software platforms take 3–6 months depending on technical scope and system integrations.',
+    q: 'How can AI agents automate business workflows and operations?',
+    a: 'AI agents can perform repetitive workflow activities like data management, customer service, documentation management, reporting, and internal functions. The AI-based workflows are designed keeping in view the existing workflows of yours to lessen the manual efforts.',
   },
   {
-    q: 'How do you handle codebase scaling and code standards?',
-    a: 'All code compiles with modern strict linting rules and modular component layouts. We deliver fully documented React systems and clean stylesheet definitions to facilitate future expansion without technical debt.',
+    q: 'Can you build AI-powered applications using our business data?',
+    a: 'Yes. It is possible to develop applications that use artificial intelligence by leveraging structured as well as unstructured data from businesses, and such applications may include intelligent search, knowledge assistants, RAG, predictive models, and others.',
   },
   {
-    q: 'Can you integrate with our existing APIs and infrastructure?',
-    a: 'Yes, we construct custom event-driven pipelines, REST API proxies, and batch ETL integrations to sync data securely between new interfaces and your legacy databases.',
+    q: 'Can you integrate our existing APIs, databases, and cloud infrastructure?',
+    a: 'Indeed. We can incorporate any existing APIs, databases, authentications, third-party services, and even cloud into new applications or old ones. It is our aim to expand your existing technological environment without interfering with your core business processes.',
   },
   {
-    q: 'What React frameworks and state management do you support?',
-    a: 'We leverage Vite or Next.js for compiler performance. For state management, we align with vanilla React Context, Zustand, or Redux, adapting strictly to project complexity.',
+    q: 'How do you build scalable and secure web applications?',
+    a: 'We use modular architecture, secure API designs, database optimization, authentication, validation, testing, and scalable infrastructure to create robust web applications. Our architecture is planned based on current needs but future growth is considered.',
   },
   {
-    q: 'How do we initiate a collaboration?',
-    a: `Submit your project requirements via the contact form below or email us at ${BRAND.email.primary}. We will initiate a technical scoping call within 24 hours.`,
+    q: 'Can you develop custom mobile applications for our business?',
+    a: `Yes. We develop custom mobile applications based on your business requirements, user workflows, and target platforms. We focus on responsive interfaces, reliable performance, secure backend integration, and maintainable architecture.`,
   },
+  {
+    q: 'Can you turn our business data into dashboards, predictive models, or AI solutions?',
+    a: 'Absolutely! It is possible to convert raw data from the business into dashboards, analytical solutions, predictive models, and AI-based solutions. It starts with understanding the business problem and then picking the right data and technology.',
+  },
+  {
+    q: 'How do you approach UI/UX design for digital products?',
+    a: 'We start by understanding users, business goals, and product requirements. We then create user flows, wireframes, high-fidelity interfaces, and prototypes before development to ensure the final product is intuitive, consistent, and aligned with the brand.',},
+    {
+      q: 'What does the development process look like from idea to production?',
+      a: 'Our process typically follows four stages: Strategy & Requirements → Design → Development → Staging & Integration. We validate requirements and designs before development, test the product during implementation, and perform final checks before production deployment.',
+    },
+    {
+      q: 'How do you maintain, monitor, and scale applications after launch?',
+      a: 'We can provide ongoing maintenance, performance monitoring, security updates, bug fixes, infrastructure optimization, and feature development. As usage grows, we can also optimize the application architecture and infrastructure to support increased traffic and workloads.',
+    }
 ];
 
 export default function FAQ() {
