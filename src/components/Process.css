@@ -134,33 +134,36 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .process-timeline {
-    margin-top: 40px;
+    margin-top: 48px;
+    padding: 0;
+    position: relative;
   }
 
-  /* Vertical connector line between steps */
+  /* Clean vertical connector line */
   .process-timeline::before {
     content: '';
     position: absolute;
-    top: 20px;
-    bottom: 20px;
-    left: 21px;
+    top: 60px;
+    bottom: 60px;
+    left: 19px;
     width: 2px;
     background: linear-gradient(
       to bottom,
-      var(--color-accent-teal) 0%,
-      rgba(0, 255, 255, 0.2) 80%,
+      transparent 0%,
+      rgba(0, 255, 255, 0.25) 8%,
+      rgba(0, 255, 255, 0.2) 50%,
+      rgba(0, 255, 255, 0.15) 92%,
       transparent 100%
     );
     z-index: 1;
-    opacity: 0.35;
   }
 
   .process-grid {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 40px;
     width: 100%;
     position: relative;
     z-index: 2;
@@ -170,53 +173,76 @@
 
   .process-step {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: flex-start;
     text-align: left;
-    gap: 16px;
+    gap: 0;
     width: 100%;
+    position: relative;
+    padding-left: 52px;
   }
 
-  /* Disable hover glow animation on mobile */
+  /* Disable hover effects on mobile */
   .process-step:hover .step-number-circle {
     transform: none;
-    box-shadow: var(--shadow-premium);
+    box-shadow: 0 0 0 4px rgba(0, 255, 255, 0.1);
     border-color: var(--color-accent-teal);
   }
 
+  .process-step:hover .step-num {
+    color: var(--color-accent-teal);
+  }
+
+  .process-step:hover .step-phase {
+    color: var(--color-text-primary);
+  }
+
+  /* Number circle positioned on timeline */
   .step-badge-wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
     flex-direction: column;
     align-items: center;
     margin-bottom: 0;
-    flex-shrink: 0;
+    gap: 0;
     z-index: 2;
-    width: 44px;
   }
 
   .step-number-circle {
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     margin-bottom: 0;
     background: var(--color-bg-deep);
-    border: 2px solid var(--color-accent-teal);
-    box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.06);
+    border: 2.5px solid var(--color-accent-teal);
+    box-shadow: 0 0 0 4px rgba(0, 255, 255, 0.1);
+    flex-shrink: 0;
   }
 
   .step-num {
-    font-size: 0.9rem;
+    font-size: 0.875rem; /* 14px */
     font-weight: 700;
     color: var(--color-accent-teal);
   }
 
-  /* Hide the micro phase label — saves vertical space */
+  /* Phase label below number */
   .step-phase {
-    display: none;
+    display: block;
+    font-size: 0.6875rem; /* 11px */
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent-teal);
+    font-weight: 600;
+    margin-top: 6px;
+    text-align: center;
   }
 
-  /* ── Strip the glass-panel card — make step content flat ── */
+  /* Content area - clean and structured */
   .step-content-card {
     flex: 1;
-    padding: 2px 0 0 0;  /* Top nudge to align with circle center */
+    width: 100%;
+    padding: 0;
+    margin: 0;
     background: transparent;
     border: none;
     box-shadow: none;
@@ -225,58 +251,89 @@
   }
 
   .step-title {
-    font-size: 1.0625rem; /* 17px */
-    margin-bottom: 5px;
-    font-weight: 600;
+    font-size: 1.125rem; /* 18px */
+    margin-bottom: 10px;
+    font-weight: 700;
     color: var(--color-text-primary);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
   }
 
   .step-desc {
-    font-size: 0.875rem; /* 14px */
-    line-height: 1.6;
+    font-size: 0.9375rem; /* 15px */
+    line-height: 1.65;
     color: var(--color-text-secondary);
+    padding-right: 8px;
   }
 }
 
 @media (max-width: 480px) {
+  .process-timeline {
+    margin-top: 44px;
+  }
+
   .process-timeline::before {
-    left: 19px;
+    left: 18px;
+    top: 56px;
+    bottom: 56px;
+  }
+
+  .process-grid {
+    gap: 36px;
   }
 
   .step-badge-wrapper {
-    width: 40px;
+    left: 0;
   }
 
   .step-number-circle {
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
+    border-width: 2.5px;
+    box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.1);
   }
 
   .step-num {
     font-size: 0.8125rem; /* 13px */
   }
 
-  .process-step {
-    gap: 14px;
+  .step-phase {
+    font-size: 0.6875rem; /* 11px */
+    margin-top: 5px;
   }
 
   .step-title {
-    font-size: 1rem; /* 16px */
-    margin-bottom: 4px;
+    font-size: 1.0625rem; /* 17px */
+    margin-bottom: 8px;
   }
 
   .step-desc {
-    font-size: 0.84375rem; /* ~13.5px */
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.6;
+  }
+
+  .process-step {
+    padding-left: 50px;
   }
 }
 
-@media (max-width: 360px) {
-  .process-timeline::before {
-    left: 17px;
+@media (max-width: 414px) {
+  .process-grid {
+    gap: 34px;
   }
 
-  .step-badge-wrapper {
-    width: 36px;
+  .step-title {
+    font-size: 1.0625rem; /* 17px */
+  }
+
+  .step-desc {
+    font-size: 0.875rem; /* 14px */
+  }
+}
+
+@media (max-width: 390px) {
+  .process-timeline::before {
+    left: 17px;
   }
 
   .step-number-circle {
@@ -284,11 +341,152 @@
     height: 36px;
   }
 
+  .process-step {
+    padding-left: 48px;
+  }
+
+  .step-num {
+    font-size: 0.8125rem; /* 13px */
+  }
+
+  .step-phase {
+    font-size: 0.6875rem; /* 11px */
+  }
+}
+
+@media (max-width: 375px) {
+  .process-timeline {
+    margin-top: 40px;
+  }
+
+  .process-timeline::before {
+    left: 17px;
+    top: 52px;
+    bottom: 52px;
+  }
+
+  .process-grid {
+    gap: 32px;
+  }
+
+  .step-number-circle {
+    width: 36px;
+    height: 36px;
+    border-width: 2px;
+  }
+
+  .step-num {
+    font-size: 0.8125rem; /* 13px */
+  }
+
+  .step-phase {
+    font-size: 0.6875rem; /* 11px */
+    margin-top: 5px;
+  }
+
+  .step-title {
+    font-size: 1rem; /* 16px */
+    margin-bottom: 8px;
+  }
+
+  .step-desc {
+    font-size: 0.875rem; /* 14px */
+  }
+
+  .process-step {
+    padding-left: 48px;
+  }
+}
+
+@media (max-width: 360px) {
+  .process-timeline {
+    margin-top: 40px;
+  }
+
+  .process-timeline::before {
+    left: 16px;
+    top: 50px;
+    bottom: 50px;
+  }
+
+  .process-grid {
+    gap: 32px;
+  }
+
+  .step-badge-wrapper {
+    left: 0;
+  }
+
+  .step-number-circle {
+    width: 34px;
+    height: 34px;
+  }
+
   .step-num {
     font-size: 0.75rem; /* 12px */
   }
 
+  .step-phase {
+    font-size: 0.6875rem; /* 11px */
+    margin-top: 4px;
+  }
+
+  .step-title {
+    font-size: 1rem; /* 16px */
+    margin-bottom: 7px;
+  }
+
+  .step-desc {
+    font-size: 0.8125rem; /* 13px */
+    line-height: 1.6;
+  }
+
+  .process-step {
+    padding-left: 46px;
+  }
+}
+
+@media (max-width: 320px) {
+  .process-timeline {
+    margin-top: 36px;
+  }
+
+  .process-timeline::before {
+    left: 15px;
+    top: 48px;
+    bottom: 48px;
+  }
+
+  .process-grid {
+    gap: 30px;
+  }
+
+  .step-number-circle {
+    width: 32px;
+    height: 32px;
+    border-width: 2px;
+  }
+
+  .step-num {
+    font-size: 0.75rem; /* 12px */
+  }
+
+  .step-phase {
+    font-size: 0.625rem; /* 10px */
+    margin-top: 4px;
+  }
+
   .step-title {
     font-size: 0.9375rem; /* 15px */
+    margin-bottom: 7px;
+  }
+
+  .step-desc {
+    font-size: 0.8125rem; /* 13px */
+    line-height: 1.55;
+  }
+
+  .process-step {
+    padding-left: 44px;
   }
 }

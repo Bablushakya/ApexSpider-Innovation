@@ -22,7 +22,7 @@ export default function Process() {
       num: '03',
       phase: 'Develop',
       label: 'Development',
-      desc: 'Our developers transform approved designs into high-performance digital solutions using clean architecture, secure coding practices, version control, continuous testing, and agile methodologies to ensure scalable and reliable products.'
+      desc: 'Approved designs are transformed into high-performance digital solutions using clean architecture, secure coding, version control, continuous testing, and agile development practices.'
     },
     {
       num: '04',
