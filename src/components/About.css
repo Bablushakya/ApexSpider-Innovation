@@ -75,111 +75,98 @@
   color: var(--color-text-secondary);
 }
 
-/* Tech Grid styling */
-.tech-stack-container {
-  padding: 36px 32px 32px;
+/* Capabilities Container styling */
+.capabilities-container {
+  padding: 40px 36px 36px;
   text-align: center;
   background: rgba(15, 23, 42, 0.5);
   border-color: rgba(255, 255, 255, 0.05);
 }
 
-.tech-grid-title {
-  font-size: 1.35rem;
-  margin-bottom: 8px;
-  font-weight: 600;
+.capabilities-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
-.tech-grid-subtitle {
-  font-size: 0.85rem;
+.capabilities-subtitle {
+  font-size: 0.88rem;
   color: var(--color-text-secondary);
-  margin-bottom: 20px;
-  font-family: var(--font-mono);
+  margin-bottom: 32px;
+  line-height: 1.5;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* Category filter pills */
-.tech-filter-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-  margin-bottom: 24px;
-}
-
-.tech-filter-pill {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  padding: 4px 12px;
-  border-radius: 99px;
-  border: 1px solid var(--border-glass);
-  background: rgba(255, 255, 255, 0.02);
-  color: var(--color-text-secondary);
-  cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.tech-filter-pill:hover {
-  border-color: var(--color-accent-teal);
-  color: var(--color-text-primary);
-}
-
-.tech-filter-pill.active {
-  background: var(--color-accent-teal-muted);
-  border-color: var(--color-accent-teal);
-  color: var(--color-accent-teal);
-}
-
-.tech-filter-pill:focus-visible {
-  outline: 2px solid var(--color-accent-teal);
-  outline-offset: 3px;
-}
-
-/* Tech grid */
-.tech-grid {
+/* Capabilities grid */
+.capabilities-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
 }
 
-.tech-item {
+.capability-card {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  padding: 12px 8px;
+  align-items: flex-start;
+  text-align: left;
+  padding: 24px 20px;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--border-glass);
-  border-radius: 10px;
+  border-radius: 12px;
   transition: var(--transition-smooth);
   cursor: default;
 }
 
-.tech-item:hover {
-  background: rgba(255, 255, 255, 0.05);
+.capability-card:hover {
+  background: rgba(255, 255, 255, 0.04);
   border-color: var(--color-accent-teal);
-  box-shadow: 0 0 15px rgba(0, 255, 255, 0.12);
+  box-shadow: 0 4px 20px rgba(0, 255, 255, 0.08);
 }
 
-.tech-name {
-  font-size: 0.75rem;
-  font-family: var(--font-mono);
+.capability-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: var(--color-accent-teal-muted);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  color: var(--color-accent-teal);
+  margin-bottom: 16px;
+  transition: var(--transition-smooth);
+}
+
+.capability-card:hover .capability-icon {
+  background: var(--color-accent-teal);
+  color: var(--color-bg-deep);
+  border-color: var(--color-accent-teal);
+  box-shadow: var(--shadow-teal-glow);
+  transform: scale(1.05);
+}
+
+.capability-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke-width: 2;
+}
+
+.capability-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 8px;
   color: var(--color-text-primary);
-  text-align: center;
   line-height: 1.3;
 }
 
-.tech-item:hover .tech-name {
-  color: var(--color-accent-teal);
-}
-
-.tech-category-badge {
-  font-size: 0.6rem;
-  font-family: var(--font-mono);
+.capability-description {
+  font-size: 0.82rem;
   color: var(--color-text-secondary);
-  opacity: 0.6;
-  text-align: center;
+  line-height: 1.5;
+  margin: 0;
 }
 
 /* Responsiveness */
@@ -193,8 +180,8 @@
     font-size: 2rem;
   }
   
-  .tech-grid {
-    grid-template-columns: repeat(3, 1fr);
+  .capabilities-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -211,26 +198,87 @@
     font-size: 1rem;
   }
   
-  .tech-stack-container {
-    padding: 24px 16px;
+  .capabilities-container {
+    padding: 32px 24px 28px;
     background: rgba(15, 23, 42, 0.3); /* Lighter background on mobile */
   }
   
-  .tech-grid-title {
+  .capabilities-title {
+    font-size: 1.3rem;
+  }
+  
+  .capabilities-subtitle {
+    font-size: 0.85rem;
+    margin-bottom: 24px;
+  }
+  
+  .capabilities-grid {
+    gap: 12px;
+  }
+  
+  .capability-card {
+    padding: 20px 16px;
+  }
+  
+  .capability-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 14px;
+  }
+  
+  .capability-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .capability-title {
+    font-size: 1rem;
+  }
+  
+  .capability-description {
+    font-size: 0.8rem;
+  }
+  
+  /* Disable hover effects on mobile */
+  .capability-card:hover {
+    background: rgba(255, 255, 255, 0.02);
+    box-shadow: none;
+  }
+  
+  .capability-card:hover .capability-icon {
+    transform: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .capabilities-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .capabilities-container {
+    padding: 28px 20px 24px;
+  }
+  
+  .capabilities-title {
     font-size: 1.2rem;
   }
   
-  .tech-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+  .capabilities-subtitle {
+    font-size: 0.82rem;
   }
   
-  .tech-item {
-    padding: 10px 6px;
+  .capability-card {
+    padding: 18px 16px;
   }
   
-  .tech-name {
-    font-size: 0.7rem;
+  .capability-title {
+    font-size: 0.98rem;
+    margin-bottom: 6px;
+  }
+  
+  .capability-description {
+    font-size: 0.78rem;
   }
 }
 
@@ -263,38 +311,39 @@
     font-size: 0.85rem;
   }
   
-  .tech-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+  .capabilities-container {
+    padding: 24px 16px 20px;
   }
   
-  .tech-stack-container {
-    padding: 20px 12px;
+  .capabilities-title {
+    font-size: 1.15rem;
   }
   
-  .tech-grid-title {
-    font-size: 1.1rem;
-  }
-  
-  .tech-grid-subtitle {
+  .capabilities-subtitle {
     font-size: 0.8rem;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
   }
   
-  .tech-item {
-    padding: 8px 6px;
-    border-radius: 8px;
+  .capability-card {
+    padding: 16px 14px;
   }
   
-  .tech-name {
-    font-size: 0.68rem;
+  .capability-icon {
+    width: 38px;
+    height: 38px;
+    margin-bottom: 12px;
   }
   
-  .tech-category-badge {
-    display: none; /* Hide category badge on small mobile */
+  .capability-icon svg {
+    width: 19px;
+    height: 19px;
   }
   
-  .tech-filter-row {
-    gap: 6px;
+  .capability-title {
+    font-size: 0.95rem;
+  }
+  
+  .capability-description {
+    font-size: 0.76rem;
   }
 }
