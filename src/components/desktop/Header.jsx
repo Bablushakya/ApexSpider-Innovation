@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback, forwardRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { NAV_LINKS, BRAND } from '../constants/brand';
-import { EASE } from '../constants/animations';
-import logoImg from '../assets/ApexSpiderLogo.png';
+import { NAV_LINKS, BRAND } from '../../constants/brand';
+import { EASE } from '../../constants/animations';
+import logoImg from '../../assets/ApexSpiderLogo.png';
 import './Header.css';
 
 /*
