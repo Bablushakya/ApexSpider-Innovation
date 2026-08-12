@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { EASE } from '../constants/animations';
-import { useContactForm } from '../hooks/useContactForm';
+import { EASE } from '../../constants/animations';
+import { useContactForm } from '../../hooks/useContactForm';
 import './ProjectInquiryModal.css';
 
 const PROJECT_TYPES = [

@@ -1,30 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useReducedMotion } from '../hooks/useReducedMotion';
-import { EASE } from '../constants/animations';
+import { TESTIMONIALS } from '../../constants/testimonials';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { EASE } from '../../constants/animations';
 import './Testimonials.css';
 
 /* ─────────────────────────────────────────────────────────
    DATA  — update this array to add / change testimonials
 ───────────────────────────────────────────────────────── */
-const TESTIMONIALS = [
-  {
-    name:     'Kim',
-    role:     'Founder · Elevation by Kim',
-    initials: 'K',
-    accent:   '#00ffff',
-    quote:
-      'The Apex Spider team delivered exactly what we envisioned for our India Sourcing Trip page. The design is clean, responsive, and professionally built. Communication was excellent throughout the project.',
-  },
-  {
-    name:     'India Heritage Travel',
-    role:     'Travel & Tourism',
-    initials: 'IH',
-    accent:   '#6366f1',
-    quote:
-      'Apex Spider Innovation transformed our website with a modern design and significantly improved our SEO foundation. Their technical expertise and ongoing support have been valuable for our digital growth.',
-  },
-];
+const TESTIMONIALS_DATA = TESTIMONIALS;
 
 /* ─────────────────────────────────────────────────────────
    SLIDE VARIANTS
@@ -61,7 +45,7 @@ function ChevronRight() {
    MAIN COMPONENT
 ───────────────────────────────────────────────────────── */
 export default function Testimonials() {
-  const count          = TESTIMONIALS.length;
+  const count          = TESTIMONIALS_DATA.length;
   const [index, setIndex] = useState(0);
   const prefersReduced = useReducedMotion();
 
@@ -93,7 +77,7 @@ export default function Testimonials() {
     return () => window.removeEventListener('keydown', onKey);
   }, [go]);
 
-  const item = TESTIMONIALS[index];
+  const item = TESTIMONIALS_DATA[index];
 
   /* section-header entrance */
 
@@ -204,7 +188,7 @@ export default function Testimonials() {
 
           {/* ── Dot indicators ── */}
           <div className="tc-dots" role="tablist" aria-label="Testimonial navigation">
-            {TESTIMONIALS.map((_, i) => (
+            {TESTIMONIALS_DATA.map((_, i) => (
               <button
                 key={i}
                 type="button"

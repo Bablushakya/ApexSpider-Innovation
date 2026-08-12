@@ -1,18 +1,34 @@
 import React, { useState, useRef, useCallback, lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Header    from './components/Header';
-import Hero      from './components/Hero';
-import Services  from './components/Services';
-import ValueProps  from './components/ValueProps';
-import Process   from './components/Process';
-import CaseStudy from './components/CaseStudy';
-import About     from './components/About';
-import Testimonials from './components/Testimonials';
-import FAQ       from './components/FAQ';
-import ContactCTA  from './components/ContactCTA';
-import Footer    from './components/Footer';
-import Preloader from './components/Preloader';
-import ProjectInquiryModal from './components/ProjectInquiryModal';
+import { useIsMobile } from './hooks/useIsMobile';
+
+// Desktop Components
+import DesktopHeader from './components/desktop/Header';
+import DesktopHero from './components/desktop/Hero';
+import DesktopServices from './components/desktop/Services';
+import DesktopValueProps from './components/desktop/ValueProps';
+import DesktopProcess from './components/desktop/Process';
+import DesktopCaseStudy from './components/desktop/CaseStudy';
+import DesktopAbout from './components/desktop/About';
+import DesktopTestimonials from './components/desktop/Testimonials';
+import DesktopFAQ from './components/desktop/FAQ';
+import DesktopContactCTA from './components/desktop/ContactCTA';
+import DesktopFooter from './components/desktop/Footer';
+import Preloader from './components/desktop/Preloader';
+import ProjectInquiryModal from './components/desktop/ProjectInquiryModal';
+
+// Mobile Components
+import MobileHeader from './components/mobile/Header';
+import MobileHero from './components/mobile/Hero';
+import MobileServices from './components/mobile/Services';
+import MobileValueProps from './components/mobile/ValueProps';
+import MobileProcess from './components/mobile/Process';
+import MobileCaseStudy from './components/mobile/CaseStudy';
+import MobileAbout from './components/mobile/About';
+import MobileTestimonials from './components/mobile/Testimonials';
+import MobileFAQ from './components/mobile/FAQ';
+import MobileContactCTA from './components/mobile/ContactCTA';
+import MobileFooter from './components/mobile/Footer';
 
 // Lazy-load legal and utility pages — they are never in the initial bundle
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
@@ -20,23 +36,44 @@ const Terms         = lazy(() => import('./pages/Terms'));
 const Security      = lazy(() => import('./pages/Security'));
 const NotFound      = lazy(() => import('./pages/NotFound'));
 
-/** Full one-page marketing site */
-function HomePage({ logoNavRef, navReady, heroReady, onOpenInquiry }) {
+/** Full one-page marketing site - Desktop Version */
+function DesktopHomePage({ logoNavRef, navReady, heroReady, onOpenInquiry }) {
   return (
     <>
-      <Header ref={logoNavRef} navReady={navReady} onOpenInquiry={onOpenInquiry} />
+      <DesktopHeader ref={logoNavRef} navReady={navReady} onOpenInquiry={onOpenInquiry} />
       <main id="main-content">
-        <Hero       heroReady={heroReady} />
-        <Services   />
-        <ValueProps />
-        <Process    />
-        <CaseStudy  />
-        <About      />
-        <Testimonials />
-        <FAQ        />
-        <ContactCTA />
+        <DesktopHero heroReady={heroReady} />
+        <DesktopServices />
+        <DesktopValueProps />
+        <DesktopProcess />
+        <DesktopCaseStudy />
+        <DesktopAbout />
+        <DesktopTestimonials />
+        <DesktopFAQ />
+        <DesktopContactCTA />
       </main>
-      <Footer />
+      <DesktopFooter />
+    </>
+  );
+}
+
+/** Full one-page marketing site - Mobile Version */
+function MobileHomePage({ logoNavRef, navReady, heroReady, onOpenInquiry }) {
+  return (
+    <>
+      <MobileHeader ref={logoNavRef} navReady={navReady} onOpenInquiry={onOpenInquiry} />
+      <main id="main-content">
+        <MobileHero heroReady={heroReady} />
+        <MobileServices />
+        <MobileValueProps />
+        <MobileProcess />
+        <MobileCaseStudy />
+        <MobileAbout />
+        <MobileTestimonials />
+        <MobileFAQ />
+        <MobileContactCTA />
+      </main>
+      <MobileFooter />
     </>
   );
 }
@@ -64,6 +101,9 @@ function PageLoader() {
 }
 
 export default function App() {
+  // Detect mobile device
+  const isMobile = useIsMobile();
+
   /*
     Three-stage gate:
     ─────────────────────────────────────────────────────
@@ -71,10 +111,11 @@ export default function App() {
     navReady       — passed to Header; triggers nav stagger
     heroReady      — passed to Hero;   triggers content reveal
     ─────────────────────────────────────────────────────
+    Note: Preloader only shown on desktop for cinematic effect
   */
-  const [showPreloader, setShowPreloader] = useState(true);
-  const [navReady,      setNavReady]      = useState(false);
-  const [heroReady,     setHeroReady]     = useState(false);
+  const [showPreloader, setShowPreloader] = useState(!isMobile);
+  const [navReady,      setNavReady]      = useState(isMobile); // Mobile starts ready
+  const [heroReady,     setHeroReady]     = useState(isMobile); // Mobile starts ready
   
   // Project Inquiry Modal state
   const [isInquiryOpen, setIsInquiryOpen] = useState(false);
@@ -113,19 +154,21 @@ export default function App() {
         Skip to main content
       </a>
 
-      {/* Project Inquiry Modal */}
-      <ProjectInquiryModal 
-        isOpen={isInquiryOpen} 
-        onClose={closeInquiryModal} 
-      />
+      {/* Project Inquiry Modal - Desktop only */}
+      {!isMobile && (
+        <ProjectInquiryModal 
+          isOpen={isInquiryOpen} 
+          onClose={closeInquiryModal} 
+        />
+      )}
 
       <Routes>
-        {/* ── Home page with cinematic preloader ── */}
+        {/* ── Home page with conditional desktop/mobile rendering ── */}
         <Route
           path="/"
           element={
             <>
-              {showPreloader && (
+              {showPreloader && !isMobile && (
                 <Preloader
                   onComplete={handlePreloaderComplete}
                   onNavReady={handleNavReady}
@@ -133,12 +176,21 @@ export default function App() {
                   logoNavRef={logoNavRef}
                 />
               )}
-              <HomePage
-                logoNavRef={logoNavRef}
-                navReady={navReady}
-                heroReady={heroReady}
-                onOpenInquiry={openInquiryModal}
-              />
+              {isMobile ? (
+                <MobileHomePage
+                  logoNavRef={logoNavRef}
+                  navReady={navReady}
+                  heroReady={heroReady}
+                  onOpenInquiry={openInquiryModal}
+                />
+              ) : (
+                <DesktopHomePage
+                  logoNavRef={logoNavRef}
+                  navReady={navReady}
+                  heroReady={heroReady}
+                  onOpenInquiry={openInquiryModal}
+                />
+              )}
             </>
           }
         />

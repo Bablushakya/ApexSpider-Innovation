@@ -1,12 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import GlowHorizonFM from './ui/GlowHorizonFM';
-import { AnimatedTitleFM } from './ui/AnimatedTitleFM';
-import { EASE } from '../constants/animations';
+import { AnimatedTitleFM } from '../ui/AnimatedTitleFM';
+import { EASE } from '../../constants/animations';
 import './Hero.css';
 
-export default function Hero({ heroReady = false }) {
-
+export default function MobileHero({ heroReady = false }) {
   const stagger = (delay = 0) => ({
     initial:    { opacity: 0, y: 30, filter: 'blur(8px)' },
     animate:    heroReady
@@ -16,26 +14,12 @@ export default function Hero({ heroReady = false }) {
   });
 
   return (
-    <section className="hero-section" id="hero" aria-labelledby="hero-heading">
-
-      {/*
-        Wrapper shifts the glow coordinate space downward by 25% of the
-        section height. GlowHorizonFM still animates y:-100% → y:-50%
-        relative to this wrapper, so the effective rest position is
-        25% + (-50%) = -25% from top → arc center lands near the bottom
-        of the section and only the top arc rim is visible.
-        Hidden on mobile for cleaner experience.
-      */}
-      <div className="hero-glow-wrapper hero-glow-desktop-only" aria-hidden="true">
-        <GlowHorizonFM variant="top" className="hero-glow" />
-      </div>
-
-      {/* All hero content sits above the glow */}
-      <div className="container hero-container">
-        <div className="hero-content">
+    <section className="mobile-hero-section" id="hero" aria-labelledby="hero-heading">
+      <div className="container mobile-hero-container">
+        <div className="mobile-hero-content">
 
           {/* Badge */}
-          <motion.div className="hero-badge" {...stagger(0)}>
+          <motion.div className="mobile-hero-badge" {...stagger(0)}>
             <span className="badge-tag">Custom Software Studio</span>
             <span className="badge-text">Scalable Solutions for Modern Teams</span>
           </motion.div>
@@ -44,13 +28,13 @@ export default function Hero({ heroReady = false }) {
           <AnimatedTitleFM open={heroReady} />
 
           {/* Description */}
-          <motion.p className="hero-description" {...stagger(0.12)}>
+          <motion.p className="mobile-hero-description" {...stagger(0.12)}>
             Custom web systems, mobile applications, and premium digital interfaces
             engineered to establish credibility and accelerate business performance.
           </motion.p>
 
           {/* CTAs */}
-          <motion.div className="hero-actions" {...stagger(0.24)}>
+          <motion.div className="mobile-hero-actions" {...stagger(0.24)}>
             <a href="#services" className="btn btn-primary">
               Explore Services
               <svg
