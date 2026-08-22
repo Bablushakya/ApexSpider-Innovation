@@ -1,17 +1,17 @@
 /* ═══════════════════════════════════════════════════════════
    MOBILE HERO STYLES
-   Mobile-optimized hero layout without desktop media queries
+   Compact, impactful hero — same visual identity as desktop
    ═══════════════════════════════════════════════════════════ */
 
 .mobile-hero-section {
   position: relative;
-  min-height: 100vh;
+  min-height: 100svh; /* Use small viewport height for mobile browsers */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 90px;
-  padding-bottom: 48px;
+  padding-top: 80px;  /* Clears fixed 64px header with breathing room */
+  padding-bottom: 40px;
   overflow: hidden;
   background: linear-gradient(135deg, var(--color-bg-deep) 0%, #0a0f1a 100%);
 }
@@ -35,23 +35,25 @@
   position: relative;
   z-index: 2;
   padding: 0;
+  gap: 0; /* Controlled individually via margin */
 }
 
+/* ── Badge ── */
 .mobile-hero-badge {
   display: inline-flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border-glass);
-  padding: 6px 14px;
+  padding: 5px 12px;
   border-radius: 99px;
-  margin-bottom: 16px;
-  font-size: 0.75rem;
+  margin-bottom: 14px;
+  font-size: 0.6875rem; /* 11px */
   backdrop-filter: blur(12px);
   text-align: center;
-  max-width: 100%;
+  max-width: 95%;
 }
 
 .badge-tag {
@@ -62,34 +64,73 @@
   padding: 2px 6px;
   border-radius: 4px;
   text-transform: uppercase;
-  font-size: 0.7rem;
+  font-size: 0.6875rem; /* 11px */
 }
 
 .badge-text {
   color: var(--color-text-secondary);
 }
 
+/* ── Description ── */
 .mobile-hero-description {
-  font-size: 0.9rem;
+  font-size: 0.9rem; /* 14.4px */
   color: var(--color-text-secondary);
-  margin-top: 14px;
-  margin-bottom: 24px;
-  max-width: 100%;
+  margin-top: 12px;
+  margin-bottom: 22px;
+  max-width: 320px;   /* Prevents line wrap disaster on narrow screens */
   line-height: 1.6;
 }
 
+/* ── CTA Buttons ── */
 .mobile-hero-actions {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   width: 100%;
-  max-width: 100%;
+  max-width: 320px;
   margin: 0 auto;
 }
 
 .mobile-hero-actions .btn {
   width: 100%;
-  min-height: 48px;
+  min-height: 46px;
   justify-content: center;
-  font-size: 0.95rem;
+  font-size: 0.9375rem; /* 15px */
+}
+
+/* ── Narrow screens (320px) ── */
+@media (max-width: 359px) {
+  .mobile-hero-section {
+    padding-top: 72px;
+    padding-bottom: 32px;
+  }
+
+  .mobile-hero-description {
+    font-size: 0.875rem;
+    max-width: 100%;
+  }
+
+  .mobile-hero-actions {
+    max-width: 100%;
+  }
+
+  .mobile-hero-actions .btn {
+    min-height: 44px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ── 390px+ (iPhone Pro): side-by-side CTAs ── */
+@media (min-width: 390px) {
+  .mobile-hero-actions {
+    flex-direction: row;
+    max-width: 100%;
+    justify-content: center;
+  }
+
+  .mobile-hero-actions .btn {
+    width: auto;
+    flex: 1;
+    max-width: 180px;
+  }
 }

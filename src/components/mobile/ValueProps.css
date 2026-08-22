@@ -1,49 +1,60 @@
 /* ═══════════════════════════════════════════════════════════
    MOBILE VALUE PROPS STYLES
+   2-column metric grid on 375+ — compact, data-focused
    ═══════════════════════════════════════════════════════════ */
 
 .mobile-value-section {
   position: relative;
 }
 
+/* Single column default; 2-col on wider mobiles */
 .mobile-value-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
   width: 100%;
 }
 
-.mobile-value-card {
-  padding: 20px 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+@media (min-width: 375px) {
+  .mobile-value-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
-.mobile-metric-header {
+/* ── Card ── */
+.mobile-value-card {
+  padding: 16px 14px;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 4px;
+}
+
+/* ── Metric block ── */
+.mobile-metric-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 2px;
 }
 
 .mobile-metric-number {
-  font-size: 2.25rem;
+  font-size: 1.875rem;   /* 30px — still impactful, less oversized */
   font-weight: 800;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   line-height: 1;
 }
 
 .mobile-metric-badge {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;  /* 11px */
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   color: var(--color-text-secondary);
   font-weight: 500;
 }
 
+/* ── Title + description ── */
 .mobile-value-title {
-  font-size: 1.125rem;
+  font-size: 0.9375rem;  /* 15px */
   font-weight: 600;
   color: var(--color-text-primary);
   margin: 0;
@@ -51,8 +62,19 @@
 }
 
 .mobile-value-desc {
-  font-size: 0.875rem;
-  line-height: 1.55;
+  font-size: 0.8125rem;  /* 13px */
+  line-height: 1.5;
   color: var(--color-text-secondary);
   margin: 0;
+}
+
+/* ── 320px: single column, smaller metric ── */
+@media (max-width: 359px) {
+  .mobile-value-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mobile-metric-number {
+    font-size: 1.625rem;
+  }
 }

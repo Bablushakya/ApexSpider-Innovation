@@ -1,97 +1,108 @@
 /* ═══════════════════════════════════════════════════════════
    MOBILE TESTIMONIALS STYLES
+   Arrows and dots on the same row — compact, cleaner height
    ═══════════════════════════════════════════════════════════ */
 
 .mobile-testimonials-section {
   position: relative;
 }
 
+/* ── Outer wrapper ── */
 .mobile-tc-wrapper {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 0 8px;
+  gap: 14px;
 }
 
+/* ── Slide area ── */
 .mobile-tc-slide-area {
   width: 100%;
   overflow: hidden;
 }
 
+/* ── Card ── */
 .mobile-tc-card {
   background: var(--color-bg-card);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-glass);
-  border-radius: 16px;
-  padding: 24px 20px;
+  border-radius: 14px;
+  padding: 20px 18px;
   box-shadow: var(--shadow-premium);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .mobile-tc-quote-badge {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: white;
-  margin-bottom: 4px;
+  color: #fff;
+  flex-shrink: 0;
 }
 
 .mobile-tc-avatar-wrap {
-  margin-bottom: 4px;
+  /* No extra margin needed — gap handles spacing */
 }
 
 .mobile-tc-avatar {
-  width: 56px;
-  height: 56px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   background: var(--color-bg-deep);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   font-weight: 700;
   color: var(--color-text-primary);
 }
 
 .mobile-tc-name {
-  font-size: 1.125rem;
+  font-size: 1rem;        /* 16px */
   font-weight: 600;
   color: var(--color-text-primary);
   margin: 0;
 }
 
 .mobile-tc-role {
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   margin: 0;
 }
 
 .mobile-tc-quote {
-  margin: 8px 0 0 0;
+  margin: 4px 0 0;
 }
 
 .mobile-tc-quote p {
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   line-height: 1.6;
   color: var(--color-text-secondary);
   margin: 0;
 }
 
+/* ── Controls row: prev · dots · next ── */
+.mobile-tc-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+/* Prev / Next arrows */
 .mobile-tc-arrow {
-  position: static;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--border-glass);
@@ -101,33 +112,43 @@
   justify-content: center;
   transition: var(--transition-smooth);
   cursor: pointer;
+  flex-shrink: 0;
 }
 
-.mobile-tc-arrow:hover {
+.mobile-tc-arrow:hover,
+.mobile-tc-arrow:focus-visible {
   background: rgba(255, 255, 255, 0.08);
   color: var(--color-accent-teal);
   border-color: var(--color-accent-teal);
 }
 
+/* Keep these class names for backward-compat with JSX */
+.mobile-tc-arrow--prev,
+.mobile-tc-arrow--next {
+  /* Styles inherited from .mobile-tc-arrow */
+}
+
+/* Dots */
 .mobile-tc-dots {
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 8px;
-  margin-top: 8px;
+  gap: 6px;
 }
 
 .mobile-tc-dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   border: none;
   background: rgba(255, 255, 255, 0.2);
   cursor: pointer;
   transition: var(--transition-smooth);
+  padding: 0;
 }
 
 .mobile-tc-dot--active {
   background: var(--color-accent-teal);
-  width: 24px;
+  width: 20px;
   border-radius: 4px;
 }

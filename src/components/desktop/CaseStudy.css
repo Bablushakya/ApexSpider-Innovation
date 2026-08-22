@@ -283,7 +283,7 @@
     /* Clamp to 3 lines to keep card height consistent */
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
+    /* -webkit-line-clamp: 3; */
     overflow: hidden;
   }
 
@@ -325,7 +325,7 @@
   .work-card-desc {
     font-size: 0.84375rem; /* ~13.5px */
     margin-bottom: 14px;
-    -webkit-line-clamp: 3;
+    /* -webkit-line-clamp: 3; */
   }
 
   .work-card-title {

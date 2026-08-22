@@ -1,5 +1,6 @@
 /* ═══════════════════════════════════════════════════════════
    MOBILE CASE STUDY STYLES
+   Full-width portfolio cards — image first, then metadata
    ═══════════════════════════════════════════════════════════ */
 
 .mobile-work-section {
@@ -9,71 +10,80 @@
 .mobile-work-grid {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-}
-
-.mobile-work-card {
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
   gap: 16px;
 }
 
+/* ── Project card ── */
+.mobile-work-card {
+  padding: 0;             /* Image bleeds to card edges */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── Browser mockup / image wrapper ── */
 .mobile-work-visual {
   width: 100%;
-  border-radius: 8px;
-  overflow: hidden;
+  border-radius: 0;       /* Handled by parent card's border-radius at top */
 }
 
 .mobile-browser-mockup {
-  background: #1a1f2e;
-  border-radius: 8px;
+  background: #12161f;
   overflow: hidden;
+  border-radius: 0;
 }
 
 .mobile-browser-chrome {
-  height: 28px;
-  background: #0f1419;
+  height: 24px;
+  background: #0d1117;
   display: flex;
   align-items: center;
   padding: 0 10px;
-  gap: 6px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  gap: 5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
 }
 
 .chrome-dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
+  flex-shrink: 0;
 }
 
-.dot-red { background: #ff5f56; }
+.dot-red    { background: #ff5f56; }
 .dot-yellow { background: #ffbd2e; }
-.dot-green { background: #27c93f; }
+.dot-green  { background: #27c93f; }
 
 .mobile-project-img {
   width: 100%;
   height: auto;
   display: block;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: top;
 }
 
+/* ── Text content ── */
 .mobile-work-content {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
+  padding: 14px 16px 16px;
 }
 
 .mobile-work-tag {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;   /* 11px */
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   color: var(--color-accent-teal);
   font-weight: 600;
   font-family: var(--font-mono);
 }
 
 .mobile-work-client {
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   color: var(--color-text-secondary);
   margin: 0;
 }
@@ -84,30 +94,36 @@
 }
 
 .mobile-work-title {
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: 1.0625rem;   /* 17px */
+  font-weight: 700;
   color: var(--color-text-primary);
   margin: 0;
-  line-height: 1.3;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
 }
 
 .mobile-work-desc {
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   line-height: 1.55;
   color: var(--color-text-secondary);
   margin: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
 }
 
+/* ── Service tags ── */
 .mobile-work-services {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 4px;
+  gap: 5px;
+  margin-top: 2px;
 }
 
 .mobile-service-tag {
-  font-size: 0.7rem;
-  padding: 4px 8px;
+  font-size: 0.6875rem;
+  padding: 3px 7px;
   border-radius: 4px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border-glass);
@@ -115,8 +131,11 @@
   white-space: nowrap;
 }
 
+/* ── CTA button ── */
 .mobile-work-btn {
-  margin-top: 8px;
+  margin-top: 4px;
   width: 100%;
   justify-content: center;
+  min-height: 42px;
+  font-size: 0.875rem;
 }

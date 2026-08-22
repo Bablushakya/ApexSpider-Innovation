@@ -103,7 +103,7 @@ button {
 
 @media (max-width: 768px) {
   .section-padding {
-    padding: 64px 0;
+    padding: 52px 0;   /* Down from 64px — tighter section rhythm */
   }
   
   .container {
@@ -113,7 +113,7 @@ button {
 
 @media (max-width: 360px) {
   .section-padding {
-    padding: 56px 0;
+    padding: 44px 0;   /* Narrowest screens get slightly less */
   }
 
   .container {
@@ -303,23 +303,23 @@ button {
 
 @media (max-width: 768px) {
   .section-header {
-    margin-bottom: 32px;
+    margin-bottom: 28px;   /* Down from 32px */
   }
 
   .section-header h2 {
     font-size: 1.625rem; /* 26px — clean section heading */
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
   
   .section-header p {
-    font-size: 0.95rem; /* 15px */
+    font-size: 0.9rem;   /* 14.4px */
     line-height: 1.6;
   }
   
   .section-header .tag {
-    font-size: 0.75rem;
-    padding: 5px 12px;
-    margin-bottom: 12px;
+    font-size: 0.6875rem;
+    padding: 4px 11px;
+    margin-bottom: 10px;
   }
 }
 

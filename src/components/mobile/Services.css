@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════
    MOBILE SERVICES STYLES
-   Vertical card layout optimized for mobile
+   Compact vertical card layout — no wasted height
    ═══════════════════════════════════════════════════════════ */
 
 .mobile-services-section {
@@ -10,35 +10,36 @@
 .mobile-services-grid {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
   width: 100%;
 }
 
+/* ── Service card ── */
 .mobile-service-card {
   width: 100%;
   background: var(--color-bg-card);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-glass);
-  border-radius: 14px;
-  padding: 18px;
+  border-radius: 12px;
+  padding: 16px;
   box-shadow: var(--shadow-premium);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
+/* ── Icon + title row ── */
 .mobile-service-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 2px;
+  gap: 10px;
 }
 
 .mobile-service-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
   background: var(--color-accent-teal-muted);
   border: 1px solid rgba(0, 255, 255, 0.2);
   color: var(--color-accent-teal);
@@ -49,13 +50,13 @@
 }
 
 .mobile-service-icon svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   stroke-width: 2;
 }
 
 .mobile-service-title {
-  font-size: 1.0625rem; /* 17px */
+  font-size: 0.9375rem;   /* 15px */
   font-weight: 600;
   color: var(--color-text-primary);
   margin: 0;
@@ -63,8 +64,9 @@
   line-height: 1.25;
 }
 
+/* ── Description ── */
 .mobile-service-desc {
-  font-size: 0.875rem; /* 14px */
+  font-size: 0.8125rem;   /* 13px */
   line-height: 1.55;
   color: var(--color-text-secondary);
   margin: 0;
@@ -74,33 +76,55 @@
   overflow: hidden;
 }
 
+/* ── Explore button row ── */
 .mobile-service-footer {
-  border-top: 1px solid transparent;
-  padding-top: 2px;
   margin-top: 2px;
 }
 
 .mobile-btn-explore {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  min-height: 44px;
-  padding-left: 12px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.04);
+  min-height: 36px;
+  padding: 0 10px;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border-glass);
   color: var(--color-text-secondary);
-  font-size: 0.875rem;
+  font-size: 0.8125rem;   /* 13px */
   font-weight: 500;
+  gap: 6px;
   transition: var(--transition-smooth);
+  text-decoration: none;
+}
+
+.mobile-btn-explore:hover,
+.mobile-btn-explore:focus-visible {
+  background: var(--color-accent-teal-muted);
+  border-color: rgba(0, 255, 255, 0.3);
+  color: var(--color-accent-teal);
 }
 
 .arrow-icon {
-  width: 14px;
-  height: 14px;
-  margin-left: auto;
+  width: 13px;
+  height: 13px;
   stroke: currentColor;
   fill: none;
   stroke-width: 2.5;
+  flex-shrink: 0;
+}
+
+/* ── 375+: show 2 cards per row for shorter page ── */
+@media (min-width: 375px) {
+  .mobile-services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+}
+
+/* ── Keep single col on very small screens ── */
+@media (max-width: 374px) {
+  .mobile-services-grid {
+    grid-template-columns: 1fr;
+  }
 }

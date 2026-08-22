@@ -1,5 +1,6 @@
 /* ═══════════════════════════════════════════════════════════
    MOBILE PROCESS STYLES
+   Tight vertical timeline — compact but clear
    ═══════════════════════════════════════════════════════════ */
 
 .mobile-process-section {
@@ -9,56 +10,95 @@
 .mobile-process-grid {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 0;           /* Controlled by connector lines below */
   width: 100%;
+  position: relative;
 }
 
+/* Vertical connector line running through steps */
+.mobile-process-grid::before {
+  content: '';
+  position: absolute;
+  left: 19px;        /* Center of the 40px step number circle */
+  top: 20px;
+  bottom: 20px;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    var(--color-accent-teal) 0%,
+    rgba(0, 255, 255, 0.15) 100%
+  );
+  z-index: 0;
+}
+
+/* ── Individual step ── */
 .mobile-process-step {
   display: flex;
-  flex-direction: column;
+  align-items: flex-start;
   gap: 12px;
+  padding-bottom: 16px;   /* Space between steps */
+  position: relative;
+  z-index: 1;
 }
 
+.mobile-process-step:last-child {
+  padding-bottom: 0;
+}
+
+/* ── Step badge (number + phase label) ── */
 .mobile-step-badge {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 4px;
+  flex-shrink: 0;
 }
 
 .mobile-step-number {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
   border: 2px solid var(--color-accent-teal);
   background: var(--color-accent-teal-muted);
   color: var(--color-accent-teal);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.125rem;
+  font-size: 1rem;         /* 16px */
   font-weight: 700;
   font-family: var(--font-headings);
   flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+  background-color: var(--color-bg-deep); /* Mask the connector line */
+  box-shadow: 0 0 0 3px var(--color-bg-deep); /* Clean gap around line */
 }
 
 .mobile-step-phase {
-  font-size: 0.875rem;
+  font-size: 0.625rem;     /* 10px */
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   color: var(--color-accent-teal);
   font-weight: 600;
   font-family: var(--font-mono);
+  text-align: center;
+  line-height: 1;
+  max-width: 40px;
+  word-break: break-word;
 }
 
+/* ── Step content card ── */
 .mobile-step-content {
-  padding: 18px;
+  flex: 1;
+  padding: 14px 14px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
+  margin-top: 0;
 }
 
 .mobile-step-title {
-  font-size: 1.0625rem;
+  font-size: 0.9375rem;    /* 15px */
   font-weight: 600;
   color: var(--color-text-primary);
   margin: 0;
@@ -66,7 +106,7 @@
 }
 
 .mobile-step-desc {
-  font-size: 0.875rem;
+  font-size: 0.8125rem;    /* 13px */
   line-height: 1.55;
   color: var(--color-text-secondary);
   margin: 0;

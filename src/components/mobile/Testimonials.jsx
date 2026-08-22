@@ -82,15 +82,7 @@ export default function MobileTestimonials() {
           viewport={{ once: true, margin: '-8%' }}
           transition={{ duration: 0.9, ease: EASE.premium, delay: 0.1 }}
         >
-          <button
-            type="button"
-            className="mobile-tc-arrow mobile-tc-arrow--prev"
-            onClick={() => go(-1)}
-            aria-label="Previous testimonial"
-          >
-            <ChevronLeft />
-          </button>
-
+          {/* Slide card */}
           <div className="mobile-tc-slide-area">
             <AnimatePresence mode="popLayout" initial={false}>
               <motion.article
@@ -132,25 +124,39 @@ export default function MobileTestimonials() {
             </AnimatePresence>
           </div>
 
-          <button
-            type="button"
-            className="mobile-tc-arrow mobile-tc-arrow--next"
-            onClick={() => go(1)}
-            aria-label="Next testimonial"
-          >
-            <ChevronRight />
-          </button>
+          {/* Controls: prev · dots · next — all on one row */}
+          <div className="mobile-tc-controls">
+            <button
+              type="button"
+              className="mobile-tc-arrow mobile-tc-arrow--prev"
+              onClick={() => go(-1)}
+              aria-label="Previous testimonial"
+            >
+              <ChevronLeft />
+            </button>
 
-          <div className="mobile-tc-dots">
-            {TESTIMONIALS.map((_, i) => (
-              <button
-                key={i}
-                type="button"
-                className={`mobile-tc-dot${i === index ? ' mobile-tc-dot--active' : ''}`}
-                onClick={() => setIndex(i)}
-                aria-label={`Go to testimonial ${i + 1}`}
-              />
-            ))}
+            <div className="mobile-tc-dots" role="tablist" aria-label="Testimonial navigation">
+              {TESTIMONIALS.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  role="tab"
+                  className={`mobile-tc-dot${i === index ? ' mobile-tc-dot--active' : ''}`}
+                  onClick={() => setIndex(i)}
+                  aria-selected={i === index}
+                  aria-label={`Go to testimonial ${i + 1}`}
+                />
+              ))}
+            </div>
+
+            <button
+              type="button"
+              className="mobile-tc-arrow mobile-tc-arrow--next"
+              onClick={() => go(1)}
+              aria-label="Next testimonial"
+            >
+              <ChevronRight />
+            </button>
           </div>
         </motion.div>
       </div>
