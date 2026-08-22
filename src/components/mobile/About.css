@@ -1,113 +1,129 @@
 /* ═══════════════════════════════════════════════════════════
    MOBILE ABOUT STYLES
+   Compact about + 2-col capabilities grid on 375+
    ═══════════════════════════════════════════════════════════ */
 
 .mobile-about-section {
   position: relative;
 }
 
+/* ── About intro copy ── */
 .mobile-about-content {
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .mobile-about-title {
-  font-size: 1.75rem;
+  font-size: 1.625rem;    /* 26px */
   font-weight: 600;
   color: var(--color-text-primary);
-  margin: 16px 0;
+  margin: 12px 0;
   line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 .mobile-about-text {
-  font-size: 0.9375rem;
+  font-size: 0.875rem;    /* 14px */
   line-height: 1.6;
   color: var(--color-text-secondary);
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
+/* ── Standards checklist ── */
 .mobile-standards-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-top: 24px;
+  gap: 12px;
+  margin-top: 20px;
 }
 
 .mobile-standard-item {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   align-items: flex-start;
 }
 
 .standard-icon {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   background: var(--color-accent-teal);
   color: var(--color-bg-deep);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-weight: 700;
   flex-shrink: 0;
-  margin-top: 2px;
+  margin-top: 1px;
 }
 
 .mobile-standard-title {
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--color-text-primary);
-  margin: 0 0 4px 0;
+  margin: 0 0 3px 0;
 }
 
 .mobile-standard-desc {
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   line-height: 1.5;
   color: var(--color-text-secondary);
   margin: 0;
 }
 
+/* ── Capabilities panel ── */
 .mobile-capabilities {
   width: 100%;
 }
 
 .mobile-capabilities-container {
-  padding: 20px 18px;
+  padding: 18px 16px;
 }
 
 .mobile-capabilities-title {
-  font-size: 1.25rem;
+  font-size: 1.125rem;    /* 18px */
   font-weight: 600;
   color: var(--color-text-primary);
-  margin: 0 0 8px 0;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.01em;
 }
 
 .mobile-capabilities-subtitle {
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   color: var(--color-text-secondary);
-  margin: 0 0 20px 0;
+  margin: 0 0 16px 0;
   line-height: 1.5;
 }
 
+/* Single column default */
 .mobile-capabilities-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 14px;
+  gap: 10px;
 }
 
+/* 2-column on 375+ */
+@media (min-width: 375px) {
+  .mobile-capabilities-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+}
+
+/* ── Capability card ── */
 .mobile-capability-card {
-  padding: 16px;
-  border-radius: 12px;
+  padding: 14px 12px;
+  border-radius: 10px;
   border: 1px solid var(--border-glass);
   background: rgba(255, 255, 255, 0.02);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .mobile-capability-icon {
-  width: 36px;
-  height: 36px;
+  width: 30px;
+  height: 30px;
   color: var(--color-accent-teal);
 }
 
@@ -117,15 +133,27 @@
 }
 
 .mobile-capability-title {
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--color-text-primary);
   margin: 0;
+  line-height: 1.3;
 }
 
 .mobile-capability-description {
-  font-size: 0.8125rem;
+  font-size: 0.75rem;     /* 12px */
   line-height: 1.5;
   color: var(--color-text-secondary);
   margin: 0;
+}
+
+/* ── 320px overrides ── */
+@media (max-width: 359px) {
+  .mobile-capabilities-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mobile-about-title {
+    font-size: 1.5rem;
+  }
 }

@@ -1,5 +1,6 @@
 /* ═══════════════════════════════════════════════════════════
    MOBILE FAQ STYLES
+   Tight accordion — comfortable touch targets, no wasted space
    ═══════════════════════════════════════════════════════════ */
 
 .mobile-faq-section {
@@ -9,32 +10,36 @@
 .mobile-faq-container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
+/* ── FAQ item ── */
 .mobile-faq-item {
-  padding: 16px;
-  border-radius: 12px;
+  padding: 14px 16px;
+  border-radius: 10px;
   transition: var(--transition-smooth);
 }
 
 .mobile-faq-item.active {
   border-color: var(--color-accent-teal);
+  background: hsla(180, 100%, 50%, 0.04);
 }
 
+/* ── Question button ── */
 .mobile-faq-question-btn {
   width: 100%;
   background: none;
   border: none;
   padding: 0;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 12px;
   cursor: pointer;
   text-align: left;
   color: inherit;
   font-family: inherit;
+  min-height: 44px;       /* Touch-friendly */
 }
 
 .mobile-faq-question-text {
@@ -45,10 +50,11 @@
   line-height: 1.4;
 }
 
+/* ── Chevron icon ── */
 .mobile-faq-arrow-icon {
   flex-shrink: 0;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   color: var(--color-text-secondary);
   transition: transform 0.3s ease, color 0.3s ease;
 }
@@ -63,6 +69,7 @@
   height: 100%;
 }
 
+/* ── Animated answer reveal ── */
 .mobile-faq-answer {
   display: grid;
   grid-template-rows: 0fr;
@@ -76,7 +83,7 @@
 
 .mobile-faq-answer-content {
   min-height: 0;
-  padding-top: 12px;
+  padding-top: 10px;
 }
 
 .mobile-faq-answer-text {

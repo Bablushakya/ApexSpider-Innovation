@@ -6,11 +6,19 @@
  *   2. Requires VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, and VITE_EMAILJS_PUBLIC_KEY.
  *   3. Falls back gracefully if environment variables are missing.
  *
+ * Email routing:
+ *   - The EmailJS service/template must be configured in the EmailJS dashboard to
+ *     deliver to info@apexspiderinnovation.com.
+ *   - The visitor's email is passed as {{reply_to}} so the business can reply directly
+ *     to the visitor without manual copy-paste.
+ *
  * To activate:
  *   1. Create a free account at https://www.emailjs.com
- *   2. Add an email service (Gmail, Outlook, etc.) in EmailJS dashboard
- *   3. Create an email template with variables: {{name}}, {{email}}, {{projectType}}, {{message}}
- *   4. Add your Service ID, Template ID, and Public Key to your .env file
+ *   2. Add an email service connected to info@apexspiderinnovation.com
+ *   3. Create an email template using the variables listed in templateParams below
+ *   4. Set the template's "To Email" to info@apexspiderinnovation.com
+ *   5. Set the template's "Reply To" field to {{reply_to}}
+ *   6. Add your Service ID, Template ID, and Public Key to your .env file
  */
 
 import emailjs from '@emailjs/browser';
@@ -36,6 +44,18 @@ import { logger } from '../utils/logger';
 /**
  * Submits a contact inquiry via EmailJS.
  *
+ * Template variables sent:
+ *   {{subject}}      — Email subject line, e.g. "New Website Inquiry — Jane Doe"
+ *   {{name}}         — Visitor's full name
+ *   {{reply_to}}     — Visitor's email address (set as Reply-To so business can reply directly)
+ *   {{email}}        — Visitor's email address (visible in email body)
+ *   {{phone}}        — Phone/WhatsApp number, or "Not provided"
+ *   {{company}}      — Company/organisation name, or "Not provided"
+ *   {{projectType}}  — Selected project category
+ *   {{budget}}       — Selected budget range, or "Not specified"
+ *   {{message}}      — Visitor's project description
+ *   {{submitted_at}} — ISO timestamp of submission
+ *
  * @param {ContactFormData} formData
  * @returns {Promise<SubmitResult>}
  */
@@ -58,7 +78,7 @@ export async function submitContactForm(formData) {
       hasPublicKey:  !!publicKey,
     });
 
-    // Simulate success in demo mode so the UI can be tested
+    // Simulate success in demo mode so the UI can be tested without live credentials
     await new Promise((resolve) => setTimeout(resolve, 900));
     return {
       success: true,
@@ -68,25 +88,28 @@ export async function submitContactForm(formData) {
   }
 
   try {
-    // Log that we're attempting to send (without exposing full credentials)
     logger.log('[ContactService] Attempting to send email via EmailJS...', {
-      serviceId:  serviceId.substring(0, 8) + '...',
-      templateId: templateId.substring(0, 8) + '...',
+      serviceId:    serviceId.substring(0, 8) + '...',
+      templateId:   templateId.substring(0, 8) + '...',
       hasPublicKey: !!publicKey,
     });
 
-    // Prepare template parameters for EmailJS
+    // Template parameters — all variables available to the EmailJS template.
+    // reply_to is the visitor's email so the business can click Reply and respond directly.
+    // subject is passed as a variable so the template can use it as the email subject line.
     const templateParams = {
-      name:        formData.name,
-      email:       formData.email,
-      projectType: formData.projectType,
-      message:     formData.message,
-      phone:       formData.phone   || 'Not provided',
-      company:     formData.company || 'Not provided',
-      budget:      formData.budget  || 'Not specified',
+      subject:       `New Website Inquiry — ${formData.name}`,
+      name:          formData.name,
+      reply_to:      formData.email,
+      email:         formData.email,
+      phone:         formData.phone    || 'Not provided',
+      company:       formData.company  || 'Not provided',
+      projectType:   formData.projectType,
+      budget:        formData.budget   || 'Not specified',
+      message:       formData.message,
+      submitted_at:  new Date().toISOString(),
     };
 
-    // Send email using EmailJS
     const response = await emailjs.send(
       serviceId,
       templateId,
@@ -96,15 +119,14 @@ export async function submitContactForm(formData) {
 
     logger.log('[ContactService] EmailJS response:', response);
 
-    // EmailJS returns a response with status 200 on success
     if (response.status === 200) {
       return {
         success: true,
-        message: 'Thank you! Your message has been sent successfully. Our team will get back to you shortly.',
+        message:
+          'Thank you! Your inquiry has been submitted successfully. Our team will get back to you soon.',
       };
     }
 
-    // Unexpected response status
     logger.error('[ContactService] Unexpected response status:', response.status);
     return {
       success: false,
