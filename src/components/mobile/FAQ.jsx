@@ -27,11 +27,10 @@ export default function MobileFAQ() {
           viewport={{ once: true, margin: '-10%' }}
           transition={{ duration: prefersReduced ? 0.01 : 0.8, ease: EASE.premium }}
         >
-          <span className="tag">Support</span>
+          <span className="tag">FAQ</span>
           <h2 id="faq-heading">Frequently Asked Questions</h2>
           <p>
-            Common questions about our coding standards, development timelines,
-            and integration methodologies.
+            Common business questions about our development process, technology capabilities, timelines, and ongoing support.
           </p>
         </motion.div>
 

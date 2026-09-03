@@ -57,14 +57,6 @@ const MobileHeader = forwardRef(function MobileHeader({ navReady = false }, logo
           animate={navReady ? { opacity: 1, y: 0 } : { opacity: 0, y: prefersReduced ? 0 : -12 }}
           transition={{ duration: prefersReduced ? 0.01 : 0.5, ease: EASE.premium, delay: prefersReduced ? 0 : 0.3 }}
         >
-          <Link
-            to="/contact"
-            className="btn btn-primary mobile-header-start-project"
-            aria-label="Start a project"
-          >
-            Start Project
-          </Link>
-          
           <button
             className={`mobile-menu-toggle ${isMobileMenuOpen ? 'open' : ''}`}
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}

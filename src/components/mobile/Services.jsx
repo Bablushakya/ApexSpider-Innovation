@@ -38,7 +38,25 @@ function MobileServiceCard({ service, index }) {
         <h3 className="mobile-service-title">{service.title}</h3>
       </div>
 
-      <p className="mobile-service-desc">{service.shortDesc || service.fullDesc}</p>
+      <p className="mobile-service-desc">{service.shortDesc}</p>
+
+      <ul className="mobile-service-bullets" aria-label={`${service.title} capabilities`}>
+        {service.capabilities.slice(0, 3).map((cap, idx) => (
+          <li key={idx} className="mobile-service-bullet-item">
+            <svg
+              className="bullet-check"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              aria-hidden="true"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            {cap}
+          </li>
+        ))}
+      </ul>
 
       <div className="mobile-service-footer">
         <Link
@@ -81,9 +99,9 @@ export default function MobileServices() {
           transition={{ duration: prefersReducedMotion ? 0.01 : 0.8, ease: EASE.premium }}
         >
           <span className="tag">Services</span>
-          <h2 id="services-heading">Our Services &amp; Solutions</h2>
+          <h2 id="services-heading">Technology built around your business.</h2>
           <p>
-            Custom technology designed around real operational needs.
+            From customer-facing websites to internal business systems, AI solutions and data platforms — we build custom technology designed around real operational needs.
           </p>
         </motion.div>
 
