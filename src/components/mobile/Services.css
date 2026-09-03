@@ -47,12 +47,20 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .mobile-service-icon svg {
   width: 16px;
   height: 16px;
   stroke-width: 2;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-service-icon svg {
+    transform: none !important;
+  }
 }
 
 .mobile-service-title {
@@ -93,7 +101,7 @@
   font-size: 0.8125rem;   /* 13px */
   font-weight: 500;
   gap: 6px;
-  transition: var(--transition-smooth);
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
   text-decoration: none;
 }
 
@@ -111,6 +119,17 @@
   fill: none;
   stroke-width: 2.5;
   flex-shrink: 0;
+  transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.mobile-btn-explore:hover .arrow-icon {
+  transform: translateX(2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-btn-explore:hover .arrow-icon {
+    transform: none;
+  }
 }
 
 /* ── 375+: show 2 cards per row for shorter page ── */

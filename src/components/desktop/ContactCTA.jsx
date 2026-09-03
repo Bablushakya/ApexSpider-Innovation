@@ -5,6 +5,7 @@ import { PROJECT_TYPES } from '../../constants/services.jsx';
 import { CONTACT_CONTENT, CONTACT_FORM_INITIAL, CONTACT_FORM_VALIDATION } from '../../constants/contact';
 import { EASE } from '../../constants/animations';
 import { useContactForm } from '../../hooks/useContactForm';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import './ContactCTA.css';
 
 export default function ContactCTA() {
@@ -17,6 +18,8 @@ export default function ContactCTA() {
     handleSubmit,
     handleReset,
   } = useContactForm(CONTACT_FORM_INITIAL, CONTACT_FORM_VALIDATION);
+  
+  const prefersReduced = useReducedMotion();
 
   return (
     <section
@@ -25,47 +28,98 @@ export default function ContactCTA() {
       aria-labelledby="contact-heading"
     >
       {/* Glow background blobs */}
-      <div className="glow-blob glow-blob-indigo contact-blob-1" aria-hidden="true" />
-      <div className="glow-blob glow-blob-teal contact-blob-2"   aria-hidden="true" />
+      <motion.div 
+        className="glow-blob glow-blob-indigo contact-blob-1" 
+        aria-hidden="true"
+        initial={{ opacity: 0, scale: prefersReduced ? 1 : 0.8 }}
+        whileInView={{ opacity: 0.6, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: prefersReduced ? 0.01 : 1.5, ease: EASE.premium }}
+      />
+      <motion.div 
+        className="glow-blob glow-blob-teal contact-blob-2" 
+        aria-hidden="true"
+        initial={{ opacity: 0, scale: prefersReduced ? 1 : 0.8 }}
+        whileInView={{ opacity: 0.6, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: prefersReduced ? 0.01 : 1.5, ease: EASE.premium, delay: prefersReduced ? 0 : 0.2 }}
+      />
 
       <div className="container contact-container">
         {/* Left Column */}
         <motion.div
           className="contact-details"
-          initial={{ opacity: 0, y: 30, filter: 'blur(5px)' }}
+          initial={{ opacity: 0, y: prefersReduced ? 0 : 30, filter: prefersReduced ? 'blur(0px)' : 'blur(5px)' }}
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-10%' }}
-          transition={{ duration: 0.9, ease: EASE.premium }}
+          transition={{ duration: prefersReduced ? 0.01 : 0.9, ease: EASE.premium }}
         >
-          <span className="tag">{CONTACT_CONTENT.tag}</span>
-          <h2 id="contact-heading" className="contact-title">
+          <motion.span 
+            className="tag"
+            initial={{ opacity: 0, scale: prefersReduced ? 1 : 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: prefersReduced ? 0.01 : 0.6, ease: EASE.premium, delay: prefersReduced ? 0 : 0.1 }}
+          >
+            {CONTACT_CONTENT.tag}
+          </motion.span>
+          
+          <motion.h2 
+            id="contact-heading" 
+            className="contact-title"
+            initial={{ opacity: 0, y: prefersReduced ? 0 : 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: prefersReduced ? 0.01 : 0.7, ease: EASE.premium, delay: prefersReduced ? 0 : 0.2 }}
+          >
             {CONTACT_CONTENT.title}{' '}
             <span className="text-gradient-cyan">{CONTACT_CONTENT.titleHighlight}</span>.
-          </h2>
-          <p className="contact-desc">
+          </motion.h2>
+          
+          <motion.p 
+            className="contact-desc"
+            initial={{ opacity: 0, y: prefersReduced ? 0 : 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: prefersReduced ? 0.01 : 0.7, ease: EASE.premium, delay: prefersReduced ? 0 : 0.3 }}
+          >
             {CONTACT_CONTENT.description}
-          </p>
+          </motion.p>
 
-          <div className="contact-info-block">
+          <motion.div 
+            className="contact-info-block"
+            initial={{ opacity: 0, x: prefersReduced ? 0 : -15 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: prefersReduced ? 0.01 : 0.7, ease: EASE.premium, delay: prefersReduced ? 0 : 0.4 }}
+          >
             <h3 className="info-title">{CONTACT_CONTENT.infoTitle}</h3>
             <a href={`mailto:${BRAND.email.primary}`} className="contact-email-link">
               {BRAND.email.primary}
             </a>
-          </div>
+          </motion.div>
 
-          <div className="contact-status-note" role="status" aria-live="polite">
+          <motion.div 
+            className="contact-status-note" 
+            role="status" 
+            aria-live="polite"
+            initial={{ opacity: 0, scale: prefersReduced ? 1 : 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: prefersReduced ? 0.01 : 0.7, ease: EASE.premium, delay: prefersReduced ? 0 : 0.5 }}
+          >
             <span className="pulse-dot" aria-hidden="true" />
             <span className="status-text">{CONTACT_CONTENT.statusText}</span>
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* Right Column: Contact Form */}
         <motion.div
           className="contact-form-wrapper"
-          initial={{ opacity: 0, y: 35, scale: 0.98, filter: 'blur(6px)' }}
+          initial={{ opacity: 0, y: prefersReduced ? 0 : 35, scale: prefersReduced ? 1 : 0.98, filter: prefersReduced ? 'blur(0px)' : 'blur(6px)' }}
           whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-10%' }}
-          transition={{ duration: 0.9, ease: EASE.premium, delay: 0.15 }}
+          transition={{ duration: prefersReduced ? 0.01 : 0.9, ease: EASE.premium, delay: prefersReduced ? 0 : 0.15 }}
         >
           <div className="glass-panel contact-card">
             {submitResult?.success ? (

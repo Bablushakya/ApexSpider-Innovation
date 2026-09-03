@@ -72,6 +72,7 @@
   z-index: 2;
   background-color: var(--color-bg-deep); /* Mask the connector line */
   box-shadow: 0 0 0 3px var(--color-bg-deep); /* Clean gap around line */
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .mobile-step-phase {
@@ -85,6 +86,14 @@
   line-height: 1;
   max-width: 40px;
   word-break: break-word;
+  transition: opacity 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-step-number,
+  .mobile-step-phase {
+    transition: none;
+  }
 }
 
 /* ── Step content card ── */

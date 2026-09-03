@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════
    MOBILE VALUE PROPS STYLES
-   2-column metric grid on 375+ — compact, data-focused
+   4-card grid on mobile — matching Desktop principles
    ═══════════════════════════════════════════════════════════ */
 
 .mobile-value-section {
@@ -11,11 +11,11 @@
 .mobile-value-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 12px;
+  gap: 14px;
   width: 100%;
 }
 
-@media (min-width: 375px) {
+@media (min-width: 480px) {
   .mobile-value-grid {
     grid-template-columns: 1fr 1fr;
   }
@@ -23,58 +23,54 @@
 
 /* ── Card ── */
 .mobile-value-card {
-  padding: 16px 14px;
+  padding: 20px 16px;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  position: relative;
+  background: var(--color-glass-bg);
+  border: 1px solid var(--color-glass-border);
+  border-radius: var(--radius-lg);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* ── Metric block ── */
-.mobile-metric-header {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-bottom: 2px;
-}
-
-.mobile-metric-number {
-  font-size: 1.875rem;   /* 30px — still impactful, less oversized */
+.mobile-principle-number {
+  font-size: 1.5rem;
   font-weight: 800;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   line-height: 1;
+  font-family: var(--font-heading);
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.mobile-metric-badge {
-  font-size: 0.6875rem;  /* 11px */
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--color-text-secondary);
-  font-weight: 500;
+@media (prefers-reduced-motion: reduce) {
+  .mobile-value-card {
+    transition: none;
+  }
+  .mobile-principle-number {
+    transition: none;
+  }
 }
 
-/* ── Title + description ── */
+/* ── Title + Subtitle + Description ── */
 .mobile-value-title {
-  font-size: 0.9375rem;  /* 15px */
-  font-weight: 600;
+  font-size: 1.05rem;
+  font-weight: 700;
   color: var(--color-text-primary);
   margin: 0;
   line-height: 1.3;
 }
 
+.mobile-value-subtitle {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-accent-cyan);
+  line-height: 1.4;
+}
+
 .mobile-value-desc {
-  font-size: 0.8125rem;  /* 13px */
+  font-size: 0.84rem;
   line-height: 1.5;
   color: var(--color-text-secondary);
   margin: 0;
-}
-
-/* ── 320px: single column, smaller metric ── */
-@media (max-width: 359px) {
-  .mobile-value-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .mobile-metric-number {
-    font-size: 1.625rem;
-  }
 }

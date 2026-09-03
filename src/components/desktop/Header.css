@@ -1,3 +1,4 @@
+/* ── Add dropdown styles to existing Header.css ── */
 .site-header {
   position: fixed;
   top: 0;
@@ -9,7 +10,10 @@
   align-items: center;
   border-bottom: 1px solid transparent;
   background-color: transparent;
-  transition: var(--transition-smooth);
+  transition: height 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              background-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .site-header.scrolled {
@@ -25,20 +29,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px; /* Prevent elements from touching */
+  gap: 8px;
 }
 
-/* Ensure proper spacing on mobile */
 @media (max-width: 768px) {
-  .header-container {
-    gap: 6px;
-  }
+  .header-container { gap: 6px; }
 }
-
 @media (max-width: 480px) {
-  .header-container {
-    gap: 4px;
-  }
+  .header-container { gap: 4px; }
 }
 
 /* Brand Logo */
@@ -53,23 +51,17 @@
   height: 46px;
   width: auto;
   object-fit: contain;
-  transition: var(--transition-smooth);
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .brand-logo:hover .logo-img {
   transform: scale(1.05);
 }
 
-.brand-name {
-  font-family: var(--font-headings);
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: var(--color-text-primary);
-  letter-spacing: -0.03em;
-}
-
-.brand-dot {
-  color: var(--color-accent-teal);
+@media (prefers-reduced-motion: reduce) {
+  .brand-logo:hover .logo-img {
+    transform: none;
+  }
 }
 
 /* Desktop Navigation */
@@ -81,6 +73,11 @@
   display: flex;
   list-style: none;
   gap: 32px;
+  align-items: center;
+}
+
+.nav-item-dropdown {
+  position: relative;
 }
 
 .nav-link {
@@ -89,6 +86,23 @@
   color: var(--color-text-secondary);
   position: relative;
   padding: 8px 0;
+  text-decoration: none;
+  transition: color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.nav-link-btn {
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  padding: 8px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .nav-link::after {
@@ -99,34 +113,135 @@
   width: 0;
   height: 2px;
   background-color: var(--color-accent-teal);
-  transition: var(--transition-smooth);
+  transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.nav-link:hover {
+.nav-link:hover,
+.nav-link-btn:hover,
+.nav-link--active,
+.nav-link-btn.active {
   color: var(--color-text-primary);
 }
 
-.nav-link:hover::after {
+.nav-link:hover::after,
+.nav-link--active::after {
   width: 100%;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .site-header {
+    transition: height 0.01s, background-color 0.01s, border-color 0.01s, box-shadow 0.01s;
+  }
+  
+  .nav-link,
+  .nav-link-btn {
+    transition: color 0.01s;
+  }
+  
+  .nav-link::after {
+    transition: width 0.01s;
+  }
+}
+
+/* Dropdown chevron */
+.dropdown-chevron {
+  transition: transform 0.2s ease;
+}
+
+.nav-link-btn.active .dropdown-chevron,
+.nav-link-btn[aria-expanded="true"] .dropdown-chevron {
+  transform: rotate(180deg);
+}
+
+/* Services Dropdown */
+.nav-dropdown {
+  position: absolute;
+  top: calc(100% + 16px);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 300px;
+  background: hsla(224, 40%, 9%, 0.98);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border-glass);
+  border-radius: 14px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+  z-index: 200;
+  overflow: hidden;
+}
+
+.nav-dropdown-header {
+  padding: 12px 16px 8px;
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.nav-dropdown-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-accent-teal);
+  font-weight: 600;
+}
+
+.nav-dropdown-list {
+  list-style: none;
+  padding: 8px;
+}
+
+.nav-dropdown-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.25s cubic-bezier(0.25, 0.8, 0.25, 1),
+              transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.nav-dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateX(4px);
+}
+
+.dropdown-item-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  transition: color 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.nav-dropdown-item:hover .dropdown-item-name {
+  color: var(--color-accent-teal);
+}
+
+.dropdown-item-desc {
+  font-size: 0.76rem;
+  color: var(--color-text-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-dropdown-item {
+    transition: background 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  
+  .nav-dropdown-item:hover {
+    transform: none;
+  }
+}
+
+/* Header Actions */
 .header-actions {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-/* Tighter spacing on mobile */
 @media (max-width: 768px) {
-  .header-actions {
-    gap: 10px;
-  }
+  .header-actions { gap: 10px; }
 }
-
 @media (max-width: 480px) {
-  .header-actions {
-    gap: 8px;
-  }
+  .header-actions { gap: 8px; }
 }
 
 /* Start Project Button in Header */
@@ -137,262 +252,32 @@
   font-size: 0.8rem;
   padding: 8px 16px;
   white-space: nowrap;
+  text-decoration: none;
 }
 
-.header-start-project svg {
-  transition: transform 0.3s ease;
-}
-
-.header-start-project:hover svg {
-  transform: translateX(4px);
-}
-
-/* Mobile Header Start Project Button - Compact Version */
 @media (max-width: 768px) {
   .header-start-project {
-    font-size: 0.75rem;      /* 12px - Smaller text */
-    padding: 8px 12px;       /* Reduced padding */
-    min-height: 38px;        /* Smaller height */
-    width: auto;
-    max-width: 130px;        /* Narrower button */
-    gap: 3px;                /* Tighter gap */
-    letter-spacing: 0;
-    border-radius: 6px;      /* Smaller radius */
+    font-size: 0.75rem;
+    padding: 8px 12px;
+    min-height: 38px;
+    max-width: 140px;
   }
 }
 
 @media (max-width: 480px) {
   .header-start-project {
-    font-size: 0.6875rem;    /* 11px - Even smaller */
-    padding: 7px 10px;       /* More compact padding */
+    font-size: 0.6875rem;
+    padding: 7px 10px;
     min-height: 36px;
-    max-width: 120px;
-    gap: 2px;
-    border-radius: 6px;
+    max-width: 130px;
   }
 }
 
-@media (max-width: 360px) {
-  .header-start-project {
-    font-size: 0.625rem;     /* 10px - Smallest */
-    padding: 6px 9px;
-    min-height: 34px;
-    max-width: 110px;
-    gap: 2px;
-  }
-}
-
-.btn-header {
-  padding: 8px 20px;
-  font-size: 0.85rem;
-}
-
-/* Mobile Toggle Hamburger button */
-/* Mobile Toggle Hamburger button */
-.mobile-menu-toggle {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  width: 44px;
-  height: 44px;
-  padding: 10px 8px;
-  margin-right: -8px;
-  z-index: 110;
-  box-sizing: border-box;
-}
-
-.hamburger-bar {
-  width: 100%;
-  height: 2px;
-  background-color: var(--color-text-primary);
-  border-radius: 4px;
-  transition: var(--transition-smooth);
-}
-
-/* Open states for hamburger bars */
-.mobile-menu-toggle.open .hamburger-bar:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
-}
-
-.mobile-menu-toggle.open .hamburger-bar:nth-child(2) {
-  opacity: 0;
-}
-
-.mobile-menu-toggle.open .hamburger-bar:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
-}
-
-/* Mobile Nav Overlay Drawer */
-.mobile-nav-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: var(--color-bg-deep);
-  z-index: 90;
-  transform: translateX(100%);
-  transition: var(--transition-smooth);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 110px 24px 40px 24px;
-  overflow-y: auto;
-  opacity: 0;
-}
-
-.mobile-nav-overlay.active {
-  transform: translateX(0);
-  opacity: 1;
-}
-
-.mobile-nav-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  list-style: none;
-  width: 100%;
-  padding: 0 20px;
-}
-
-.mobile-nav-link {
-  font-family: var(--font-headings);
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: var(--color-text-secondary);
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 12px;
-}
-
-.mobile-nav-link:hover {
-  color: var(--color-accent-teal);
-}
-
-/* Mobile Start Project CTA */
-.mobile-nav-cta {
-  margin-top: 20px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.mobile-start-project {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  width: 10%;
-  max-width: 50px;
-  padding: 2px 7px;
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-.mobile-start-project svg {
-  width: 5px;
-  height: 5px;
-  transition: transform 0.3s ease;
-}
-
-.mobile-start-project:hover svg {
-  transform: translateX(4px);
-}
-
-/* Responsive Rules for Header */
+/* Responsive – hide desktop nav items if ever needed below 1024px
+   (This header is only rendered at >= 1024px via useIsMobile in PageLayout/App) */
 @media (max-width: 1024px) {
   .desktop-nav {
     display: none;
   }
-
-  .mobile-menu-toggle {
-    display: flex;
-  }
-  
-  /* Keep header button visible on mobile - it's now compact */
-  .header-start-project {
-    display: flex;
-  }
 }
 
-@media (max-width: 768px) {
-  .site-header {
-    height: 72px;
-  }
-  
-  .site-header.scrolled {
-    height: 60px;
-  }
-  
-  .logo-img {
-    height: 36px; /* Slightly smaller to balance with compact button */
-  }
-  
-  .brand-name {
-    font-size: 1.2rem;
-  }
-  
-  .mobile-nav-overlay {
-    padding: 90px 18px 32px 18px;
-  }
-  
-  .mobile-nav-link {
-    font-size: 1.4rem;
-  }
-  
-  .mobile-start-project {
-    max-width: 260px;       /* ✅ Wider button */
-    padding: 12px 24px;     /* ✅ Better padding */
-    font-size: 0.95rem;     /* ✅ More readable (15.2px) */
-  }
-}
-
-@media (max-width: 480px) {
-  .site-header {
-    height: 64px;
-  }
-  
-  .site-header.scrolled {
-    height: 56px;
-  }
-  
-  .logo-img {
-    height: 32px; /* Smaller logo for compact header */
-  }
-  
-  .brand-name {
-    font-size: 1.1rem;
-  }
-  
-  .mobile-nav-overlay {
-    padding: 80px 16px 28px 16px;
-  }
-  
-  .mobile-nav-list {
-    gap: 16px;
-  }
-  
-  .mobile-nav-link {
-    font-size: 1.25rem;
-  }
-  
-  .mobile-nav-cta {
-    margin-top: 16px;
-  }
-  
-  .mobile-start-project {
-    max-width: 240px;       /* ✅ Much wider */
-    padding: 11px 20px;     /* ✅ Proper touch target */
-    font-size: 0.9rem;      /* ✅ Readable (14.4px) */
-  }
-  
-  .mobile-start-project svg {
-    width: 14px;            /* ✅ Visible icon */
-    height: 14px;
-  }
-}

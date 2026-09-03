@@ -14,7 +14,10 @@
   align-items: center;
   border-bottom: 1px solid transparent;
   background-color: transparent;
-  transition: var(--transition-smooth);
+  transition: height 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              background-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .mobile-site-header.scrolled {
@@ -45,11 +48,21 @@
   height: 30px;
   width: auto;
   object-fit: contain;
-  transition: var(--transition-smooth);
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .mobile-brand-logo:hover .mobile-logo-img {
   transform: scale(1.05);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-site-header {
+    transition: height 0.01s, background-color 0.01s, border-color 0.01s, box-shadow 0.01s;
+  }
+  
+  .mobile-brand-logo:hover .mobile-logo-img {
+    transform: none;
+  }
 }
 
 /* ── Right side: CTA + hamburger ── */
@@ -96,7 +109,8 @@
   height: 2px;
   background-color: var(--color-text-primary);
   border-radius: 4px;
-  transition: var(--transition-smooth);
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              opacity 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   display: block;
 }
 
@@ -110,6 +124,12 @@
 }
 .mobile-menu-toggle.open .hamburger-bar:nth-child(3) {
   transform: translateY(-7px) rotate(-45deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hamburger-bar {
+    transition: transform 0.01s, opacity 0.01s;
+  }
 }
 
 /* ── Full-screen nav overlay ── */
@@ -150,7 +170,9 @@
   align-items: center;
   padding: 4px 16px;
   border-radius: 8px;
-  transition: color 0.25s ease, background 0.25s ease;
+  transition: color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              background 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   letter-spacing: -0.01em;
 }
 
@@ -158,6 +180,23 @@
 .mobile-nav-link:focus-visible {
   color: var(--color-accent-teal);
   background: var(--color-accent-teal-muted);
+  transform: translateX(4px);
+}
+
+.mobile-nav-link--active {
+  color: var(--color-accent-teal);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-nav-link {
+    transition: color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                background 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  
+  .mobile-nav-link:hover,
+  .mobile-nav-link:focus-visible {
+    transform: none;
+  }
 }
 
 /* ── CTA inside overlay ── */
@@ -183,11 +222,17 @@
 .mobile-start-project svg {
   width: 14px;
   height: 14px;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .mobile-start-project:hover svg {
   transform: translateX(4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-start-project:hover svg {
+    transform: none;
+  }
 }
 
 /* ── Very narrow screens (320px) ── */

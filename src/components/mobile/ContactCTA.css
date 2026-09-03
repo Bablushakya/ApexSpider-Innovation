@@ -46,11 +46,20 @@
   font-weight: 500;
   color: var(--color-accent-teal);
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: inline-block;
 }
 
 .mobile-contact-email-link:hover {
   color: var(--color-text-primary);
+  transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-contact-email-link:hover {
+    transform: none;
+  }
 }
 
 .mobile-contact-status-note {
@@ -148,4 +157,48 @@
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+/* ── Form input focus animations ── */
+.form-input {
+  transition: border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.form-input:focus {
+  border-color: var(--color-accent-teal);
+  box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.1), 
+              0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.form-textarea {
+  transition: border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.form-textarea:focus {
+  border-color: var(--color-accent-teal);
+  box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.1), 
+              0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.form-select {
+  transition: border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.form-select:focus {
+  border-color: var(--color-accent-teal);
+  box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.4; }
+  }
+  
+  @keyframes spin {
+    to { transform: none; }
+  }
 }

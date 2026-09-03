@@ -2,79 +2,138 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ABOUT_CONTENT, CAPABILITIES } from '../../constants/about.jsx';
 import { EASE } from '../../constants/animations';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import './About.css';
 
-const capabilityContainerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.08, delayChildren: 0.15 } },
-};
-
-const capabilityItemVariants = {
-  hidden: { opacity: 0, y: 20, filter: 'blur(3px)' },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-    transition: { duration: 0.6, ease: EASE.premium },
-  },
-};
-
 export default function About() {
+  const prefersReducedMotion = useReducedMotion();
+  const paragraphs = ABOUT_CONTENT.paragraphs || [];
+  const standards = ABOUT_CONTENT.standards || [];
+
+  const capabilityContainerVariants = {
+    hidden: {},
+    visible: { 
+      transition: { 
+        staggerChildren: prefersReducedMotion ? 0 : 0.1, 
+        delayChildren: prefersReducedMotion ? 0 : 0.2 
+      } 
+    },
+  };
+
+  const capabilityItemVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: prefersReducedMotion ? 0 : 20, 
+      filter: prefersReducedMotion ? 'blur(0px)' : 'blur(3px)' 
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: 'blur(0px)',
+      transition: { 
+        duration: prefersReducedMotion ? 0.01 : 0.6, 
+        ease: EASE.premium 
+      },
+    },
+  };
+
   return (
     <section
       className="about-section section-padding"
       id="about"
       aria-labelledby="about-heading"
     >
-      {/* Ambient background blob */}
-      <div className="glow-blob glow-blob-teal about-blob" aria-hidden="true" />
+      <motion.div 
+        className="glow-blob glow-blob-teal about-blob" 
+        aria-hidden="true"
+        initial={{ opacity: 0, scale: 0.8 }}
+        whileInView={{ opacity: 0.15, scale: 1 }}
+        viewport={{ once: true, margin: '-20%' }}
+        transition={{ 
+          duration: prefersReducedMotion ? 0.01 : 1.5, 
+          ease: EASE.smooth 
+        }}
+      />
 
       <div className="container about-container">
-
         {/* ── Left: Story ──────────────────────────────────── */}
         <motion.div
           className="about-content"
-          initial={{ opacity: 0, y: 30, filter: 'blur(5px)' }}
+          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 30, filter: prefersReducedMotion ? 'blur(0px)' : 'blur(5px)' }}
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-10%' }}
-          transition={{ duration: 0.9, ease: EASE.premium }}
+          transition={{ duration: prefersReducedMotion ? 0.01 : 0.9, ease: EASE.premium }}
         >
-          <span className="tag">{ABOUT_CONTENT.tag}</span>
+          <span className="tag">{ABOUT_CONTENT.tag || 'Company'}</span>
           <h2 id="about-heading" className="about-title">
-            {ABOUT_CONTENT.title}
+            {ABOUT_CONTENT.title || 'Building Software with Precision'}
           </h2>
-          {ABOUT_CONTENT.paragraphs.map((para, idx) => (
-            <p key={idx} className="about-text">{para}</p>
+          {paragraphs.map((para, idx) => (
+            <motion.p 
+              key={idx} 
+              className="about-text"
+              initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ 
+                duration: prefersReducedMotion ? 0.01 : 0.7, 
+                ease: EASE.smooth, 
+                delay: prefersReducedMotion ? 0 : 0.15 + idx * 0.1 
+              }}
+            >
+              {para}
+            </motion.p>
           ))}
 
-          <div className="about-standards-list">
-            {ABOUT_CONTENT.standards.map((standard, idx) => (
-              <div key={idx} className="standard-item">
-                <span className="standard-icon" aria-hidden="true">✓</span>
-                <div>
-                  <h3 className="standard-title">{standard.title}</h3>
-                  <p className="standard-desc">{standard.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          {standards.length > 0 && (
+            <motion.div 
+              className="about-standards-list"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ 
+                duration: prefersReducedMotion ? 0.01 : 0.6, 
+                delay: prefersReducedMotion ? 0 : 0.4 
+              }}
+            >
+              {standards.map((standard, idx) => (
+                <motion.div 
+                  key={idx} 
+                  className="standard-item"
+                  initial={{ opacity: 0, x: prefersReducedMotion ? 0 : -15 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ 
+                    duration: prefersReducedMotion ? 0.01 : 0.5, 
+                    ease: EASE.smooth, 
+                    delay: prefersReducedMotion ? 0 : 0.5 + idx * 0.12 
+                  }}
+                >
+                  <span className="standard-icon" aria-hidden="true">✓</span>
+                  <div>
+                    <h3 className="standard-title">{standard.title}</h3>
+                    <p className="standard-desc">{standard.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
         </motion.div>
 
         {/* ── Right: Capabilities ──────────────────────────── */}
         <motion.div
           className="about-visual"
-          initial={{ opacity: 0, y: 35, scale: 0.98, filter: 'blur(6px)' }}
+          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 35, scale: prefersReducedMotion ? 1 : 0.98, filter: prefersReducedMotion ? 'blur(0px)' : 'blur(6px)' }}
           whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-10%' }}
-          transition={{ duration: 0.9, ease: EASE.premium, delay: 0.15 }}
+          transition={{ duration: prefersReducedMotion ? 0.01 : 0.9, ease: EASE.premium, delay: prefersReducedMotion ? 0 : 0.2 }}
         >
           <div className="capabilities-container glass-panel">
-            <h3 className="capabilities-title">Our Capabilities</h3>
+            <h3 className="capabilities-title">Engineering Standards</h3>
             <p className="capabilities-subtitle">
-              Services we use to design, build, and scale digital products.
+              Core benchmarks and architectural standards built into every product.
             </p>
 
-            {/* Capabilities grid */}
             <motion.div
               className="capabilities-grid"
               variants={capabilityContainerVariants}
@@ -82,20 +141,35 @@ export default function About() {
               whileInView="visible"
               viewport={{ once: true }}
             >
-              {CAPABILITIES.map((capability) => (
+              {(CAPABILITIES || []).map((capability) => (
                 <motion.div
                   key={capability.id}
                   className="capability-card"
                   variants={capabilityItemVariants}
-                  whileHover={{
-                    y: -4,
-                    borderColor: 'var(--color-accent-teal)',
-                  }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+                  whileHover={
+                    prefersReducedMotion 
+                      ? {} 
+                      : {
+                          y: -4,
+                          borderColor: 'var(--color-accent-teal)',
+                          transition: { duration: 0.25, ease: EASE.smooth }
+                        }
+                  }
                 >
-                  <div className="capability-icon">
+                  <motion.div 
+                    className="capability-icon"
+                    whileHover={
+                      prefersReducedMotion 
+                        ? {} 
+                        : { 
+                            scale: 1.1, 
+                            rotate: 5,
+                            transition: { duration: 0.25, ease: EASE.smooth }
+                          }
+                    }
+                  >
                     {capability.icon}
-                  </div>
+                  </motion.div>
                   <h4 className="capability-title">{capability.title}</h4>
                   <p className="capability-description">{capability.description}</p>
                 </motion.div>
@@ -103,7 +177,6 @@ export default function About() {
             </motion.div>
           </div>
         </motion.div>
-
       </div>
     </section>
   );

@@ -1,31 +1,37 @@
 /**
- * Process/Methodology steps - Single source of truth
- * Used by both Desktop and Mobile Process components
+ * Process / Methodology steps - Single source of truth
+ * Used by Desktop & Mobile Process components, Service Detail pages, and About page.
  */
 
 export const PROCESS_STEPS = [
   {
     num: '01',
-    phase: 'Architect',
-    label: 'Strategy & Requirements',
-    desc: 'We map data schemas, outline user scenarios, and finalize architecture blueprints before writing a single line of code.'
+    phase: 'Discover',
+    label: 'Discovery & Requirements',
+    desc: 'We analyze your business workflows, operational goals, and technical requirements to define clear objectives.',
   },
   {
     num: '02',
-    phase: 'Design',
-    label: 'High-Fidelity Mockups',
-    desc: 'Crafting responsive user interfaces and building clickable prototypes to align on interactions and styling.'
+    phase: 'Plan',
+    label: 'Architecture & Strategy',
+    desc: 'We map data schemas, API contracts, security protocols, and system architecture before writing code.',
   },
   {
     num: '03',
-    phase: 'Develop',
-    label: 'Development',
-    desc: 'Approved designs are transformed into high-performance digital solutions using clean architecture, secure coding, version control, continuous testing, and agile development practices.'
+    phase: 'Design',
+    label: 'UI/UX & Prototyping',
+    desc: 'Crafting responsive user interfaces and interactive prototypes to align on styling, flows, and usability.',
   },
   {
     num: '04',
-    phase: 'Deploy',
-    label: 'Staging & Integration',
-    desc: 'Running load tests, security scans, and system audits on staging before conducting a seamless production launch.'
-  }
+    phase: 'Build',
+    label: 'Development & Integration',
+    desc: 'Building high-performance software with clean code, database integrations, and automated quality testing.',
+  },
+  {
+    num: '05',
+    phase: 'Launch',
+    label: 'Deployment & Support',
+    desc: 'Executing staging audits, production rollout, and providing ongoing monitoring, updates, and maintenance.',
+  },
 ];

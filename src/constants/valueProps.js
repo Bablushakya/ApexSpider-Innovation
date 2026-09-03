@@ -1,28 +1,31 @@
 /**
- * Value Propositions data - Single source of truth
+ * Value Propositions / Core Principles data - Single source of truth
  * Used by both Desktop and Mobile ValueProps components
  */
 
 export const VALUE_PROPS = [
   {
-    metric: '99.9',
-    metricSuffix: '%',
-    metricLabel: 'Prototype Uptime',
-    title: 'Engineering Excellence',
-    desc: 'We architect systems with fail-safes and optimized querying to ensure reliability under heavy operational loads.'
+    number: '01',
+    title: 'Business-First Development',
+    subtitle: 'We understand the workflow before building the technology.',
+    desc: 'We spend time analyzing your actual business operations, constraints, and objectives first. The result is technology that fits how your team works.',
   },
   {
-    metric: '2',
-    metricSuffix: '',
-    metricLabel: 'Projects Optimised',
-    title: 'Web Development',
-    desc: 'We build high-performance websites and web applications focused on speed, responsiveness, SEO, security, and exceptional user experience using modern development technologies.'
+    number: '02',
+    title: 'Custom, Not Cookie-Cutter',
+    subtitle: 'Solutions designed around your actual business requirements.',
+    desc: 'We do not force your business into pre-packaged templates. Every database schema, interface, and workflow integration is built for your specific needs.',
   },
   {
-    metric: '1:1',
-    metricSuffix: '',
-    metricLabel: 'Design Fidelity',
-    title: 'Premium User Interfaces',
-    desc: 'We bridge design and engineering seamlessly, ensuring mockups translate identically to the final React application.'
-  }
+    number: '03',
+    title: 'Scalable Architecture',
+    subtitle: 'Systems built with future growth in mind.',
+    desc: 'Clean code, modular design, and robust API contracts ensure your application can handle increased user workloads and evolving business needs over time.',
+  },
+  {
+    number: '04',
+    title: 'One Technology Partner',
+    subtitle: 'End-to-end integration across your digital ecosystem.',
+    desc: 'Website → Application → Database → AI → Analytics → Automation. We handle your entire technology stack so you do not have to manage multiple vendors.',
+  },
 ];

@@ -1,8 +1,10 @@
 import React, { useState, useRef, useCallback, lazy, Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import { useIsMobile } from './hooks/useIsMobile';
+import ScrollToTop from './components/layout/ScrollToTop';
 
-// Desktop Components
+// Desktop Components (Home page only)
 import DesktopHeader from './components/desktop/Header';
 import DesktopHero from './components/desktop/Hero';
 import DesktopServices from './components/desktop/Services';
@@ -15,9 +17,8 @@ import DesktopFAQ from './components/desktop/FAQ';
 import DesktopContactCTA from './components/desktop/ContactCTA';
 import DesktopFooter from './components/desktop/Footer';
 import Preloader from './components/desktop/Preloader';
-import ProjectInquiryModal from './components/desktop/ProjectInquiryModal';
 
-// Mobile Components
+// Mobile Components (Home page only)
 import MobileHeader from './components/mobile/Header';
 import MobileHero from './components/mobile/Hero';
 import MobileServices from './components/mobile/Services';
@@ -30,17 +31,64 @@ import MobileFAQ from './components/mobile/FAQ';
 import MobileContactCTA from './components/mobile/ContactCTA';
 import MobileFooter from './components/mobile/Footer';
 
-// Lazy-load legal and utility pages — they are never in the initial bundle
+// Multi-page pages — lazy loaded so they don't inflate the home bundle
+const AboutPage        = lazy(() => import('./pages/AboutPage'));
+const ServicesPage     = lazy(() => import('./pages/ServicesPage'));
+const ServiceDetailPage = lazy(() => import('./pages/ServiceDetailPage'));
+const PortfolioPage    = lazy(() => import('./pages/PortfolioPage'));
+const CaseStudyPage    = lazy(() => import('./pages/CaseStudyPage'));
+const ContactPage      = lazy(() => import('./pages/ContactPage'));
+
+// Legal / utility pages — lazy loaded
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const Terms         = lazy(() => import('./pages/Terms'));
 const Security      = lazy(() => import('./pages/Security'));
 const NotFound      = lazy(() => import('./pages/NotFound'));
 
-/** Full one-page marketing site - Desktop Version */
-function DesktopHomePage({ logoNavRef, navReady, heroReady, onOpenInquiry }) {
+/** Page-level loading fallback with spinner animation */
+function PageLoader() {
+  return (
+    <div
+      role="status"
+      aria-label="Loading page"
+      style={{
+        minHeight: '80vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '20px',
+        background: 'hsl(224, 40%, 7%)',
+        color: 'hsl(210, 40%, 98%)',
+        fontFamily: 'Inter, sans-serif',
+        fontSize: '0.95rem',
+      }}
+    >
+      <div
+        style={{
+          width: '48px',
+          height: '48px',
+          border: '3px solid rgba(255, 255, 255, 0.1)',
+          borderTop: '3px solid hsl(180, 100%, 50%)',
+          borderRadius: '50%',
+          animation: 'pageLoaderSpin 0.8s linear infinite',
+        }}
+      />
+      <style>{`
+        @keyframes pageLoaderSpin {
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
+      <span>Loading…</span>
+    </div>
+  );
+}
+
+/** Full one-page home — Desktop */
+function DesktopHomePage({ logoNavRef, navReady, heroReady }) {
   return (
     <>
-      <DesktopHeader ref={logoNavRef} navReady={navReady} onOpenInquiry={onOpenInquiry} />
+      <DesktopHeader ref={logoNavRef} navReady={navReady} />
       <main id="main-content">
         <DesktopHero heroReady={heroReady} />
         <DesktopServices />
@@ -57,11 +105,11 @@ function DesktopHomePage({ logoNavRef, navReady, heroReady, onOpenInquiry }) {
   );
 }
 
-/** Full one-page marketing site - Mobile Version */
-function MobileHomePage({ logoNavRef, navReady, heroReady, onOpenInquiry }) {
+/** Full one-page home — Mobile */
+function MobileHomePage({ logoNavRef, navReady, heroReady }) {
   return (
     <>
-      <MobileHeader ref={logoNavRef} navReady={navReady} onOpenInquiry={onOpenInquiry} />
+      <MobileHeader ref={logoNavRef} navReady={navReady} />
       <main id="main-content">
         <MobileHero heroReady={heroReady} />
         <MobileServices />
@@ -78,74 +126,19 @@ function MobileHomePage({ logoNavRef, navReady, heroReady, onOpenInquiry }) {
   );
 }
 
-/** Page-level loading fallback */
-function PageLoader() {
-  return (
-    <div
-      role="status"
-      aria-label="Loading page"
-      style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'hsl(224, 40%, 7%)',
-        color: 'hsl(210, 40%, 98%)',
-        fontFamily: 'Inter, sans-serif',
-        fontSize: '0.95rem',
-      }}
-    >
-      Loading…
-    </div>
-  );
-}
-
 export default function App() {
-  // Detect mobile device
   const isMobile = useIsMobile();
+  const location = useLocation();
 
-  /*
-    Three-stage gate:
-    ─────────────────────────────────────────────────────
-    showPreloader  — controls whether <Preloader> is mounted
-    navReady       — passed to Header; triggers nav stagger
-    heroReady      — passed to Hero;   triggers content reveal
-    ─────────────────────────────────────────────────────
-    Note: Preloader only shown on desktop for cinematic effect
-  */
   const [showPreloader, setShowPreloader] = useState(!isMobile);
-  const [navReady,      setNavReady]      = useState(isMobile); // Mobile starts ready
-  const [heroReady,     setHeroReady]     = useState(isMobile); // Mobile starts ready
-  
-  // Project Inquiry Modal state
-  const [isInquiryOpen, setIsInquiryOpen] = useState(false);
+  const [navReady,      setNavReady]      = useState(isMobile);
+  const [heroReady,     setHeroReady]     = useState(isMobile);
 
-  /*
-    logoNavRef is forwarded into <Header> so that the
-    preloader can read the navbar logo's exact position
-    (getBoundingClientRect) and fly toward it.
-  */
   const logoNavRef = useRef(null);
 
-  const handlePreloaderComplete = useCallback(() => {
-    setShowPreloader(false);
-  }, []);
-
-  const handleNavReady = useCallback(() => {
-    setNavReady(true);
-  }, []);
-
-  const handleHeroReady = useCallback(() => {
-    setHeroReady(true);
-  }, []);
-
-  const openInquiryModal = useCallback(() => {
-    setIsInquiryOpen(true);
-  }, []);
-
-  const closeInquiryModal = useCallback(() => {
-    setIsInquiryOpen(false);
-  }, []);
+  const handlePreloaderComplete = useCallback(() => setShowPreloader(false), []);
+  const handleNavReady          = useCallback(() => setNavReady(true),       []);
+  const handleHeroReady         = useCallback(() => setHeroReady(true),      []);
 
   return (
     <>
@@ -154,83 +147,128 @@ export default function App() {
         Skip to main content
       </a>
 
-      {/* Project Inquiry Modal - Desktop only */}
-      {!isMobile && (
-        <ProjectInquiryModal 
-          isOpen={isInquiryOpen} 
-          onClose={closeInquiryModal} 
-        />
-      )}
+      {/* Scroll to top on every route change */}
+      <ScrollToTop />
 
-      <Routes>
-        {/* ── Home page with conditional desktop/mobile rendering ── */}
-        <Route
-          path="/"
-          element={
-            <>
-              {showPreloader && !isMobile && (
-                <Preloader
-                  onComplete={handlePreloaderComplete}
-                  onNavReady={handleNavReady}
-                  onHeroReady={handleHeroReady}
-                  logoNavRef={logoNavRef}
-                />
-              )}
-              {isMobile ? (
-                <MobileHomePage
-                  logoNavRef={logoNavRef}
-                  navReady={navReady}
-                  heroReady={heroReady}
-                  onOpenInquiry={openInquiryModal}
-                />
-              ) : (
-                <DesktopHomePage
-                  logoNavRef={logoNavRef}
-                  navReady={navReady}
-                  heroReady={heroReady}
-                  onOpenInquiry={openInquiryModal}
-                />
-              )}
-            </>
-          }
-        />
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          {/* ── Home — one-page experience preserved ── */}
+          <Route
+            path="/"
+            element={
+              <>
+                {showPreloader && !isMobile && (
+                  <Preloader
+                    onComplete={handlePreloaderComplete}
+                    onNavReady={handleNavReady}
+                    onHeroReady={handleHeroReady}
+                    logoNavRef={logoNavRef}
+                  />
+                )}
+                {isMobile ? (
+                  <MobileHomePage
+                    logoNavRef={logoNavRef}
+                    navReady={navReady}
+                    heroReady={heroReady}
+                  />
+                ) : (
+                  <DesktopHomePage
+                    logoNavRef={logoNavRef}
+                    navReady={navReady}
+                    heroReady={heroReady}
+                  />
+                )}
+              </>
+            }
+          />
 
-        {/* ── Legal pages — lazy loaded ── */}
-        <Route
-          path="/privacy"
-          element={
-            <Suspense fallback={<PageLoader />}>
-              <PrivacyPolicy />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/terms"
-          element={
-            <Suspense fallback={<PageLoader />}>
-              <Terms />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/security"
-          element={
-            <Suspense fallback={<PageLoader />}>
-              <Security />
-            </Suspense>
-          }
-        />
+          {/* ── New multi-page routes ── */}
+          <Route
+            path="/about"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <AboutPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/services"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <ServicesPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/services/:slug"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <ServiceDetailPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/portfolio"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <PortfolioPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/portfolio/:slug"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <CaseStudyPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/contact"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <ContactPage />
+              </Suspense>
+            }
+          />
 
-        {/* ── 404 catch-all ── */}
-        <Route
-          path="*"
-          element={
-            <Suspense fallback={<PageLoader />}>
-              <NotFound />
-            </Suspense>
-          }
-        />
-      </Routes>
+          {/* ── Legal pages ── */}
+          <Route
+            path="/privacy"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <PrivacyPolicy />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/terms"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <Terms />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/security"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <Security />
+              </Suspense>
+            }
+          />
+
+          {/* ── 404 ── */}
+          <Route
+            path="*"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <NotFound />
+              </Suspense>
+            }
+          />
+        </Routes>
+      </AnimatePresence>
     </>
   );
 }

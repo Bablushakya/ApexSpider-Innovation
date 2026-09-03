@@ -191,7 +191,12 @@ button {
   background-clip: text;
 }
 
-/* Button Variants */
+/* ═══════════════════════════════════════════════════════════
+   BUTTON MICRO-INTERACTIONS
+   Premium hover, active, and focus states with smooth animations
+   ═══════════════════════════════════════════════════════════ */
+
+/* Base Button */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -204,6 +209,9 @@ button {
   letter-spacing: 0.01em;
   gap: 8px;
   box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
 }
 
 @media (max-width: 768px) {
@@ -213,31 +221,111 @@ button {
   }
 }
 
+/* Primary Button - Gradient with glow effect */
 .btn-primary {
   background: linear-gradient(135deg, var(--color-accent-teal) 0%, var(--color-accent-indigo) 100%);
   color: var(--color-bg-deep);
   font-weight: 600;
+  transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              box-shadow 0.25s cubic-bezier(0.25, 0.8, 0.25, 1),
+              filter 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: -1;
 }
 
 .btn-primary:hover {
-  box-shadow: var(--shadow-teal-glow);
-  transform: translateY(-2px);
-  filter: brightness(1.1);
+  box-shadow: 0 8px 24px rgba(0, 255, 255, 0.3), 0 0 32px rgba(99, 102, 241, 0.2);
+  transform: translateY(-3px) scale(1.02);
+  filter: brightness(1.15);
 }
 
+.btn-primary:hover::before {
+  opacity: 1;
+}
+
+.btn-primary:active {
+  transform: translateY(-1px) scale(0.98);
+  box-shadow: 0 4px 16px rgba(0, 255, 255, 0.25);
+  transition-duration: 0.1s;
+}
+
+.btn-primary:focus-visible {
+  outline: 2px solid var(--color-accent-teal);
+  outline-offset: 4px;
+}
+
+/* Arrow icon animation in primary buttons */
+.btn-primary svg {
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.btn-primary:hover svg {
+  transform: translateX(4px);
+}
+
+/* Secondary Button - Glass morphism with border glow */
 .btn-secondary {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border-glass);
   color: var(--color-text-primary);
   backdrop-filter: blur(8px);
+  transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1),
+              background 0.25s cubic-bezier(0.25, 0.8, 0.25, 1),
+              border-color 0.25s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.btn-secondary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--color-accent-teal) 0%, var(--color-accent-indigo) 100%);
+  opacity: 0;
+  transition: opacity 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: -1;
 }
 
 .btn-secondary:hover {
   background: rgba(255, 255, 255, 0.08);
-  border-color: var(--color-text-primary);
-  transform: translateY(-2px);
+  border-color: var(--color-accent-teal);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(0, 255, 255, 0.15);
 }
 
+.btn-secondary:hover::before {
+  opacity: 0.05;
+}
+
+.btn-secondary:active {
+  transform: translateY(-1px) scale(0.98);
+  box-shadow: 0 4px 12px rgba(0, 255, 255, 0.1);
+  transition-duration: 0.1s;
+}
+
+.btn-secondary:focus-visible {
+  outline: 2px solid var(--color-accent-teal);
+  outline-offset: 4px;
+}
+
+/* Arrow icon animation in secondary buttons */
+.btn-secondary svg {
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.btn-secondary:hover svg {
+  transform: translateX(4px);
+}
+
+/* Text Button - Underline reveal effect */
 .btn-text {
   color: var(--color-accent-teal);
   padding: 4px 0;
@@ -246,17 +334,19 @@ button {
   min-height: 44px;
   display: inline-flex;
   align-items: center;
+  gap: 6px;
+  transition: color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .btn-text::after {
   content: '';
   position: absolute;
-  bottom: 0;
+  bottom: 2px;
   left: 0;
   width: 0%;
-  height: 1px;
-  background-color: var(--color-accent-teal);
-  transition: var(--transition-smooth);
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-accent-teal) 0%, var(--color-accent-indigo) 100%);
+  transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .btn-text:hover::after {
@@ -265,6 +355,159 @@ button {
 
 .btn-text:hover {
   color: var(--color-text-primary);
+}
+
+.btn-text:active {
+  transform: scale(0.97);
+}
+
+.btn-text:focus-visible {
+  outline: 2px solid var(--color-accent-teal);
+  outline-offset: 4px;
+}
+
+/* Arrow icon animation in text buttons */
+.btn-text svg {
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.btn-text:hover svg {
+  transform: translateX(4px);
+}
+
+/* Icon Buttons - Circular with scale effect */
+.btn-icon {
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-glass);
+  color: var(--color-text-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1),
+              background 0.25s cubic-bezier(0.25, 0.8, 0.25, 1),
+              border-color 0.25s cubic-bezier(0.25, 0.8, 0.25, 1),
+              color 0.25s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.btn-icon:hover {
+  background: rgba(0, 255, 255, 0.1);
+  border-color: var(--color-accent-teal);
+  color: var(--color-accent-teal);
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 4px 16px rgba(0, 255, 255, 0.2);
+}
+
+.btn-icon:active {
+  transform: scale(0.95);
+  transition-duration: 0.1s;
+}
+
+.btn-icon:focus-visible {
+  outline: 2px solid var(--color-accent-teal);
+  outline-offset: 4px;
+}
+
+.btn-icon svg {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.btn-icon:hover svg {
+  transform: scale(1.1);
+}
+
+/* Disabled Button State */
+.btn:disabled,
+.btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+  filter: grayscale(0.5);
+}
+
+/* Loading State */
+.btn.loading {
+  position: relative;
+  color: transparent;
+  pointer-events: none;
+}
+
+.btn.loading::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: btnSpinner 0.6s linear infinite;
+  color: inherit;
+}
+
+@keyframes btnSpinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Mobile: Reduce transform intensity for better touch feedback */
+@media (max-width: 768px) {
+  .btn-primary:hover,
+  .btn-secondary:hover {
+    transform: translateY(-2px) scale(1.01);
+  }
+  
+  .btn-icon:hover {
+    transform: scale(1.08) rotate(3deg);
+  }
+}
+
+/* Accessibility: Disable animations when reduced motion is preferred */
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .btn-primary,
+  .btn-secondary,
+  .btn-text,
+  .btn-icon,
+  .btn-primary:hover,
+  .btn-secondary:hover,
+  .btn-text:hover,
+  .btn-icon:hover,
+  .btn-primary:active,
+  .btn-secondary:active,
+  .btn-text:active,
+  .btn-icon:active,
+  .btn-primary svg,
+  .btn-secondary svg,
+  .btn-text svg,
+  .btn-icon svg,
+  .btn-primary:hover svg,
+  .btn-secondary:hover svg,
+  .btn-text:hover svg,
+  .btn-icon:hover svg,
+  .btn::before,
+  .btn-primary::before,
+  .btn-secondary::before {
+    transform: none !important;
+    animation: none !important;
+    transition: color 0.01s, background 0.01s, border-color 0.01s, opacity 0.01s, box-shadow 0.01s, filter 0.01s;
+  }
+  
+  .btn-text::after {
+    transition: width 0.01s;
+  }
+  
+  .btn.loading::after {
+    animation: none !important;
+    opacity: 0.5;
+  }
 }
 
 /* Section Header styling */
@@ -345,6 +588,17 @@ button {
 
 .pulse-glow-indigo {
   animation: pulseGlow 10s infinite ease-in-out 2s;
+}
+
+/* Image reveal animation styling */
+.animated-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.animated-image.loading {
+  opacity: 0;
 }
 
 /* Forms styling */

@@ -11,10 +11,19 @@
   grid-template-columns: 1fr 1.1fr;
   overflow: hidden;
   align-items: center;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .work-card:hover {
   transform: translateY(-4px);
+  box-shadow: 0 16px 50px 0 rgba(0, 255, 255, 0.08);
+  border-color: rgba(0, 255, 255, 0.2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-card:hover {
+    transform: none;
+  }
 }
 
 .work-visual-wrapper {
@@ -88,6 +97,18 @@
   object-fit: cover;
   object-position: top;
   max-height: 340px;
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-browser-mockup,
+  .work-project-img {
+    transition: none;
+  }
+  
+  .work-card:hover .work-browser-mockup {
+    transform: none;
+  }
 }
 
 .work-content-wrapper {

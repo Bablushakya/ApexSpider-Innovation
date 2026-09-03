@@ -19,8 +19,8 @@
 
 .process-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 32px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
   position: relative;
   z-index: 2;
 }
@@ -51,7 +51,7 @@
   justify-content: center;
   margin-bottom: 12px;
   box-shadow: var(--shadow-premium);
-  transition: var(--transition-smooth);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .step-num {
@@ -59,6 +59,7 @@
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--color-text-secondary);
+  transition: color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .step-phase {
@@ -67,12 +68,14 @@
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--color-text-secondary);
+  transition: color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .step-content-card {
   padding: 30px 24px;
   width: 100%;
   height: 100%;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 /* Hover and active updates */
@@ -88,6 +91,23 @@
 
 .process-step:hover .step-phase {
   color: var(--color-text-primary);
+}
+
+.process-step:hover .step-content-card {
+  box-shadow: 0 12px 40px 0 rgba(0, 255, 255, 0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .step-number-circle,
+  .step-num,
+  .step-phase,
+  .step-content-card {
+    transition: none;
+  }
+  
+  .process-step:hover .step-number-circle {
+    transform: none;
+  }
 }
 
 .step-title {

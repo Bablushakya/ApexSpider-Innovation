@@ -116,7 +116,7 @@
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--border-glass);
   border-radius: 12px;
-  transition: var(--transition-smooth);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   cursor: default;
 }
 
@@ -137,7 +137,7 @@
   border: 1px solid rgba(0, 255, 255, 0.2);
   color: var(--color-accent-teal);
   margin-bottom: 16px;
-  transition: var(--transition-smooth);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .capability-card:hover .capability-icon {
@@ -152,6 +152,19 @@
   width: 22px;
   height: 22px;
   stroke-width: 2;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .capability-card,
+  .capability-icon,
+  .capability-icon svg {
+    transition: none;
+  }
+  
+  .capability-card:hover .capability-icon {
+    transform: none;
+  }
 }
 
 .capability-title {

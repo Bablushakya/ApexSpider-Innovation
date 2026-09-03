@@ -1,31 +1,16 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FAQS } from '../../constants/faq';
 import { EASE } from '../../constants/animations';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import './FAQ.css';
-
-const FAQS_DATA = FAQS;
 
 export default function FAQ() {
   const [activeIndex, setActiveIndex] = useState(null);
+  const prefersReduced = useReducedMotion();
 
   const handleToggle = (index) => {
     setActiveIndex((prev) => (prev === index ? null : index));
-  };
-
-  const containerVariants = {
-    hidden:  {},
-    visible: { transition: { staggerChildren: 0.1 } },
-  };
-
-  const itemVariants = {
-    hidden:  { opacity: 0, y: 25, filter: 'blur(4px)' },
-    visible: {
-      opacity: 1,
-      y: 0,
-      filter: 'blur(0px)',
-      transition: { duration: 0.8, ease: EASE.premium },
-    },
   };
 
   return (
@@ -35,34 +20,24 @@ export default function FAQ() {
       aria-labelledby="faq-heading"
     >
       <div className="container">
-        {/* Section Header */}
         <motion.div
           className="section-header"
-          initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
+          initial={{ opacity: 0, y: prefersReduced ? 0 : 20, filter: prefersReduced ? 'blur(0px)' : 'blur(4px)' }}
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-10%' }}
-          transition={{ duration: 0.8, ease: EASE.premium }}
+          transition={{ duration: prefersReduced ? 0.01 : 0.8, ease: EASE.premium }}
         >
-          <span className="tag">Support</span>
+          <span className="tag">FAQ</span>
           <h2 id="faq-heading">Frequently Asked Questions</h2>
           <p>
-            Common questions about our coding standards, development timelines,
-            and integration methodologies.
+            Common business questions about our development process, technology capabilities, timelines, and ongoing support.
           </p>
         </motion.div>
 
-        {/* Accordion list */}
-        <motion.div
-          className="faq-container"
-          role="list"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-8%' }}
-        >
-          {FAQS_DATA.map((faq, idx) => {
-            const isOpen    = activeIndex === idx;
-            const answerId  = `faq-answer-${idx}`;
+        <div className="faq-container" role="list">
+          {FAQS.map((faq, idx) => {
+            const isOpen = activeIndex === idx;
+            const answerId = `faq-answer-${idx}`;
             const questionId = `faq-question-${idx}`;
 
             return (
@@ -70,13 +45,11 @@ export default function FAQ() {
                 key={idx}
                 role="listitem"
                 className={`glass-panel faq-item${isOpen ? ' active' : ''}`}
-                variants={itemVariants}
+                initial={{ opacity: 0, y: prefersReduced ? 0 : 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-8%' }}
+                transition={{ duration: prefersReduced ? 0.01 : 0.7, ease: EASE.premium, delay: prefersReduced ? 0 : idx * 0.08 }}
               >
-                {/*
-                  The button is the ONLY interactive element.
-                  The outer div has no onClick — keyboard and pointer
-                  users both interact exclusively via the button.
-                */}
                 <button
                   id={questionId}
                   className="faq-question-btn"
@@ -85,7 +58,12 @@ export default function FAQ() {
                   onClick={() => handleToggle(idx)}
                 >
                   <span className="faq-question-text">{faq.q}</span>
-                  <span className="faq-arrow-icon" aria-hidden="true">
+                  <motion.span 
+                    className="faq-arrow-icon" 
+                    aria-hidden="true"
+                    animate={{ rotate: isOpen ? 180 : 0 }}
+                    transition={{ duration: prefersReduced ? 0.01 : 0.3, ease: EASE.smooth }}
+                  >
                     <svg
                       viewBox="0 0 24 24"
                       fill="none"
@@ -94,25 +72,49 @@ export default function FAQ() {
                     >
                       <polyline points="6 9 12 15 18 9" />
                     </svg>
-                  </span>
+                  </motion.span>
                 </button>
 
-                {/* CSS grid-template-rows height animation */}
-                <div
-                  id={answerId}
-                  className={`faq-answer${isOpen ? ' open' : ''}`}
-                  role="region"
-                  aria-labelledby={questionId}
-                  hidden={!isOpen}
-                >
-                  <div className="faq-answer-content">
-                    <p className="faq-answer-text">{faq.a}</p>
-                  </div>
-                </div>
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      id={answerId}
+                      className="faq-answer open"
+                      role="region"
+                      aria-labelledby={questionId}
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ 
+                        height: 'auto', 
+                        opacity: 1,
+                        transition: {
+                          height: { duration: prefersReduced ? 0.01 : 0.35, ease: EASE.smooth },
+                          opacity: { duration: prefersReduced ? 0.01 : 0.25, delay: prefersReduced ? 0 : 0.1 }
+                        }
+                      }}
+                      exit={{ 
+                        height: 0, 
+                        opacity: 0,
+                        transition: {
+                          height: { duration: prefersReduced ? 0.01 : 0.3, ease: EASE.smooth },
+                          opacity: { duration: prefersReduced ? 0.01 : 0.15 }
+                        }
+                      }}
+                    >
+                      <motion.div 
+                        className="faq-answer-content"
+                        initial={{ y: prefersReduced ? 0 : -10 }}
+                        animate={{ y: 0 }}
+                        transition={{ duration: prefersReduced ? 0.01 : 0.3, delay: prefersReduced ? 0 : 0.1 }}
+                      >
+                        <p className="faq-answer-text">{faq.a}</p>
+                      </motion.div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             );
           })}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -1,89 +1,57 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { VALUE_PROPS } from '../../constants/valueProps';
 import { EASE } from '../../constants/animations';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import './ValueProps.css';
 
-function AnimatedNumber({ value, duration = 1.6, delay = 0.1 }) {
-  const [displayValue, setDisplayValue] = useState(value.includes(':') ? '0:0' : '0');
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-10%" });
-  
-  const isFloat = value.includes('.');
-  const isRatio = value.includes(':');
-  
-  useEffect(() => {
-    if (!isInView) return;
-    
-    let startTimestamp = null;
-    const target = isRatio ? 1 : parseFloat(value);
-    
-    const step = (timestamp) => {
-      if (!startTimestamp) startTimestamp = timestamp;
-      const progress = Math.min((timestamp - startTimestamp) / (duration * 1000), 1);
-      
-      const current = progress * target;
-      
-      if (isRatio) {
-        const val = Math.floor(progress * 1);
-        setDisplayValue(`${val}:${val}`);
-      } else if (isFloat) {
-        setDisplayValue(current.toFixed(1));
-      } else {
-        setDisplayValue(Math.floor(current));
-      }
-      
-      if (progress < 1) {
-        window.requestAnimationFrame(step);
-      } else {
-        setDisplayValue(value);
-      }
-    };
-    
-    const timer = setTimeout(() => {
-      window.requestAnimationFrame(step);
-    }, delay * 1000);
-    
-    return () => clearTimeout(timer);
-  }, [isInView, value, duration, delay, isFloat, isRatio]);
-
-  return <span ref={ref}>{displayValue}</span>;
-}
-
 export default function MobileValueProps() {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <section className="mobile-value-section section-padding" id="value-props">
       <div className="container">
         <motion.div 
           className="section-header"
-          initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          viewport={{ once: true, margin: "-10%" }}
-          transition={{ duration: 0.8, ease: EASE.premium }}
+          initial={{ opacity: 0, y: 20, filter: prefersReducedMotion ? 'blur(0px)' : 'blur(4px)' }}
+          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          viewport={{ once: true, margin: '-10%' }}
+          transition={{ duration: prefersReducedMotion ? 0.01 : 0.8, ease: EASE.premium }}
         >
-          <span className="tag">Value Proposition</span>
+          <span className="tag">Why ApexSpider</span>
           <h2>Why Choose Us</h2>
-          <p>We combine deep engineering standards with premium aesthetic execution to launch products faster.</p>
+          <p>We combine business insight with senior engineering standards to build software that moves your business forward.</p>
         </motion.div>
 
         <div className="mobile-value-grid">
           {VALUE_PROPS.map((item, index) => (
             <motion.div 
-              key={index} 
+              key={item.number || index} 
               className="glass-panel mobile-value-card"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 25 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ duration: 0.7, ease: EASE.premium, delay: index * 0.1 }}
+              viewport={{ once: true, margin: '-10%' }}
+              transition={{ 
+                duration: prefersReducedMotion ? 0.01 : 0.6, 
+                ease: EASE.premium, 
+                delay: prefersReducedMotion ? 0 : index * 0.1 
+              }}
             >
-              <div className="mobile-metric-header">
-                <span className="mobile-metric-number text-gradient-cyan">
-                  <AnimatedNumber value={item.metric} delay={0.3 + index * 0.1} />
-                  {item.metricSuffix}
-                </span>
-                <span className="mobile-metric-badge">{item.metricLabel}</span>
-              </div>
+              <motion.div 
+                className="mobile-principle-number text-gradient-cyan"
+                initial={{ scale: 0.9, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ 
+                  duration: prefersReducedMotion ? 0.01 : 0.5, 
+                  ease: EASE.premium, 
+                  delay: prefersReducedMotion ? 0 : index * 0.1 + 0.15 
+                }}
+              >
+                {item.number}
+              </motion.div>
               <h3 className="mobile-value-title">{item.title}</h3>
+              {item.subtitle && <div className="mobile-value-subtitle">{item.subtitle}</div>}
               <p className="mobile-value-desc">{item.desc}</p>
             </motion.div>
           ))}

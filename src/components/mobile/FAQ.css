@@ -17,7 +17,8 @@
 .mobile-faq-item {
   padding: 14px 16px;
   border-radius: 10px;
-  transition: var(--transition-smooth);
+  transition: border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              background 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .mobile-faq-item.active {
@@ -48,6 +49,7 @@
   font-weight: 600;
   color: var(--color-text-primary);
   line-height: 1.4;
+  transition: color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 /* ── Chevron icon ── */
@@ -56,11 +58,10 @@
   width: 18px;
   height: 18px;
   color: var(--color-text-secondary);
-  transition: transform 0.3s ease, color 0.3s ease;
+  transition: color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .mobile-faq-item.active .mobile-faq-arrow-icon {
-  transform: rotate(180deg);
   color: var(--color-accent-teal);
 }
 
@@ -71,14 +72,7 @@
 
 /* ── Animated answer reveal ── */
 .mobile-faq-answer {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.3s ease;
   overflow: hidden;
-}
-
-.mobile-faq-answer.open {
-  grid-template-rows: 1fr;
 }
 
 .mobile-faq-answer-content {
@@ -91,4 +85,18 @@
   line-height: 1.6;
   color: var(--color-text-secondary);
   margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-faq-item {
+    transition: border-color 0.01s, background 0.01s;
+  }
+  
+  .mobile-faq-question-text {
+    transition: color 0.01s;
+  }
+  
+  .mobile-faq-arrow-icon {
+    transition: color 0.01s;
+  }
 }

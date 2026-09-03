@@ -1,55 +1,45 @@
-import React, { useState, useEffect, useCallback, forwardRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, forwardRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { NAV_LINKS, BRAND } from '../../constants/brand';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { NAV_LINKS, SERVICE_NAV_ITEMS, BRAND } from '../../constants/brand';
 import { EASE } from '../../constants/animations';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import logoImg from '../../assets/ApexSpiderLogo.png';
 import './Header.css';
 
-/*
-  Header accepts three props from App:
-  - navReady: boolean — when true, stagger-animate nav items in
-  - logoNavRef: forwarded ref — preloader reads this to fly the logo here
-  - onOpenInquiry: function — opens project inquiry modal
-*/
-const Header = forwardRef(function Header({ navReady = false, onOpenInquiry }, logoNavRef) {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
+const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
+  const [isScrolled, setIsScrolled]         = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const navigate    = useNavigate();
+  const prefersReduced = useReducedMotion();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close dropdown when clicking outside
   useEffect(() => {
-    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
-
-    return () => {
-      document.body.style.overflow = '';
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setIsDropdownOpen(false);
+      }
     };
-  }, [isMobileMenuOpen]);
-
-  const closeMobileMenu = useCallback(() => {
-    setIsMobileMenuOpen(false);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Navigation animation
   const navItemVariants = {
-    hidden: {
-      opacity: 0,
-      y: -12,
-    },
+    hidden:  { opacity: 0, y: prefersReduced ? 0 : -12 },
     visible: (i) => ({
-      opacity: 1,
+      opacity: 1, 
       y: 0,
-      transition: {
-        duration: 0.5,
-        ease: EASE.premium,
-        delay: i * 0.08,
+      transition: { 
+        duration: prefersReduced ? 0.01 : 0.5, 
+        ease: EASE.premium, 
+        delay: prefersReduced ? 0 : i * 0.08 
       },
     }),
   };
@@ -58,11 +48,8 @@ const Header = forwardRef(function Header({ navReady = false, onOpenInquiry }, l
     <header className={`site-header ${isScrolled ? 'scrolled' : ''}`} role="banner">
       <div className="container header-container">
 
-        <a
-          href="#hero"
-          className="brand-logo"
-          aria-label={`${BRAND.name} — return to top`}
-        >
+        {/* Logo */}
+        <Link to="/" className="brand-logo" aria-label={`${BRAND.name} — Home`}>
           <motion.img
             ref={logoNavRef}
             src={logoImg}
@@ -70,16 +57,13 @@ const Header = forwardRef(function Header({ navReady = false, onOpenInquiry }, l
             className="logo-img"
             width="46"
             height="46"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: navReady ? 1 : 0 }}
-            transition={{
-              duration: 0.18,
-              ease: 'easeOut',
-              delay: 0.05,
-            }}
+            initial={{ opacity: 0, scale: prefersReduced ? 1 : 0.95 }}
+            animate={{ opacity: navReady ? 1 : 0, scale: 1 }}
+            transition={{ duration: prefersReduced ? 0.01 : 0.4, ease: 'easeOut', delay: prefersReduced ? 0 : 0.05 }}
           />
-        </a>
+        </Link>
 
+        {/* Desktop Nav — always visible on desktop */}
         <nav className="desktop-nav" aria-label="Main navigation">
           <ul className="nav-list" role="list">
             {NAV_LINKS.map((link, i) => (
@@ -89,108 +73,89 @@ const Header = forwardRef(function Header({ navReady = false, onOpenInquiry }, l
                 variants={navItemVariants}
                 initial="hidden"
                 animate={navReady ? 'visible' : 'hidden'}
+                className={link.hasDropdown ? 'nav-item-dropdown' : ''}
+                ref={link.hasDropdown ? dropdownRef : null}
               >
-                <a href={link.href} className="nav-link">
-                  {link.name}
-                </a>
+                {link.hasDropdown ? (
+                  <button
+                    className={`nav-link nav-link-btn ${isDropdownOpen ? 'active' : ''}`}
+                    onClick={() => setIsDropdownOpen((prev) => !prev)}
+                    aria-expanded={isDropdownOpen}
+                    aria-haspopup="true"
+                  >
+                    {link.name}
+                    <motion.svg 
+                      className="dropdown-chevron" 
+                      width="12" 
+                      height="12" 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      strokeWidth="2.5" 
+                      aria-hidden="true"
+                      animate={{ rotate: isDropdownOpen ? 180 : 0 }}
+                      transition={{ duration: prefersReduced ? 0.01 : 0.25, ease: EASE.smooth }}
+                    >
+                      <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+                    </motion.svg>
+                  </button>
+                ) : (
+                  <NavLink
+                    to={link.href}
+                    className={({ isActive }) => `nav-link${isActive ? ' nav-link--active' : ''}`}
+                  >
+                    {link.name}
+                  </NavLink>
+                )}
+
+                {/* Services Dropdown */}
+                {link.hasDropdown && (
+                  <AnimatePresence>
+                    {isDropdownOpen && (
+                      <motion.div
+                        className="nav-dropdown"
+                        initial={{ opacity: 0, y: prefersReduced ? 0 : -8, scale: prefersReduced ? 1 : 0.98 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: prefersReduced ? 0 : -8, scale: prefersReduced ? 1 : 0.98 }}
+                        transition={{ duration: prefersReduced ? 0.01 : 0.25, ease: 'easeOut' }}
+                      >
+                        <div className="nav-dropdown-header">
+                          <span className="nav-dropdown-label">Services</span>
+                        </div>
+                        <ul className="nav-dropdown-list" role="list">
+                          {SERVICE_NAV_ITEMS.map((item, idx) => (
+                            <motion.li 
+                              key={item.name}
+                              initial={{ opacity: 0, x: prefersReduced ? 0 : -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ 
+                                duration: prefersReduced ? 0.01 : 0.25, 
+                                delay: prefersReduced ? 0 : idx * 0.05,
+                                ease: EASE.smooth 
+                              }}
+                            >
+                              <NavLink
+                                to={item.href}
+                                className="nav-dropdown-item"
+                                onClick={() => setIsDropdownOpen(false)}
+                              >
+                                <span className="dropdown-item-name">{item.name}</span>
+                                <span className="dropdown-item-desc">{item.desc}</span>
+                              </NavLink>
+                            </motion.li>
+                          ))}
+                        </ul>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                )}
               </motion.li>
             ))}
           </ul>
         </nav>
 
-        {/* Desktop Start Project button */}
-        <motion.div 
-          className="header-actions"
-          initial={{ opacity: 0, y: -12 }}
-          animate={navReady ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
-          transition={{ duration: 0.5, ease: EASE.premium, delay: NAV_LINKS.length * 0.08 }}
-        >
-          <button
-            onClick={onOpenInquiry}
-            className="btn btn-primary header-start-project"
-            aria-label="Start your project with us"
-          >
-            Start Project
-          </button>
-          
-          <button
-            className={`mobile-menu-toggle ${isMobileMenuOpen ? 'open' : ''}`}
-            onClick={() => setIsMobileMenuOpen((prev) => !prev)}
-            aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={isMobileMenuOpen}
-            aria-controls="mobile-nav"
-          >
-            <span className="hamburger-bar" aria-hidden="true" />
-            <span className="hamburger-bar" aria-hidden="true" />
-            <span className="hamburger-bar" aria-hidden="true" />
-          </button>
-        </motion.div>
+
       </div>
-
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            id="mobile-nav"
-            className="mobile-nav-overlay active"
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            transition={{
-              duration: 0.35,
-              ease: EASE.premium,
-            }}
-            aria-modal="false"
-          >
-            <nav className="mobile-nav" aria-label="Mobile navigation">
-              <ul className="mobile-nav-list" role="list">
-                {NAV_LINKS.map((link, i) => (
-                  <motion.li
-                    key={link.name}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      delay: i * 0.06,
-                      duration: 0.4,
-                      ease: EASE.premium,
-                    }}
-                  >
-                    <a
-                      href={link.href}
-                      className="mobile-nav-link"
-                      onClick={closeMobileMenu}
-                    >
-                      {link.name}
-                    </a>
-                  </motion.li>
-                ))}
-
-                {/* Mobile Start Project CTA */}
-                <motion.li
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    delay: NAV_LINKS.length * 0.06,
-                    duration: 0.4,
-                    ease: EASE.premium,
-                  }}
-                  className="mobile-nav-cta"
-                >
-                  <button
-                    onClick={() => {
-                      closeMobileMenu();
-                      onOpenInquiry();
-                    }}
-                    className="btn btn-primary mobile-start-project"
-                    aria-label="Start your project with us"
-                  >
-                    Start Project
-                  </button>
-                </motion.li>
-              </ul>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </header>
   );
 });

@@ -11,6 +11,8 @@
 .faq-item {
   padding: 24px;
   border-color: rgba(255, 255, 255, 0.05);
+  transition: border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              background 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .faq-item:hover {
@@ -32,6 +34,7 @@
   text-align: left;
   gap: 20px;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .faq-question-text {
@@ -39,6 +42,7 @@
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--color-text-primary);
+  transition: color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .faq-item:hover .faq-question-text {
@@ -52,7 +56,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: var(--transition-smooth);
+  transition: color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   flex-shrink: 0;
 }
 
@@ -62,26 +66,12 @@
 }
 
 .faq-item.active .faq-arrow-icon {
-  transform: rotate(180deg);
   color: var(--color-accent-teal);
 }
 
-/* Modern Grid Auto-Height transition */
+/* Answer content wrapper - no longer using grid, controlled by Framer Motion */
 .faq-answer {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-/* When hidden attribute is removed and open class added */
-.faq-answer:not([hidden]).open {
-  grid-template-rows: 1fr;
-}
-
-/* Override hidden to still allow grid animation */
-.faq-answer[hidden] {
-  display: grid;
-  grid-template-rows: 0fr;
+  overflow: hidden;
 }
 
 .faq-answer-content {
@@ -93,6 +83,20 @@
   font-size: 0.95rem;
   color: var(--color-text-secondary);
   line-height: 1.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-item {
+    transition: border-color 0.01s, background 0.01s;
+  }
+  
+  .faq-question-text {
+    transition: color 0.01s;
+  }
+  
+  .faq-arrow-icon {
+    transition: color 0.01s;
+  }
 }
 
 @media (max-width: 768px) {

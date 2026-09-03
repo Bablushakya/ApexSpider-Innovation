@@ -1,30 +1,48 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { SERVICES } from '../../constants/services.jsx';
 import { EASE } from '../../constants/animations';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import './Services.css';
 
-function MobileServiceCard({ service }) {
+function MobileServiceCard({ service, index }) {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <motion.div
       className="mobile-service-card"
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 25 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-10%' }}
-      transition={{ duration: 0.6, ease: EASE.premium }}
+      transition={{ 
+        duration: prefersReducedMotion ? 0.01 : 0.6, 
+        ease: EASE.premium,
+        delay: prefersReducedMotion ? 0 : index * 0.12
+      }}
     >
       <div className="mobile-service-header">
-        <div className="mobile-service-icon">
+        <motion.div 
+          className="mobile-service-icon"
+          whileHover={
+            prefersReducedMotion 
+              ? {} 
+              : { 
+                  scale: 1.05,
+                  transition: { duration: 0.2, ease: EASE.smooth }
+                }
+          }
+        >
           {service.icon}
-        </div>
+        </motion.div>
         <h3 className="mobile-service-title">{service.title}</h3>
       </div>
 
-      <p className="mobile-service-desc">{service.desc}</p>
+      <p className="mobile-service-desc">{service.shortDesc || service.fullDesc}</p>
 
       <div className="mobile-service-footer">
-        <a
-          href="#contact"
+        <Link
+          to={`/services/${service.slug}`}
           className="mobile-btn-explore"
           aria-label={`Explore ${service.title}`}
         >
@@ -39,13 +57,15 @@ function MobileServiceCard({ service }) {
           >
             <polyline points="9 18 15 12 9 6" />
           </svg>
-        </a>
+        </Link>
       </div>
     </motion.div>
   );
 }
 
 export default function MobileServices() {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <section
       className="mobile-services-section section-padding"
@@ -55,22 +75,21 @@ export default function MobileServices() {
       <div className="container">
         <motion.div
           className="section-header"
-          initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
+          initial={{ opacity: 0, y: 20, filter: prefersReducedMotion ? 'blur(0px)' : 'blur(4px)' }}
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-10%' }}
-          transition={{ duration: 0.8, ease: EASE.premium }}
+          transition={{ duration: prefersReducedMotion ? 0.01 : 0.8, ease: EASE.premium }}
         >
-          <span className="tag">Capabilities</span>
+          <span className="tag">Services</span>
           <h2 id="services-heading">Our Services &amp; Solutions</h2>
           <p>
-            End-to-end digital solutions — from web and mobile development to data science
-            and ongoing technical support.
+            Custom technology designed around real operational needs.
           </p>
         </motion.div>
 
         <div className="mobile-services-grid">
-          {SERVICES.map((service) => (
-            <MobileServiceCard key={service.id} service={service} />
+          {SERVICES.map((service, index) => (
+            <MobileServiceCard key={service.id} service={service} index={index} />
           ))}
         </div>
       </div>
