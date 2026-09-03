@@ -71,6 +71,35 @@
   color: var(--color-text-secondary);
 }
 
+/* ── Main Headline ── */
+.mobile-hero-title {
+  font-family: var(--font-heading);
+  font-size: 2.25rem;   /* 36px */
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--color-text-primary);
+  letter-spacing: -0.03em;
+  margin: 0;
+  padding: 0;
+}
+
+.mobile-hero-title .text-gradient-cyan {
+  background: linear-gradient(135deg, #00ffff 0%, #00d9ff 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ── Subheadline ── */
+.mobile-hero-subheadline {
+  font-size: 1rem;   /* 16px */
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  margin-top: 10px;
+  margin-bottom: 0;
+  line-height: 1.4;
+}
+
 /* ── Description ── */
 .mobile-hero-description {
   font-size: 0.9rem; /* 14.4px */
@@ -96,6 +125,40 @@
   min-height: 46px;
   justify-content: center;
   font-size: 0.9375rem; /* 15px */
+}
+
+/* ── Trust Strip ── */
+.mobile-trust-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 10px;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-glass);
+  width: 100%;
+  max-width: 360px;
+}
+
+.trust-item {
+  display: flex;
+  align-items: center;
+}
+
+.trust-label {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;   /* 10px */
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.trust-divider {
+  color: var(--color-accent-teal);
+  opacity: 0.4;
+  font-size: 0.75rem;
 }
 
 /* ── Narrow screens (320px) ── */

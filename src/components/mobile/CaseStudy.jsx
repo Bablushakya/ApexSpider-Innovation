@@ -24,9 +24,9 @@ export default function MobileCaseStudy() {
           transition={{ duration: prefersReducedMotion ? 0.01 : 0.8, ease: EASE.premium }}
         >
           <span className="tag">Portfolio</span>
-          <h2 id="work-heading">Our Work</h2>
+          <h2 id="work-heading">Featured Portfolio</h2>
           <p>
-            Real projects delivered for real clients — communicating the challenge, solution, and outcome.
+            Real projects delivered for real businesses — communicating the problem, solution, technology, and outcome.
           </p>
         </motion.div>
 

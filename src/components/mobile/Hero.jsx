@@ -1,6 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { AnimatedTitleFM } from '../ui/AnimatedTitleFM';
 import { EASE } from '../../constants/animations';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import './Hero.css';
@@ -37,25 +37,29 @@ export default function MobileHero({ heroReady = false }) {
       <div className="container mobile-hero-container">
         <div className="mobile-hero-content">
 
-          {/* Badge */}
+          {/* Badge Eyebrow */}
           <motion.div className="mobile-hero-badge" {...stagger(0)}>
-            <span className="badge-tag">Custom Software Studio</span>
-            <span className="badge-text">Scalable Solutions for Modern Teams</span>
+            <span className="badge-tag">SOFTWARE • AI • DATA • AUTOMATION</span>
           </motion.div>
 
-          {/* Animated title */}
-          <AnimatedTitleFM open={heroReady} />
+          {/* Main Headline */}
+          <motion.h1 id="hero-heading" className="mobile-hero-title" {...stagger(0.1)}>
+            Build. Automate. <span className="text-gradient-cyan">Scale.</span>
+          </motion.h1>
+
+          <motion.p className="mobile-hero-subheadline" {...stagger(0.18)}>
+            Scalable software for next-generation businesses.
+          </motion.p>
 
           {/* Description */}
-          <motion.p className="mobile-hero-description" {...stagger(0.16)}>
-            Custom web systems, mobile applications, and premium digital interfaces
-            engineered to establish credibility and accelerate business performance.
+          <motion.p className="mobile-hero-description" {...stagger(0.26)}>
+            We design and build custom digital products, business applications, AI solutions and data systems around the way your business actually works.
           </motion.p>
 
           {/* CTAs */}
-          <motion.div className="mobile-hero-actions" {...stagger(0.28)}>
-            <a href="#services" className="btn btn-primary">
-              Explore Services
+          <motion.div className="mobile-hero-actions" {...stagger(0.34)}>
+            <Link to="/contact" className="btn btn-primary">
+              Start a Project
               <svg
                 width="18"
                 height="18"
@@ -71,10 +75,29 @@ export default function MobileHero({ heroReady = false }) {
                   strokeLinejoin="round"
                 />
               </svg>
-            </a>
-            <a href="#work" className="btn btn-secondary">
+            </Link>
+            <Link to="/portfolio" className="btn btn-secondary">
               View Our Work
-            </a>
+            </Link>
+          </motion.div>
+
+          {/* Trust / Capability Strip */}
+          <motion.div className="mobile-trust-strip" {...stagger(0.42)}>
+            <div className="trust-item">
+              <span className="trust-label">CUSTOM SOFTWARE</span>
+            </div>
+            <div className="trust-divider">•</div>
+            <div className="trust-item">
+              <span className="trust-label">AI SOLUTIONS</span>
+            </div>
+            <div className="trust-divider">•</div>
+            <div className="trust-item">
+              <span className="trust-label">DATA & ANALYTICS</span>
+            </div>
+            <div className="trust-divider">•</div>
+            <div className="trust-item">
+              <span className="trust-label">BUSINESS AUTOMATION</span>
+            </div>
           </motion.div>
 
         </div>
