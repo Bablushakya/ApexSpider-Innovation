@@ -2,15 +2,34 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { AnimatedTitleFM } from '../ui/AnimatedTitleFM';
 import { EASE } from '../../constants/animations';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import './Hero.css';
 
 export default function MobileHero({ heroReady = false }) {
+  const prefersReducedMotion = useReducedMotion();
+
   const stagger = (delay = 0) => ({
-    initial:    { opacity: 0, y: 30, filter: 'blur(8px)' },
-    animate:    heroReady
-      ? { opacity: 1, y: 0, filter: 'blur(0px)' }
-      : { opacity: 0, y: 30, filter: 'blur(8px)' },
-    transition: { duration: 0.7, ease: EASE.premium, delay },
+    initial: { 
+      opacity: 0, 
+      y: prefersReducedMotion ? 0 : 30, 
+      filter: prefersReducedMotion ? 'blur(0px)' : 'blur(8px)' 
+    },
+    animate: heroReady
+      ? { 
+          opacity: 1, 
+          y: 0, 
+          filter: 'blur(0px)' 
+        }
+      : { 
+          opacity: 0, 
+          y: prefersReducedMotion ? 0 : 30, 
+          filter: prefersReducedMotion ? 'blur(0px)' : 'blur(8px)' 
+        },
+    transition: { 
+      duration: prefersReducedMotion ? 0.01 : 0.7, 
+      ease: EASE.premium, 
+      delay: prefersReducedMotion ? 0 : delay 
+    },
   });
 
   return (
@@ -28,13 +47,13 @@ export default function MobileHero({ heroReady = false }) {
           <AnimatedTitleFM open={heroReady} />
 
           {/* Description */}
-          <motion.p className="mobile-hero-description" {...stagger(0.12)}>
+          <motion.p className="mobile-hero-description" {...stagger(0.16)}>
             Custom web systems, mobile applications, and premium digital interfaces
             engineered to establish credibility and accelerate business performance.
           </motion.p>
 
           {/* CTAs */}
-          <motion.div className="mobile-hero-actions" {...stagger(0.24)}>
+          <motion.div className="mobile-hero-actions" {...stagger(0.28)}>
             <a href="#services" className="btn btn-primary">
               Explore Services
               <svg

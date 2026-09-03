@@ -59,10 +59,20 @@
   font-size: 1.8rem;
   font-weight: 700;
   color: var(--color-accent-teal);
+  transition: color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: inline-block;
 }
 
 .contact-email-link:hover {
   color: var(--color-text-primary);
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-email-link:hover {
+    transform: none;
+  }
 }
 
 .email-fallback {
@@ -126,6 +136,41 @@
 .form-textarea {
   resize: vertical;
   min-height: 100px;
+  transition: border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.form-textarea:focus {
+  border-color: var(--color-accent-teal);
+  box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.1), 
+              0 4px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form-textarea {
+    transition: border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+                box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  
+  .form-textarea:focus {
+    transform: none;
+  }
+}
+
+.form-input {
+  min-height: 48px;
+  transition: border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.form-input:focus {
+  border-color: var(--color-accent-teal);
+  box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.1), 
+              0 4px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-1px);
 }
 
 .form-select {
@@ -135,6 +180,39 @@
   background-position: right 16px center;
   background-size: 16px;
   padding-right: 40px;
+  transition: border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.form-select:focus {
+  border-color: var(--color-accent-teal);
+  box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form-input {
+    transition: border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+                box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  
+  .form-input:focus {
+    transform: none;
+  }
+  
+  .form-select {
+    transition: border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+                box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  
+  @keyframes pulseDot {
+    0%, 100% {
+      transform: none;
+      box-shadow: 0 0 10px #10b981;
+    }
+    70% {
+      box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+    }
+  }
 }
 
 .form-select option {

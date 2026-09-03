@@ -13,11 +13,26 @@ const TESTIMONIALS_DATA = TESTIMONIALS;
 /* ─────────────────────────────────────────────────────────
    SLIDE VARIANTS
 ───────────────────────────────────────────────────────── */
-const slideVariants = {
-  enter:  { opacity: 0, y: 20,  scale: 0.98, filter: 'blur(4px)' },
-  center: { opacity: 1, y: 0,   scale: 1,    filter: 'blur(0px)' },
-  exit:   { opacity: 0, y: -20, scale: 0.98, filter: 'blur(4px)' },
-};
+const getSlideVariants = (prefersReduced) => ({
+  enter:  { 
+    opacity: 0, 
+    y: prefersReduced ? 0 : 20,  
+    scale: prefersReduced ? 1 : 0.98, 
+    filter: prefersReduced ? 'blur(0px)' : 'blur(4px)' 
+  },
+  center: { 
+    opacity: 1, 
+    y: 0,   
+    scale: 1,    
+    filter: 'blur(0px)' 
+  },
+  exit:   { 
+    opacity: 0, 
+    y: prefersReduced ? 0 : -20, 
+    scale: prefersReduced ? 1 : 0.98, 
+    filter: prefersReduced ? 'blur(0px)' : 'blur(4px)' 
+  },
+});
 
 /* ─────────────────────────────────────────────────────────
    ARROW ICON (inline — no external icon library needed)
@@ -78,6 +93,7 @@ export default function Testimonials() {
   }, [go]);
 
   const item = TESTIMONIALS_DATA[index];
+  const slideVariants = getSlideVariants(prefersReduced);
 
   /* section-header entrance */
 
@@ -92,10 +108,10 @@ export default function Testimonials() {
         {/* ── Section header ── */}
         <motion.div
           className="section-header"
-          initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
+          initial={{ opacity: 0, y: 20, filter: prefersReduced ? 'blur(0px)' : 'blur(4px)' }}
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-10%' }}
-          transition={{ duration: 0.8, ease: EASE.premium }}
+          transition={{ duration: prefersReduced ? 0.01 : 0.8, ease: EASE.premium }}
         >
           <span className="tag">Testimonials</span>
           <h2 id="testimonials-heading">What Clients Say</h2>
@@ -105,10 +121,10 @@ export default function Testimonials() {
         {/* ── Carousel wrapper ── */}
         <motion.div
           className="tc-wrapper"
-          initial={{ opacity: 0, y: 30, filter: 'blur(6px)' }}
+          initial={{ opacity: 0, y: prefersReduced ? 0 : 30, filter: prefersReduced ? 'blur(0px)' : 'blur(6px)' }}
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-8%' }}
-          transition={{ duration: 0.9, ease: EASE.premium, delay: 0.1 }}
+          transition={{ duration: prefersReduced ? 0.01 : 0.9, ease: EASE.premium, delay: prefersReduced ? 0 : 0.15 }}
           aria-roledescription="carousel"
           aria-label="Client testimonials"
         >
@@ -136,7 +152,10 @@ export default function Testimonials() {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ duration: 0.28, ease: 'easeOut' }}
+                transition={{ 
+                  duration: prefersReduced ? 0.01 : 0.32, 
+                  ease: 'easeOut' 
+                }}
               >
                 {/* Decorative quote badge */}
                 <span

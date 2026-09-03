@@ -1,130 +1,80 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { VALUE_PROPS } from '../../constants/valueProps';
 import { EASE } from '../../constants/animations';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import './ValueProps.css';
 
-// Custom sub-component to animate numeric metrics count-up dynamically on scroll
-function AnimatedNumber({ value, duration = 1.6, delay = 0.1 }) {
-  const [displayValue, setDisplayValue] = useState(value.includes(':') ? '0:0' : '0');
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-10%" });
-  
-  const isFloat = value.includes('.');
-  const isRatio = value.includes(':');
-  
-  useEffect(() => {
-    if (!isInView) return;
-    
-    let startTimestamp = null;
-    const target = isRatio ? 1 : parseFloat(value);
-    
-    const step = (timestamp) => {
-      if (!startTimestamp) startTimestamp = timestamp;
-      const progress = Math.min((timestamp - startTimestamp) / (duration * 1000), 1);
-      
-      const current = progress * target;
-      
-      if (isRatio) {
-        // Count up ratios like 0:0 -> 1:1
-        const val = Math.floor(progress * 1);
-        setDisplayValue(`${val}:${val}`);
-      } else if (isFloat) {
-        setDisplayValue(current.toFixed(1));
-      } else {
-        setDisplayValue(Math.floor(current));
-      }
-      
-      if (progress < 1) {
-        window.requestAnimationFrame(step);
-      } else {
-        setDisplayValue(value);
-      }
-    };
-    
-    const timer = setTimeout(() => {
-      window.requestAnimationFrame(step);
-    }, delay * 1000);
-    
-    return () => clearTimeout(timer);
-  }, [isInView, value, duration, delay, isFloat, isRatio]);
-
-  return <span ref={ref}>{displayValue}</span>;
-}
-
 export default function ValueProps() {
-  const propsList = VALUE_PROPS;
-
-  const containerVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.12
-      }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: 35, 
-      filter: "blur(5px)" 
-    },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      filter: "blur(0px)",
-      transition: { 
-        duration: 0.85, 
-        ease: EASE.premium
-      }
-    }
-  };
+  const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section className="value-section section-padding" id="value-props">
-      <div className="glow-blob glow-blob-indigo value-blob"></div>
+    <section className="value-section section-padding" id="why-apexspider" aria-labelledby="why-heading">
+      <motion.div 
+        className="glow-blob glow-blob-indigo value-blob" 
+        aria-hidden="true"
+        initial={{ opacity: 0, scale: 0.8 }}
+        whileInView={{ opacity: 0.15, scale: 1 }}
+        viewport={{ once: true, margin: '-20%' }}
+        transition={{ duration: prefersReducedMotion ? 0.01 : 1.5, ease: EASE.smooth }}
+      />
       
       <div className="container">
-        {/* Section Header */}
         <motion.div 
           className="section-header"
-          initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          viewport={{ once: true, margin: "-10%" }}
-          transition={{ duration: 0.8, ease: EASE.premium }}
+          initial={{ opacity: 0, y: 20, filter: prefersReducedMotion ? 'blur(0px)' : 'blur(4px)' }}
+          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          viewport={{ once: true, margin: '-10%' }}
+          transition={{ duration: prefersReducedMotion ? 0.01 : 0.8, ease: EASE.premium }}
         >
-          <span className="tag">Value Proposition</span>
-          <h2>Why Choose Us</h2>
-          <p>We combine deep engineering standards with premium aesthetic execution to launch products faster.</p>
+          <span className="tag">Why ApexSpider</span>
+          <h2 id="why-heading">Why Choose ApexSpider?</h2>
+          <p>We combine business insight with senior engineering standards to build software that moves your business forward.</p>
         </motion.div>
 
-        {/* Value Cards Grid */}
-        <motion.div 
-          className="value-grid"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-10%" }}
-        >
-          {propsList.map((item, index) => (
+        <div className="value-grid">
+          {VALUE_PROPS.map((principle, index) => (
             <motion.div 
-              key={index} 
+              key={principle.number} 
               className="glass-panel value-card"
-              variants={cardVariants}
+              initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-10%' }}
+              transition={{ 
+                duration: prefersReducedMotion ? 0.01 : 0.7, 
+                ease: EASE.premium, 
+                delay: prefersReducedMotion ? 0 : index * 0.12 
+              }}
+              whileHover={
+                prefersReducedMotion 
+                  ? {} 
+                  : { 
+                      y: -4,
+                      borderColor: 'rgba(0, 255, 255, 0.25)',
+                      transition: { duration: 0.3, ease: EASE.smooth }
+                    }
+              }
             >
-              <div className="metric-header">
-                <span className="metric-number text-gradient-cyan">
-                  <AnimatedNumber value={item.metric} delay={0.2 + index * 0.1} />
-                  {item.metricSuffix}
-                </span>
-                <span className="metric-badge">{item.metricLabel}</span>
-              </div>
-              <h3 className="value-title">{item.title}</h3>
-              <p className="value-desc">{item.desc}</p>
+              <motion.div 
+                className="principle-number"
+                whileHover={
+                  prefersReducedMotion 
+                    ? {} 
+                    : { 
+                        scale: 1.05,
+                        backgroundColor: 'rgba(0, 255, 255, 0.25)',
+                        transition: { duration: 0.2, ease: EASE.smooth }
+                      }
+                }
+              >
+                {principle.number}
+              </motion.div>
+              <h3 className="value-title">{principle.title}</h3>
+              <div className="value-subtitle">{principle.subtitle}</div>
+              <p className="value-desc">{principle.desc}</p>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

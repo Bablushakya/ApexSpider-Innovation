@@ -6,9 +6,10 @@
 export const BRAND = {
   name: 'ApexSpider Innovation',
   shortName: 'ApexSpider',
-  tagline: 'Architecting premium custom web applications and scalable enterprise software solutions.',
+  tagline: 'Technology That Moves Your Business Forward.',
   description:
-    'ApexSpider Innovation develops premium custom software, scalable web applications, and intelligent digital systems for next-gen startups and growing enterprises.',
+    'We design and build custom digital products, business applications, AI solutions and data systems that help businesses operate smarter and scale faster.',
+  footerContactDesc: 'Have a project or technical inquiry? Connect with our engineering team directly.',
   url: 'https://www.apexspiderinnovation.com',
   email: {
     primary: 'info@apexspiderinnovation.com',
@@ -27,36 +28,52 @@ export const BRAND = {
 };
 
 export const SITE_META = {
-  title: 'ApexSpider Innovation | Premium Custom Software & Web Solutions',
+  title: 'ApexSpider Innovation | Custom Software, AI & Digital Solutions',
   description: BRAND.description,
   keywords:
-    'ApexSpider Innovation, Custom Software Development, Web Application Design, UI/UX Design, Automation Solutions, React Development, Enterprise Software, Tech Startup',
+    'ApexSpider Innovation, Custom Software Development, Web Development, Mobile App Development, AI Solutions, Business Applications, Data Analytics, Automation, Digital Transformation',
   ogImage: `${BRAND.url}/og-image.png`,
   twitterHandle: '@apexspider',
 };
 
+/** Desktop & mobile navigation — uses real routes for multi-page architecture */
 export const NAV_LINKS = [
-  { name: 'Services',     href: '#services'     },
-  { name: 'Value',        href: '#value-props'  },
-  { name: 'Process',      href: '#process'      },
-  { name: 'Work',         href: '#work'         },
-  { name: 'About',        href: '#about'        },
-  { name: 'Testimonials', href: '#testimonials' },
-  { name: 'FAQs',         href: '#faq'          },
+  { name: 'Home',      href: '/'         },
+  { name: 'About',     href: '/about'    },
+  { name: 'Services',  href: '/services', hasDropdown: true },
+  { name: 'Portfolio', href: '/portfolio' },
+  { name: 'Contact',   href: '/contact'  },
+];
+
+/** Services shown inside the nav dropdown */
+export const SERVICE_NAV_ITEMS = [
+  { name: 'Web Development',       href: '/services/web-development',        desc: 'Websites and custom web applications.' },
+  { name: 'Mobile App Development', href: '/services/mobile-app-development', desc: 'Android, iOS and cross-platform apps.' },
+  { name: 'AI Solutions',          href: '/services/ai-solutions',           desc: 'Practical AI systems for business.' },
+  { name: 'Business Applications', href: '/services/business-applications',  desc: 'Admin panels, CRMs and internal tools.' },
+  { name: 'Data Analytics',        href: '/services/data-analytics',         desc: 'Dashboards, KPIs and reporting.' },
+  { name: 'Automation',            href: '/services/automation',             desc: 'Workflows, integrations and process automation.' },
 ];
 
 export const FOOTER_NAV_LINKS = [
-  { name: 'Services',     href: '#services'     },
-  { name: 'Value',        href: '#value-props'  },
-  { name: 'Process',      href: '#process'      },
-  { name: 'Work',         href: '#work'         },
-  { name: 'About',        href: '#about'        },
-  { name: 'Testimonials', href: '#testimonials' },
-  { name: 'FAQs',         href: '#faq'          },
+  { name: 'Home',      href: '/'         },
+  { name: 'About',     href: '/about'    },
+  { name: 'Services',  href: '/services' },
+  { name: 'Portfolio', href: '/portfolio'},
+  { name: 'Contact',   href: '/contact'  },
+];
+
+export const FOOTER_SERVICE_LINKS = [
+  { name: 'Web Development',       href: '/services/web-development'        },
+  { name: 'Mobile Apps',           href: '/services/mobile-app-development' },
+  { name: 'AI Solutions',          href: '/services/ai-solutions'           },
+  { name: 'Business Applications', href: '/services/business-applications'  },
+  { name: 'Data Analytics',        href: '/services/data-analytics'         },
+  { name: 'Automation',            href: '/services/automation'             },
 ];
 
 export const LEGAL_LINKS = [
-  { name: 'Privacy Policy',    href: '/privacy'   },
-  { name: 'Terms of Service',  href: '/terms'     },
-  { name: 'Security',          href: '/security'  },
+  { name: 'Privacy Policy',   href: '/privacy'   },
+  { name: 'Terms of Service', href: '/terms'     },
+  { name: 'Security',         href: '/security'  },
 ];

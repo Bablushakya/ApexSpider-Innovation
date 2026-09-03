@@ -1,0 +1,127 @@
+.services-page-hero {
+  padding-top: 40px;
+}
+
+.services-hero-content {
+  max-width: 800px;
+}
+
+.services-hero-title {
+  font-size: 3rem;
+  line-height: 1.15;
+  margin-top: 16px;
+  margin-bottom: 20px;
+}
+
+.services-hero-desc {
+  font-size: 1.2rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.services-page-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+.service-page-card {
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+}
+
+.service-page-card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.service-num-badge {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-accent-teal);
+  background: var(--color-accent-teal-muted);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.service-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--color-accent-teal-muted);
+  color: var(--color-accent-teal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.service-icon-box svg {
+  width: 22px;
+  height: 22px;
+}
+
+.service-page-card-header h2 {
+  font-size: 1.4rem;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.service-page-desc {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+  margin-bottom: 24px;
+}
+
+.service-caps-block h3 {
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-accent-teal);
+  margin-bottom: 14px;
+}
+
+.service-caps-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.service-caps-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.service-page-card-footer {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-glass);
+}
+
+@media (max-width: 900px) {
+  .services-page-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .services-hero-title {
+    font-size: 2.2rem;
+  }
+
+  .service-page-card {
+    padding: 24px 20px;
+  }
+}

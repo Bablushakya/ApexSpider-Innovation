@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useCallback, forwardRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link, NavLink } from 'react-router-dom';
 import { NAV_LINKS, BRAND } from '../../constants/brand';
 import { EASE } from '../../constants/animations';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import logoImg from '../../assets/ApexSpiderLogo.png';
 import './Header.css';
 
-const MobileHeader = forwardRef(function MobileHeader({ navReady = false, onOpenInquiry }, logoNavRef) {
+const MobileHeader = forwardRef(function MobileHeader({ navReady = false }, logoNavRef) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const prefersReduced = useReducedMotion();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -30,10 +33,10 @@ const MobileHeader = forwardRef(function MobileHeader({ navReady = false, onOpen
     <header className={`mobile-site-header ${isScrolled ? 'scrolled' : ''}`} role="banner">
       <div className="container mobile-header-container">
         
-        <a
-          href="#hero"
+        <Link
+          to="/"
           className="mobile-brand-logo"
-          aria-label={`${BRAND.name} — return to top`}
+          aria-label={`${BRAND.name} — Home`}
         >
           <motion.img
             ref={logoNavRef}
@@ -42,25 +45,25 @@ const MobileHeader = forwardRef(function MobileHeader({ navReady = false, onOpen
             className="mobile-logo-img"
             width="36"
             height="36"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: navReady ? 1 : 0 }}
-            transition={{ duration: 0.18, ease: 'easeOut', delay: 0.05 }}
+            initial={{ opacity: 0, scale: prefersReduced ? 1 : 0.95 }}
+            animate={{ opacity: navReady ? 1 : 0, scale: 1 }}
+            transition={{ duration: prefersReduced ? 0.01 : 0.4, ease: 'easeOut', delay: prefersReduced ? 0 : 0.05 }}
           />
-        </a>
+        </Link>
 
         <motion.div 
           className="mobile-header-actions"
-          initial={{ opacity: 0, y: -12 }}
-          animate={navReady ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
-          transition={{ duration: 0.5, ease: EASE.premium, delay: 0.3 }}
+          initial={{ opacity: 0, y: prefersReduced ? 0 : -12 }}
+          animate={navReady ? { opacity: 1, y: 0 } : { opacity: 0, y: prefersReduced ? 0 : -12 }}
+          transition={{ duration: prefersReduced ? 0.01 : 0.5, ease: EASE.premium, delay: prefersReduced ? 0 : 0.3 }}
         >
-          <button
-            onClick={onOpenInquiry}
+          <Link
+            to="/contact"
             className="btn btn-primary mobile-header-start-project"
-            aria-label="Start your project with us"
+            aria-label="Start a project"
           >
             Start Project
-          </button>
+          </Link>
           
           <button
             className={`mobile-menu-toggle ${isMobileMenuOpen ? 'open' : ''}`}
@@ -81,46 +84,53 @@ const MobileHeader = forwardRef(function MobileHeader({ navReady = false, onOpen
           <motion.div
             id="mobile-nav"
             className="mobile-nav-overlay active"
-            initial={{ opacity: 0, x: '100%' }}
+            initial={{ opacity: 0, x: prefersReduced ? 0 : '100%' }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            transition={{ duration: 0.35, ease: EASE.premium }}
+            exit={{ opacity: 0, x: prefersReduced ? 0 : '100%' }}
+            transition={{ duration: prefersReduced ? 0.01 : 0.35, ease: EASE.premium }}
           >
             <nav className="mobile-nav" aria-label="Mobile navigation">
               <ul className="mobile-nav-list" role="list">
                 {NAV_LINKS.map((link, i) => (
                   <motion.li
                     key={link.name}
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: prefersReduced ? 0 : 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.06, duration: 0.4, ease: EASE.premium }}
+                    transition={{ 
+                      delay: prefersReduced ? 0 : i * 0.06, 
+                      duration: prefersReduced ? 0.01 : 0.4, 
+                      ease: EASE.premium 
+                    }}
                   >
-                    <a
-                      href={link.href}
-                      className="mobile-nav-link"
+                    <NavLink
+                      to={link.href}
+                      className={({ isActive }) =>
+                        `mobile-nav-link${isActive ? ' mobile-nav-link--active' : ''}`
+                      }
                       onClick={closeMobileMenu}
                     >
                       {link.name}
-                    </a>
+                    </NavLink>
                   </motion.li>
                 ))}
 
                 <motion.li
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: prefersReduced ? 0 : 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: NAV_LINKS.length * 0.06, duration: 0.4, ease: EASE.premium }}
+                  transition={{ 
+                    delay: prefersReduced ? 0 : NAV_LINKS.length * 0.06, 
+                    duration: prefersReduced ? 0.01 : 0.4, 
+                    ease: EASE.premium 
+                  }}
                   className="mobile-nav-cta"
                 >
-                  <button
-                    onClick={() => {
-                      closeMobileMenu();
-                      onOpenInquiry();
-                    }}
+                  <Link
+                    to="/contact"
                     className="btn btn-primary mobile-start-project"
-                    aria-label="Start your project with us"
+                    onClick={closeMobileMenu}
                   >
-                    Start Project
-                  </button>
+                    Start a Project
+                  </Link>
                 </motion.li>
               </ul>
             </nav>

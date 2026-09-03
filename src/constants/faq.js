@@ -1,43 +1,43 @@
 /**
  * FAQ data - Single source of truth
- * Used by both Desktop and Mobile FAQ components
+ * Business-oriented questions for the main FAQ section.
  */
 
 export const FAQS = [
   {
-    q: 'How can AI agents automate business workflows and operations?',
-    a: 'AI agents can perform repetitive workflow activities like data management, customer service, documentation management, reporting, and internal functions. The AI-based workflows are designed keeping in view the existing workflows of yours to lessen the manual efforts.',
+    q: 'How can ApexSpider help my business?',
+    a: 'ApexSpider designs and builds custom digital products — websites, web applications, mobile apps, AI solutions, business management systems, data dashboards and automation tools. We work with businesses that need technology built around how they actually operate, not around a generic template.',
   },
   {
-    q: 'Can you build AI-powered applications using our business data?',
-    a: 'Yes. It is possible to develop applications that use artificial intelligence by leveraging structured as well as unstructured data from businesses, and such applications may include intelligent search, knowledge assistants, RAG, predictive models, and others.',
+    q: 'Can you build a custom web application for our business?',
+    a: 'Yes. We develop custom web applications designed around your specific business requirements — from customer-facing platforms to internal management tools and database-driven systems. Every application is built for your workflow, not adapted from a one-size-fits-all solution.',
   },
   {
-    q: 'Can you integrate our existing APIs, databases, and cloud infrastructure?',
-    a: 'Indeed. We can incorporate any existing APIs, databases, authentications, third-party services, and even cloud into new applications or old ones. It is our aim to expand your existing technological environment without interfering with your core business processes.',
+    q: 'Can you integrate AI into an existing business system?',
+    a: 'Yes. We can add AI capabilities to existing applications — for example, an AI assistant for customer queries, intelligent search for a product catalogue, or AI-powered automation within an existing workflow. The approach depends on your data and the specific problem you want to solve.',
   },
   {
-    q: 'How do you build scalable and secure web applications?',
-    a: 'We use modular architecture, secure API designs, database optimization, authentication, validation, testing, and scalable infrastructure to create robust web applications. Our architecture is planned based on current needs but future growth is considered.',
+    q: 'Can you build a mobile application?',
+    a: 'Yes. We develop mobile applications for Android, iOS and cross-platform using Flutter. We handle the full cycle — design, development, backend integration, testing and maintenance.',
   },
   {
-    q: 'Can you develop custom mobile applications for our business?',
-    a: `Yes. We develop custom mobile applications based on your business requirements, user workflows, and target platforms. We focus on responsive interfaces, reliable performance, secure backend integration, and maintainable architecture.`,
+    q: 'Can you connect different systems and applications via API?',
+    a: 'Yes. We design integration layers that allow different software systems to communicate — connecting databases, third-party services, internal tools and APIs so your data flows automatically rather than requiring manual handling.',
   },
   {
-    q: 'Can you turn our business data into dashboards, predictive models, or AI solutions?',
-    a: 'Absolutely! It is possible to convert raw data from the business into dashboards, analytical solutions, predictive models, and AI-based solutions. It starts with understanding the business problem and then picking the right data and technology.',
+    q: 'Can you automate repetitive business processes?',
+    a: 'Yes. We identify the manual, repetitive tasks your team performs and design automation solutions around them — form-to-database workflows, scheduled reporting, data synchronisation, email automation and API-driven process automation.',
   },
   {
-    q: 'How do you approach UI/UX design for digital products?',
-    a: 'We start by understanding users, business goals, and product requirements. We then create user flows, wireframes, high-fidelity interfaces, and prototypes before development to ensure the final product is intuitive, consistent, and aligned with the brand.',
+    q: 'How does your development process work?',
+    a: 'We follow five stages: Discover (understand your business and requirements), Plan (define architecture and roadmap), Design (create the user experience and interface), Build (develop, integrate and test), and Launch & Support (deploy and continuously improve). We validate requirements before development begins.',
   },
   {
-    q: 'What does the development process look like from idea to production?',
-    a: 'Our process typically follows four stages: Strategy & Requirements → Design → Development → Staging & Integration. We validate requirements and designs before development, test the product during implementation, and perform final checks before production deployment.',
+    q: 'How long does a project take?',
+    a: 'Timelines depend on the scope and complexity of the project. A business website may take 2–4 weeks. A custom web application or mobile app may take 6–14 weeks. We define the timeline during the planning phase, once we understand your specific requirements.',
   },
   {
-    q: 'How do you maintain, monitor, and scale applications after launch?',
-    a: 'We can provide ongoing maintenance, performance monitoring, security updates, bug fixes, infrastructure optimization, and feature development. As usage grows, we can also optimize the application architecture and infrastructure to support increased traffic and workloads.',
-  }
+    q: 'Do you provide support after the project launches?',
+    a: 'Yes. We provide ongoing support, maintenance, bug fixes, performance monitoring and feature development after launch. We can also monitor, scale and optimise your application as your usage grows.',
+  },
 ];

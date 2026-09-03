@@ -5,11 +5,26 @@ import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { EASE } from '../../constants/animations';
 import './Testimonials.css';
 
-const slideVariants = {
-  enter:  { opacity: 0, y: 20,  scale: 0.98, filter: 'blur(4px)' },
-  center: { opacity: 1, y: 0,   scale: 1,    filter: 'blur(0px)' },
-  exit:   { opacity: 0, y: -20, scale: 0.98, filter: 'blur(4px)' },
-};
+const getSlideVariants = (prefersReduced) => ({
+  enter:  { 
+    opacity: 0, 
+    y: prefersReduced ? 0 : 20,  
+    scale: prefersReduced ? 1 : 0.98, 
+    filter: prefersReduced ? 'blur(0px)' : 'blur(4px)' 
+  },
+  center: { 
+    opacity: 1, 
+    y: 0,   
+    scale: 1,    
+    filter: 'blur(0px)' 
+  },
+  exit:   { 
+    opacity: 0, 
+    y: prefersReduced ? 0 : -20, 
+    scale: prefersReduced ? 1 : 0.98, 
+    filter: prefersReduced ? 'blur(0px)' : 'blur(4px)' 
+  },
+});
 
 function ChevronLeft() {
   return (
@@ -55,6 +70,7 @@ export default function MobileTestimonials() {
   }, [go]);
 
   const item = TESTIMONIALS[index];
+  const slideVariants = getSlideVariants(prefersReduced);
 
   return (
     <section
@@ -65,10 +81,10 @@ export default function MobileTestimonials() {
       <div className="container">
         <motion.div
           className="section-header"
-          initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
+          initial={{ opacity: 0, y: 20, filter: prefersReduced ? 'blur(0px)' : 'blur(4px)' }}
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-10%' }}
-          transition={{ duration: 0.8, ease: EASE.premium }}
+          transition={{ duration: prefersReduced ? 0.01 : 0.8, ease: EASE.premium }}
         >
           <span className="tag">Testimonials</span>
           <h2 id="testimonials-heading">What Clients Say</h2>
@@ -77,10 +93,10 @@ export default function MobileTestimonials() {
 
         <motion.div
           className="mobile-tc-wrapper"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: prefersReduced ? 0 : 25 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-8%' }}
-          transition={{ duration: 0.9, ease: EASE.premium, delay: 0.1 }}
+          transition={{ duration: prefersReduced ? 0.01 : 0.9, ease: EASE.premium, delay: prefersReduced ? 0 : 0.15 }}
         >
           {/* Slide card */}
           <div className="mobile-tc-slide-area">
@@ -92,7 +108,10 @@ export default function MobileTestimonials() {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ duration: 0.28, ease: 'easeOut' }}
+                transition={{ 
+                  duration: prefersReduced ? 0.01 : 0.32, 
+                  ease: 'easeOut' 
+                }}
               >
                 <span
                   className="mobile-tc-quote-badge"

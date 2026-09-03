@@ -1,0 +1,147 @@
+.about-hero-section {
+  padding-top: 40px;
+}
+
+.about-hero-content {
+  max-width: 800px;
+}
+
+.about-hero-title {
+  font-size: 3rem;
+  line-height: 1.15;
+  margin-top: 16px;
+  margin-bottom: 20px;
+}
+
+.about-hero-desc {
+  font-size: 1.2rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.about-panel {
+  padding: 40px;
+  border-radius: 20px;
+}
+
+.about-section-title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.about-body-text p {
+  font-size: 1.05rem;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.about-body-text p:last-child {
+  margin-bottom: 0;
+}
+
+.believe-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.believe-card {
+  padding: 32px 24px;
+}
+
+.believe-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+  color: var(--color-text-primary);
+}
+
+.believe-card p {
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.approach-timeline {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+
+.approach-step-card {
+  padding: 24px 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.step-num {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-accent-teal);
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.step-title {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.step-body {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.tech-stack-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.tech-cat-card {
+  padding: 28px;
+}
+
+.tech-cat-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+  color: var(--color-accent-teal);
+}
+
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tech-tag-badge {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-glass);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: var(--color-text-primary);
+}
+
+@media (max-width: 1024px) {
+  .approach-timeline {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .tech-stack-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .about-hero-title {
+    font-size: 2.2rem;
+  }
+  .believe-grid,
+  .tech-stack-grid {
+    grid-template-columns: 1fr;
+  }
+  .approach-timeline {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,27 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { CASE_STUDIES } from '../../constants/caseStudies.jsx';
 import { EASE } from '../../constants/animations';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import './CaseStudy.css';
 
-const caseStudies = CASE_STUDIES;
-
-const gridContainerVariants = {
-  hidden:  {},
-  visible: { transition: { staggerChildren: 0.2 } },
-};
-
-const cardVariants = {
-  hidden:  { opacity: 0, y: 40, filter: 'blur(6px)' },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-    transition: { duration: 0.9, ease: EASE.premium },
-  },
-};
-
 export default function CaseStudy() {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <section
       className="work-section section-padding"
@@ -29,62 +16,81 @@ export default function CaseStudy() {
       aria-labelledby="work-heading"
     >
       <div className="container">
-        {/* Section Header */}
         <motion.div
           className="section-header"
-          initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
+          initial={{ opacity: 0, y: 20, filter: prefersReducedMotion ? 'blur(0px)' : 'blur(4px)' }}
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-10%' }}
-          transition={{ duration: 0.8, ease: EASE.premium }}
+          transition={{ duration: prefersReducedMotion ? 0.01 : 0.8, ease: EASE.premium }}
         >
-          <span className="tag">Client Work</span>
-          <h2 id="work-heading">Our Work</h2>
+          <span className="tag">Portfolio</span>
+          <h2 id="work-heading">Featured Portfolio</h2>
           <p>
-            Real projects delivered for real clients - explore the work we have built
-            and the results we have achieved together.
+            Real projects delivered for real businesses — communicating the problem, solution, technology, and outcome.
           </p>
         </motion.div>
 
-        {/* Case Studies */}
-        <motion.div
-          className="work-container"
-          variants={gridContainerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-8%' }}
-        >
-          {caseStudies.map((project, index) => (
+        <div className="work-container">
+          {CASE_STUDIES.map((project, index) => (
             <motion.article
-              key={index}
+              key={project.slug}
               className="glass-panel work-card"
-              variants={cardVariants}
+              initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-10%' }}
+              transition={{ 
+                duration: prefersReducedMotion ? 0.01 : 0.8, 
+                ease: EASE.premium, 
+                delay: prefersReducedMotion ? 0 : index * 0.18 
+              }}
               aria-labelledby={`work-card-title-${index}`}
             >
-              {/* Visual — real project screenshot inside browser chrome */}
+              {/* Visual screenshot inside browser mockup */}
               <div className="work-visual-wrapper">
-                <div className="work-browser-mockup">
-                  {/* Browser chrome dots */}
+                <motion.div 
+                  className="work-browser-mockup"
+                  initial={{ opacity: 0, scale: prefersReducedMotion ? 1 : 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ 
+                    duration: prefersReducedMotion ? 0.01 : 0.7, 
+                    ease: EASE.premium, 
+                    delay: prefersReducedMotion ? 0 : index * 0.18 + 0.2 
+                  }}
+                >
                   <div className="work-browser-chrome">
                     <span className="chrome-dot dot-red" />
                     <span className="chrome-dot dot-yellow" />
                     <span className="chrome-dot dot-green" />
                   </div>
-                  {/* Actual screenshot */}
                   <motion.img
                     src={project.image}
                     alt={project.imageAlt}
                     className="work-project-img"
-                    initial={{ opacity: 0, scale: 1.04 }}
+                    loading="lazy"
+                    initial={{ opacity: 0, scale: prefersReducedMotion ? 1 : 0.98 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.8, ease: EASE.premium, delay: 0.2 }}
+                    transition={{ 
+                      duration: prefersReducedMotion ? 0.01 : 0.6, 
+                      ease: EASE.smooth, 
+                      delay: prefersReducedMotion ? 0 : index * 0.18 + 0.35 
+                    }}
+                    whileHover={
+                      prefersReducedMotion 
+                        ? {} 
+                        : { 
+                            scale: 1.03,
+                            transition: { duration: 0.4, ease: EASE.smooth }
+                          }
+                    }
                   />
-                </div>
+                </motion.div>
               </div>
 
               {/* Content */}
               <div className="work-content-wrapper">
-                <span className="work-badge-tag">{project.tag}</span>
+                <span className="work-badge-tag">{project.category}</span>
                 <p className="work-client-label">
                   Client: <strong>{project.client}</strong>
                 </p>
@@ -94,45 +100,61 @@ export default function CaseStudy() {
                 >
                   {project.title}
                 </h3>
-                <p className="work-card-desc">{project.desc}</p>
+                <p className="work-card-desc">{project.shortDesc}</p>
 
-                {/* Service tags */}
-                <div className="work-techs-row" aria-label="Services delivered">
-                  {project.services.map((svc, idx) => (
-                    <span key={idx} className="work-tech-badge">{svc}</span>
+                <div className="work-techs-row" aria-label="Technology & services">
+                  {project.services.slice(0, 4).map((svc, idx) => (
+                    <motion.span 
+                      key={idx} 
+                      className="work-tech-badge"
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ 
+                        duration: prefersReducedMotion ? 0.01 : 0.4, 
+                        ease: EASE.smooth, 
+                        delay: prefersReducedMotion ? 0 : index * 0.18 + 0.5 + idx * 0.08 
+                      }}
+                    >
+                      {svc}
+                    </motion.span>
                   ))}
                 </div>
 
-                {/* Live project CTA */}
-                <motion.a
-                  href={project.liveUrl}
-                  className="btn btn-primary work-live-btn"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={project.liveLabel}
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ type: 'spring', stiffness: 350, damping: 20 }}
-                >
-                  View Live Project
-                  <svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    aria-hidden="true"
+                <div className="work-actions-row">
+                  <Link
+                    to={`/portfolio/${project.slug}`}
+                    className="btn btn-primary work-live-btn"
                   >
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                    <polyline points="15 3 21 3 21 9" />
-                    <line x1="10" y1="14" x2="21" y2="3" />
-                  </svg>
-                </motion.a>
+                    View Case Study
+                    <svg
+                      width="15"
+                      height="15"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      aria-hidden="true"
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </Link>
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-secondary work-ext-btn"
+                      aria-label={project.liveLabel}
+                    >
+                      Live Project ↗
+                    </a>
+                  )}
+                </div>
               </div>
             </motion.article>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

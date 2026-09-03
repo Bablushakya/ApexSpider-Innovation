@@ -1,10 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { CASE_STUDIES } from '../../constants/caseStudies.jsx';
 import { EASE } from '../../constants/animations';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import './CaseStudy.css';
 
 export default function MobileCaseStudy() {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <section
       className="mobile-work-section section-padding"
@@ -14,16 +18,15 @@ export default function MobileCaseStudy() {
       <div className="container">
         <motion.div
           className="section-header"
-          initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
+          initial={{ opacity: 0, y: 20, filter: prefersReducedMotion ? 'blur(0px)' : 'blur(4px)' }}
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-10%' }}
-          transition={{ duration: 0.8, ease: EASE.premium }}
+          transition={{ duration: prefersReducedMotion ? 0.01 : 0.8, ease: EASE.premium }}
         >
-          <span className="tag">Client Work</span>
+          <span className="tag">Portfolio</span>
           <h2 id="work-heading">Our Work</h2>
           <p>
-            Real projects delivered for real clients - explore the work we have built
-            and the results we have achieved together.
+            Real projects delivered for real clients — communicating the challenge, solution, and outcome.
           </p>
         </motion.div>
 
@@ -32,29 +35,51 @@ export default function MobileCaseStudy() {
             <motion.article
               key={index}
               className="glass-panel mobile-work-card"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 25 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-10%' }}
-              transition={{ duration: 0.7, ease: EASE.premium, delay: index * 0.15 }}
+              transition={{ 
+                duration: prefersReducedMotion ? 0.01 : 0.7, 
+                ease: EASE.premium, 
+                delay: prefersReducedMotion ? 0 : index * 0.18 
+              }}
               aria-labelledby={`work-card-title-${index}`}
             >
               <div className="mobile-work-visual">
-                <div className="mobile-browser-mockup">
+                <motion.div 
+                  className="mobile-browser-mockup"
+                  initial={{ opacity: 0, scale: prefersReducedMotion ? 1 : 0.96 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ 
+                    duration: prefersReducedMotion ? 0.01 : 0.6, 
+                    ease: EASE.premium, 
+                    delay: prefersReducedMotion ? 0 : index * 0.18 + 0.15 
+                  }}
+                >
                   <div className="mobile-browser-chrome">
                     <span className="chrome-dot dot-red" />
                     <span className="chrome-dot dot-yellow" />
                     <span className="chrome-dot dot-green" />
                   </div>
-                  <img
+                  <motion.img
                     src={project.image}
                     alt={project.imageAlt}
                     className="mobile-project-img"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ 
+                      duration: prefersReducedMotion ? 0.01 : 0.5, 
+                      ease: EASE.smooth, 
+                      delay: prefersReducedMotion ? 0 : index * 0.18 + 0.3 
+                    }}
                   />
-                </div>
+                </motion.div>
               </div>
 
               <div className="mobile-work-content">
-                <span className="mobile-work-tag">{project.tag}</span>
+                <span className="mobile-work-tag">{project.category || project.tag}</span>
                 <p className="mobile-work-client">
                   Client: <strong>{project.client}</strong>
                 </p>
@@ -64,36 +89,57 @@ export default function MobileCaseStudy() {
                 >
                   {project.title}
                 </h3>
-                <p className="mobile-work-desc">{project.desc}</p>
+                <p className="mobile-work-desc">{project.shortDesc || project.overview}</p>
 
                 <div className="mobile-work-services">
                   {project.services.map((svc, idx) => (
-                    <span key={idx} className="mobile-service-tag">{svc}</span>
+                    <motion.span 
+                      key={idx} 
+                      className="mobile-service-tag"
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ 
+                        duration: prefersReducedMotion ? 0.01 : 0.4, 
+                        ease: EASE.smooth, 
+                        delay: prefersReducedMotion ? 0 : index * 0.18 + 0.45 + idx * 0.08 
+                      }}
+                    >
+                      {svc}
+                    </motion.span>
                   ))}
                 </div>
 
-                <a
-                  href={project.liveUrl}
-                  className="btn btn-primary mobile-work-btn"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={project.liveLabel}
-                >
-                  View Live Project
-                  <svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    aria-hidden="true"
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '16px' }}>
+                  <Link
+                    to={`/portfolio/${project.slug}`}
+                    className="btn btn-primary mobile-work-btn"
                   >
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                    <polyline points="15 3 21 3 21 9" />
-                    <line x1="10" y1="14" x2="21" y2="3" />
-                  </svg>
-                </a>
+                    View Case Study
+                    <svg
+                      width="15"
+                      height="15"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      aria-hidden="true"
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </Link>
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-secondary mobile-work-btn"
+                      aria-label={project.liveLabel}
+                    >
+                      Live Project ↗
+                    </a>
+                  )}
+                </div>
               </div>
             </motion.article>
           ))}

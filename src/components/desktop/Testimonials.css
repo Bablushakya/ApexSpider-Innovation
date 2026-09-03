@@ -45,7 +45,10 @@
   background: rgba(255, 255, 255, 0.04);
   color: var(--color-text-secondary);
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  transition: background 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   z-index: 10;
   /* Shift arrows out of text area */
   margin-top: -24px; /* compensate for dots below center */
@@ -58,11 +61,31 @@
   background: rgba(0, 255, 255, 0.08);
   border-color: var(--color-accent-teal);
   color: var(--color-accent-teal);
+  transform: translateY(-50%) scale(1.1);
 }
 
 .tc-arrow:focus-visible {
   outline: 2px solid var(--color-accent-teal);
   outline-offset: 3px;
+}
+
+/* Arrow SVG smooth scale on hover */
+.tc-arrow svg {
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.tc-arrow:hover svg {
+  transform: scale(1.05);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tc-arrow:hover {
+    transform: translateY(-50%);
+  }
+  
+  .tc-arrow:hover svg {
+    transform: none;
+  }
 }
 
 /* ── Slide area — fixes height during AnimatePresence ─── */
@@ -189,7 +212,10 @@
   border: 1px solid var(--border-glass);
   background: rgba(255, 255, 255, 0.12);
   cursor: pointer;
-  transition: background 0.25s ease, transform 0.25s ease, border-color 0.25s ease, width 0.25s ease;
+  transition: background 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   padding: 0;
 }
 
@@ -203,11 +229,24 @@
 
 .tc-dot:hover:not(.tc-dot--active) {
   background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.2);
 }
 
 .tc-dot:focus-visible {
   outline: 2px solid var(--color-accent-teal);
   outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tc-dot {
+    transition: background 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  
+  .tc-dot:hover:not(.tc-dot--active) {
+    transform: none;
+  }
 }
 
 /* ── Responsive ───────────────────────────────────────── */
