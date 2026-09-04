@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Submit IndexNow (Bing)
 
 on:
   push:
@@ -7,61 +7,26 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: false
 
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-      - uses: actions/configure-pages@v4
-      - run: npm ci
-      - name: Build with env
-        run: npm run build
-        env:
-          VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
-          VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
-          VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist/
-
-  deploy:
-    name: Deploy
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
   indexnow:
     name: Submit IndexNow (Bing)
     runs-on: ubuntu-latest
-    needs: deploy
-    # Never block deployment if IndexNow ping fails
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     continue-on-error: true
-    # Only run on pushes to main (not pull requests or manual triggers
-    # that aren't production deploys). Skip if trigger secret is absent.
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
-      - name: Ping Vercel IndexNow endpoint
-        # The INDEXNOW_API_KEY lives ONLY in Vercel environment variables.
-        # Only the INDEXNOW_TRIGGER_SECRET is stored in GitHub Secrets.
-        # This call authenticates the trigger but never exposes the real API key.
+      - name: Wait for site to be reachable
+        run: |
+          echo "Waiting for site to be reachable with HTTP 200..."
+          curl -s -f -o /dev/null \
+            --retry 10 \
+            --retry-delay 5 \
+            --retry-all-errors \
+            --max-time 30 \
+            https://www.apexspiderinnovation.com/
+          echo "Site is reachable with HTTP 200."
+
+      - name: Trigger IndexNow submission
         run: |
           HTTP_STATUS=$(curl -s -o /tmp/indexnow_response.txt -w "%{http_code}" \
             -X POST \
@@ -69,10 +34,12 @@ jobs:
             -H "Content-Type: application/json" \
             https://www.apexspiderinnovation.com/api/indexnow)
           echo "IndexNow endpoint responded with HTTP $HTTP_STATUS"
+          echo "Response body:"
           cat /tmp/indexnow_response.txt
+          echo ""
           if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 300 ]; then
-            echo "✅ IndexNow submission triggered successfully."
+            echo "IndexNow submission triggered successfully."
           else
-            echo "⚠️  IndexNow submission returned HTTP $HTTP_STATUS — check Vercel logs."
+            echo "IndexNow submission returned HTTP $HTTP_STATUS — check Vercel logs."
             exit 1
           fi
