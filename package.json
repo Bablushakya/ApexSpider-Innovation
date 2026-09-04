@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:ui": "vitest --ui",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "indexnow": "node scripts/indexnow.mjs"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
