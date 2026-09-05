@@ -65,7 +65,7 @@ export default function Hero({ heroReady = false }) {
 
           {/* Description */}
           <motion.p className="hero-description" {...stagger(0.26)}>
-            We design and build custom digital products, business applications, AI solutions and data systems around the way your business actually works.
+            Apex Spider Innovation designs and builds custom digital products, business applications, AI solutions and data systems around the way your business actually works.
           </motion.p>
 
           {/* CTAs */}

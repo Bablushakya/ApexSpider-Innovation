@@ -27,8 +27,8 @@ export default function ValueProps() {
           viewport={{ once: true, margin: '-10%' }}
           transition={{ duration: prefersReducedMotion ? 0.01 : 0.8, ease: EASE.premium }}
         >
-          <span className="tag">Why ApexSpider</span>
-          <h2 id="why-heading">Why Choose ApexSpider?</h2>
+          <span className="tag">Why Apex Spider</span>
+          <h2 id="why-heading">Why Choose Apex Spider?</h2>
           <p>We combine business insight with senior engineering standards to build software that moves your business forward.</p>
         </motion.div>
 

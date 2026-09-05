@@ -16,7 +16,7 @@ export const CASE_STUDIES = [
     shortDesc:
       'A complete digital transformation for a travel company — from website design and development through to SEO and social media management.',
     overview:
-      'India Heritage Travel required a complete digital presence that could represent their curated travel offerings with clarity, credibility and strong search visibility. ApexSpider designed and developed the full website while implementing a comprehensive SEO strategy to establish their online presence.',
+      'India Heritage Travel required a complete digital presence that could represent their curated travel offerings with clarity, credibility and strong search visibility. Apex Spider Innovation designed and developed the full website while implementing a comprehensive SEO strategy to establish their online presence.',
     clientChallenge:
       'India Heritage Travel had a strong travel offering but lacked a digital presence capable of representing it effectively. The existing setup did not support discoverability through search, and the user experience did not reflect the premium nature of their travel experiences.',
     objectives: [

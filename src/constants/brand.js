@@ -4,11 +4,12 @@
  */
 
 export const BRAND = {
-  name: 'ApexSpider Innovation',
-  shortName: 'ApexSpider',
+  name: 'Apex Spider Innovation',
+  shortName: 'Apex Spider',
+  alternateName: 'ApexSpider Innovation',
   tagline: 'Technology That Moves Your Business Forward.',
   description:
-    'We design and build custom digital products, business applications, AI solutions and data systems that help businesses operate smarter and scale faster.',
+    'Apex Spider Innovation builds custom software, scalable web applications, and automation solutions for startups and growing enterprises.',
   footerContactDesc: 'Have a project or technical inquiry? Connect with our engineering team directly.',
   url: 'https://www.apexspiderinnovation.com',
   email: {
@@ -28,12 +29,9 @@ export const BRAND = {
 };
 
 export const SITE_META = {
-  title: 'ApexSpider Innovation | Custom Software, AI & Digital Solutions',
+  title: 'Apex Spider Innovation | Custom Software & Web Development',
   description: BRAND.description,
-  keywords:
-    'ApexSpider Innovation, Custom Software Development, Web Development, Mobile App Development, AI Solutions, Business Applications, Data Analytics, Automation, Digital Transformation',
   ogImage: `${BRAND.url}/og-image.png`,
-  twitterHandle: '@apexspider',
 };
 
 /** Desktop & mobile navigation — uses real routes for multi-page architecture */
