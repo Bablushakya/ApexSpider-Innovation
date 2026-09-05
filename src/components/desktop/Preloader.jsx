@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { EASE } from '../../constants/animations';
-import logoImg from '../../assets/ApexSpiderLogo.png';
+import logoImg from '../../assets/ApexSPiderInnovationLogoBGRemove.png';
 import './Preloader.css';
 
 /*
@@ -130,12 +130,16 @@ export default function Preloader({ onComplete, onNavReady, onHeroReady, logoNav
 
       // Snapshot starting position (fixed coords)
       setLogoStyle({
-        x:    fromRect.left,
-        y:    fromRect.top,
-        size: fromRect.height,
-        toX:  toRect.left,
-        toY:  toRect.top + (toRect.height - 46) / 2, // vertically center in nav slot
-        toSize: 46,
+        x:        fromRect.left,
+        y:        fromRect.top,
+        width:    fromRect.width,
+        height:   fromRect.height,
+        size:     fromRect.height,
+        toX:      toRect.left,
+        toY:      toRect.top,
+        toWidth:  toRect.width,
+        toHeight: toRect.height,
+        toSize:   toRect.height,
       });
       setLogoFlying(true);
       setPhase(PHASE.LOGO_TRAVEL);
@@ -269,18 +273,23 @@ export default function Preloader({ onComplete, onNavReady, onHeroReady, logoNav
 
 /* ── Flying Logo: animates from center screen to navbar slot ── */
 function FlyingLogo({ style }) {
-  const { x, y, size, toX, toY, toSize } = style;
+  const { x, y, width, height, size, toX, toY, toWidth, toHeight, toSize } = style;
 
   return (
     <motion.div
       className="pl-flying-logo"
-      style={{ width: size, height: size, top: 0, left: 0 }}
+      style={{
+        width: width || size,
+        height: height || size,
+        top: 0,
+        left: 0,
+      }}
       initial={{ x, y }}
       animate={{
         x:      toX,
         y:      toY,
-        width:  toSize,
-        height: toSize,
+        width:  toWidth || toSize,
+        height: toHeight || toSize,
       }}
       transition={{ duration: 0.45, ease: EASE.premium }}
     >

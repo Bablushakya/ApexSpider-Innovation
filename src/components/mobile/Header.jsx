@@ -4,7 +4,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { NAV_LINKS, BRAND } from '../../constants/brand';
 import { EASE } from '../../constants/animations';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
-import logoImg from '../../assets/ApexSpiderLogo.png';
+import logoImg from '../../assets/ApexSPiderInnovationLogoBGRemove.png';
 import './Header.css';
 
 const MobileHeader = forwardRef(function MobileHeader({ navReady = false }, logoNavRef) {
@@ -43,7 +43,7 @@ const MobileHeader = forwardRef(function MobileHeader({ navReady = false }, logo
             src={logoImg}
             alt={BRAND.logo.alt}
             className="mobile-logo-img"
-            width="36"
+            width="44"
             height="36"
             initial={{ opacity: 0, scale: prefersReduced ? 1 : 0.95 }}
             animate={{ opacity: navReady ? 1 : 0, scale: 1 }}

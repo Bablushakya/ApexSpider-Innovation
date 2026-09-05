@@ -4,7 +4,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { NAV_LINKS, SERVICE_NAV_ITEMS, BRAND } from '../../constants/brand';
 import { EASE } from '../../constants/animations';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
-import logoImg from '../../assets/ApexSpiderLogo.png';
+import logoImg from '../../assets/ApexSPiderInnovationLogoBGRemove.png';
 import './Header.css';
 
 const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
@@ -55,8 +55,8 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
             src={logoImg}
             alt={BRAND.logo.alt}
             className="logo-img"
-            width="46"
-            height="46"
+            width="50"
+            height="40"
             initial={{ opacity: 0, scale: prefersReduced ? 1 : 0.95 }}
             animate={{ opacity: navReady ? 1 : 0, scale: 1 }}
             transition={{ duration: prefersReduced ? 0.01 : 0.4, ease: 'easeOut', delay: prefersReduced ? 0 : 0.05 }}
