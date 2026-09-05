@@ -5,8 +5,8 @@
 
 export const FAQS = [
   {
-    q: 'How can ApexSpider help my business?',
-    a: 'ApexSpider designs and builds custom digital products — websites, web applications, mobile apps, AI solutions, business management systems, data dashboards and automation tools. We work with businesses that need technology built around how they actually operate, not around a generic template.',
+    q: 'How can Apex Spider Innovation help my business?',
+    a: 'Apex Spider Innovation designs and builds custom digital products — websites, web applications, mobile apps, AI solutions, business management systems, data dashboards and automation tools. We work with businesses that need technology built around how they actually operate, not around a generic template.',
   },
   {
     q: 'Can you build a custom web application for our business?',

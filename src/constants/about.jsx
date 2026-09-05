@@ -7,7 +7,7 @@ export const ABOUT_CONTENT = {
   tag: 'Company',
   title: 'Building Software with Precision',
   paragraphs: [
-    'At ApexSpider Innovation, we believe software should be robust, scalable, and built around real business workflows. We partner with growing businesses and startup founders to architect custom web and mobile applications, data-driven solutions, and clean UI systems that ensure operational efficiency and long-term growth.',
+    'At Apex Spider Innovation, we believe software should be robust, scalable, and built around real business workflows. We partner with growing businesses and startup founders to architect custom web and mobile applications, data-driven solutions, and clean UI systems that ensure operational efficiency and long-term growth.',
     'Our approach prioritises clean architecture, business-first design, and high-fidelity code execution. We write modular, maintainable code and build secure backends to guarantee product velocity.'
   ],
   standards: [
@@ -23,17 +23,17 @@ export const ABOUT_CONTENT = {
 
   // Dedicated /about Page fields
   hero: {
-    tag: 'About ApexSpider',
+    tag: 'About Apex Spider',
     headline: 'Technology should solve real problems.',
     subheadline: 'Not just look impressive.',
     description:
-      'ApexSpider Innovation builds custom digital products and business systems for companies that need technology designed around how they actually operate.',
+      'Apex Spider Innovation builds custom digital products and business systems for companies that need technology designed around how they actually operate.',
   },
 
   whoWeAre: {
     heading: 'Who We Are',
     body: [
-      'ApexSpider Innovation is a software and technology company that designs and builds custom digital solutions — from business websites and web applications to mobile apps, AI solutions, data systems and business automation.',
+      'Apex Spider Innovation is a software and technology company that designs and builds custom digital solutions — from business websites and web applications to mobile apps, AI solutions, data systems and business automation.',
       'We work with businesses that need more than off-the-shelf tools. Our focus is on understanding your business first, then designing and building technology that fits the way you work.',
     ],
   },
