@@ -19,10 +19,10 @@ export const BRAND = {
     youtube: 'https://www.youtube.com/@ApexSpiderInnovation',
     instagram: 'https://www.instagram.com/apex_spider_innovation/',
     linkedin: 'https://www.linkedin.com/company/apexspider-innovation',
-    twitter: 'https://twitter.com/apexspider',
+    twitter: 'https://x.com/Apex_Spider_Ino',
   },
   logo: {
-    alt: 'ApexSpider Innovation Logo',
+    alt: 'Apex Spider Innovation',
   },
   founded: '2026',
 };
