@@ -50,6 +50,11 @@ Added explicit build settings:
 
 **Purpose**: Explicitly defines build process (no auto-detection ambiguity)
 
+**CRITICAL FIX**: Simplified regex patterns in headers to avoid Vercel validation errors
+- Changed from complex regex: `/(.*\.(webp|png|jpg|...))`
+- To simple patterns: `/(.*).webp`, `/(.*).png`, etc.
+- **Reason**: Vercel's routing engine doesn't accept escaped dots in header source patterns
+
 ---
 
 ### 4. Pre-Deployment Verification Script
