@@ -3,7 +3,7 @@
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
     {
-      "source": "/((?!assets/|src/|_next/|favicon|og-image|site\\.webmanifest|robots\\.txt|sitemap|.*\\.(ico|png|jpg|jpeg|webp|svg|woff|woff2|ttf|eot|js|css|json|txt|xml|map)).*).*)",
+      "source": "/((?!assets/|src/|_next/|favicon|og-image|site\\.webmanifest|robots\\.txt|sitemap|.*\\.(ico|png|jpg|jpeg|webp|svg|woff|woff2|ttf|eot|js|css|json|txt|xml|map)).*)",
       "destination": "/index.html"
     }
   ],
