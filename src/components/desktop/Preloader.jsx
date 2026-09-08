@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { EASE } from '../../constants/animations';
-import logoImg from '../../assets/ApexSPiderInnovationLogoBGRemove.png';
+import logoImg from '../../assets/apexspiderinnovationlogobgremove.webp';
 import './Preloader.css';
 
 /*

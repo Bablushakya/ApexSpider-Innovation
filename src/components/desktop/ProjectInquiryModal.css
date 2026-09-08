@@ -187,6 +187,13 @@
   background-repeat: no-repeat;
   background-position: right 12px center;
   padding-right: 40px;
+  color-scheme: dark;
+}
+
+.inquiry-form-select option {
+  background-color: #0b1120;
+  color: #f8fafc;
+  padding: 10px 14px;
 }
 
 .inquiry-form-textarea {

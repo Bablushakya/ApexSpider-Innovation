@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { BRAND, FOOTER_NAV_LINKS, FOOTER_SERVICE_LINKS, LEGAL_LINKS } from '../../constants/brand';
 import { EASE } from '../../constants/animations';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
-import logoImg from '../../assets/apexSpiderInnovationFotterLogo.png';
+import logoImg from '../../assets/apexspiderinnovationfotterlogo.webp';
 import './Footer.css';
 
 export default function Footer() {
@@ -28,8 +28,8 @@ export default function Footer() {
               src={logoImg}
               alt={BRAND.logo.alt}
               className="footer-logo-img"
-              width="140"
-              height="42"
+              loading="lazy"
+              decoding="async"
             />
           </Link>
           <p className="footer-tagline">{BRAND.tagline}</p>
