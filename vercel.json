@@ -7,7 +7,7 @@
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
     {
-      "source": "/((?!assets/|src/|_next/|favicon|og-image|site\\.webmanifest|robots\\.txt|sitemap|.*\\.(ico|png|jpg|jpeg|webp|svg|woff|woff2|ttf|eot|js|css|json|txt|xml|map)).*)",
+      "source": "/((?!assets/|favicon|og-image|site.webmanifest|robots.txt|sitemap).*)",
       "destination": "/index.html"
     }
   ],
@@ -19,13 +19,55 @@
       ]
     },
     {
-      "source": "/(.*\\.(webp|png|jpg|jpeg|svg|ico|woff|woff2))",
+      "source": "/(.*).webp",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
     },
     {
-      "source": "/(.*\\.html)",
+      "source": "/(.*).png",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*).jpg",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*).jpeg",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*).svg",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*).ico",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*).woff",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*).woff2",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*).html",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
       ]
