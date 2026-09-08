@@ -3,8 +3,8 @@
  * Used by Portfolio page, CaseStudy components, and individual case-study pages.
  */
 
-import kinImg from '../assets/Our work/Kin webiste.png';
-import heritageImg from '../assets/Our work/india heritage travel.png';
+import kinImg from '../assets/Our work/kin-webiste.webp';
+import heritageImg from '../assets/Our work/india-heritage-travel.webp';
 
 export const CASE_STUDIES = [
   {

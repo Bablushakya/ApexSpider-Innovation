@@ -4,32 +4,36 @@ import { AnimatePresence } from 'framer-motion';
 import { useIsMobile } from './hooks/useIsMobile';
 import ScrollToTop from './components/layout/ScrollToTop';
 
-// Desktop Components (Home page only)
+// Desktop Components (Home page) — Header + Hero stay eager (above-fold critical path)
 import DesktopHeader from './components/desktop/Header';
 import DesktopHero from './components/desktop/Hero';
-import DesktopServices from './components/desktop/Services';
-import DesktopValueProps from './components/desktop/ValueProps';
-import DesktopProcess from './components/desktop/Process';
-import DesktopCaseStudy from './components/desktop/CaseStudy';
-import DesktopAbout from './components/desktop/About';
-import DesktopTestimonials from './components/desktop/Testimonials';
-import DesktopFAQ from './components/desktop/FAQ';
-import DesktopContactCTA from './components/desktop/ContactCTA';
 import DesktopFooter from './components/desktop/Footer';
 import Preloader from './components/desktop/Preloader';
 
-// Mobile Components (Home page only)
+// Desktop below-fold sections — lazy loaded (never in initial viewport)
+const DesktopServices     = lazy(() => import('./components/desktop/Services'));
+const DesktopValueProps   = lazy(() => import('./components/desktop/ValueProps'));
+const DesktopProcess      = lazy(() => import('./components/desktop/Process'));
+const DesktopCaseStudy    = lazy(() => import('./components/desktop/CaseStudy'));
+const DesktopAbout        = lazy(() => import('./components/desktop/About'));
+const DesktopTestimonials = lazy(() => import('./components/desktop/Testimonials'));
+const DesktopFAQ          = lazy(() => import('./components/desktop/FAQ'));
+const DesktopContactCTA   = lazy(() => import('./components/desktop/ContactCTA'));
+
+// Mobile Components (Home page) — Header + Hero stay eager
 import MobileHeader from './components/mobile/Header';
 import MobileHero from './components/mobile/Hero';
-import MobileServices from './components/mobile/Services';
-import MobileValueProps from './components/mobile/ValueProps';
-import MobileProcess from './components/mobile/Process';
-import MobileCaseStudy from './components/mobile/CaseStudy';
-import MobileAbout from './components/mobile/About';
-import MobileTestimonials from './components/mobile/Testimonials';
-import MobileFAQ from './components/mobile/FAQ';
-import MobileContactCTA from './components/mobile/ContactCTA';
 import MobileFooter from './components/mobile/Footer';
+
+// Mobile below-fold sections — lazy loaded
+const MobileServices     = lazy(() => import('./components/mobile/Services'));
+const MobileValueProps   = lazy(() => import('./components/mobile/ValueProps'));
+const MobileProcess      = lazy(() => import('./components/mobile/Process'));
+const MobileCaseStudy    = lazy(() => import('./components/mobile/CaseStudy'));
+const MobileAbout        = lazy(() => import('./components/mobile/About'));
+const MobileTestimonials = lazy(() => import('./components/mobile/Testimonials'));
+const MobileFAQ          = lazy(() => import('./components/mobile/FAQ'));
+const MobileContactCTA   = lazy(() => import('./components/mobile/ContactCTA'));
 
 // Multi-page pages — lazy loaded so they don't inflate the home bundle
 const AboutPage        = lazy(() => import('./pages/AboutPage'));
@@ -91,14 +95,16 @@ function DesktopHomePage({ logoNavRef, navReady, heroReady }) {
       <DesktopHeader ref={logoNavRef} navReady={navReady} />
       <main id="main-content">
         <DesktopHero heroReady={heroReady} />
-        <DesktopServices />
-        <DesktopValueProps />
-        <DesktopProcess />
-        <DesktopCaseStudy />
-        <DesktopAbout />
-        <DesktopTestimonials />
-        <DesktopFAQ />
-        <DesktopContactCTA />
+        <Suspense fallback={null}>
+          <DesktopServices />
+          <DesktopValueProps />
+          <DesktopProcess />
+          <DesktopCaseStudy />
+          <DesktopAbout />
+          <DesktopTestimonials />
+          <DesktopFAQ />
+          <DesktopContactCTA />
+        </Suspense>
       </main>
       <DesktopFooter />
     </>
@@ -112,14 +118,16 @@ function MobileHomePage({ logoNavRef, navReady, heroReady }) {
       <MobileHeader ref={logoNavRef} navReady={navReady} />
       <main id="main-content">
         <MobileHero heroReady={heroReady} />
-        <MobileServices />
-        <MobileValueProps />
-        <MobileProcess />
-        <MobileCaseStudy />
-        <MobileAbout />
-        <MobileTestimonials />
-        <MobileFAQ />
-        <MobileContactCTA />
+        <Suspense fallback={null}>
+          <MobileServices />
+          <MobileValueProps />
+          <MobileProcess />
+          <MobileCaseStudy />
+          <MobileAbout />
+          <MobileTestimonials />
+          <MobileFAQ />
+          <MobileContactCTA />
+        </Suspense>
       </main>
       <MobileFooter />
     </>

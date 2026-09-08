@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { BRAND, FOOTER_NAV_LINKS, FOOTER_SERVICE_LINKS, LEGAL_LINKS } from '../../constants/brand';
 import { EASE } from '../../constants/animations';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
-import logoImg from '../../assets/apexSpiderInnovationFotterLogo.png';
+import logoImg from '../../assets/apexspiderinnovationfotterlogo.webp';
 import './Footer.css';
 
 export default function MobileFooter() {

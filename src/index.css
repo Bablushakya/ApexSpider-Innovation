@@ -22,6 +22,7 @@
   
   --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   --transition-fast: all 0.15s ease;
+  color-scheme: dark;
 }
 
 /* Global Reset */
@@ -33,6 +34,16 @@
 
 html {
   scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+select, option {
+  color-scheme: dark;
+}
+
+option {
+  background-color: #0b1120;
+  color: #f8fafc;
 }
 
 body {
@@ -92,18 +103,18 @@ button {
 }
 
 .section-padding {
-  padding: 25px 0;
+  padding: 80px 0;
 }
 
 @media (max-width: 1024px) {
   .section-padding {
-    padding: 75px 0;
+    padding: 64px 0;
   }
 }
 
 @media (max-width: 768px) {
   .section-padding {
-    padding: 52px 0;   /* Down from 64px — tighter section rhythm */
+    padding: 48px 0;
   }
   
   .container {
@@ -113,7 +124,7 @@ button {
 
 @media (max-width: 360px) {
   .section-padding {
-    padding: 44px 0;   /* Narrowest screens get slightly less */
+    padding: 40px 0;
   }
 
   .container {

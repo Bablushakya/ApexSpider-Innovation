@@ -4,7 +4,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { NAV_LINKS, SERVICE_NAV_ITEMS, BRAND } from '../../constants/brand';
 import { EASE } from '../../constants/animations';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
-import logoImg from '../../assets/ApexSPiderInnovationLogoBGRemove.png';
+import logoImg from '../../assets/apexspiderinnovationlogobgremove.webp';
 import './Header.css';
 
 const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
