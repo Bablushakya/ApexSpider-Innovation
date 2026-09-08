@@ -6,6 +6,9 @@
  * markup, exact brand entity consistency ("Apex Spider Innovation"),
  * route-specific SEO metadata, and JSON-LD structured data inside dist/
  * for search engines, crawlers, and instant client page loads.
+ *
+ * Production Asset Fix: Resolves Vite dev SSR asset paths (/src/assets/...)
+ * into production hashed asset URLs (/assets/...) using Vite manifest.json.
  */
 
 import { createServer } from 'vite';
@@ -29,6 +32,41 @@ async function prerender() {
   }
 
   const baseTemplate = fs.readFileSync(indexHtmlPath, 'utf-8');
+
+  // Load manifest.json to map development /src/assets paths to production /assets/[name]-[hash]
+  let manifest = {};
+  const manifestPath = path.join(distDir, '.vite', 'manifest.json');
+  const altManifestPath = path.join(distDir, 'manifest.json');
+  if (fs.existsSync(manifestPath)) {
+    manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
+  } else if (fs.existsSync(altManifestPath)) {
+    manifest = JSON.parse(fs.readFileSync(altManifestPath, 'utf-8'));
+  }
+
+  const assetReplacements = [];
+  for (const [srcKey, entry] of Object.entries(manifest)) {
+    if (entry && entry.file) {
+      const rawSrc = '/' + srcKey;
+      const encodedSrc = '/' + encodeURI(srcKey);
+      const targetFile = '/' + entry.file;
+      assetReplacements.push({ from: rawSrc, to: targetFile });
+      if (rawSrc !== encodedSrc) {
+        assetReplacements.push({ from: encodedSrc, to: targetFile });
+      }
+    }
+  }
+
+  // Copy src/assets into dist/src/assets as physical fallback
+  const srcAssetsDir = path.resolve(__dirname, '..', 'src', 'assets');
+  const distSrcAssetsDir = path.join(distDir, 'src', 'assets');
+  if (fs.existsSync(srcAssetsDir)) {
+    try {
+      fs.cpSync(srcAssetsDir, distSrcAssetsDir, { recursive: true });
+      console.log('  📦 Fallback asset directory copied to dist/src/assets/');
+    } catch (e) {
+      console.warn('  ⚠️ Could not copy fallback src/assets:', e.message);
+    }
+  }
 
   // Start Vite custom server to load React modules in SSR environment
   const vite = await createServer({
@@ -412,7 +450,7 @@ async function prerender() {
 
     for (const route of routes) {
       // 1. Render React tree to string
-      const appHtml = renderToString(
+      let appHtml = renderToString(
         React.createElement(
           StaticRouter,
           { location: route.path },
@@ -420,8 +458,18 @@ async function prerender() {
         )
       );
 
+      // Replace development /src/assets/... paths with production built /assets/... paths
+      for (const rep of assetReplacements) {
+        appHtml = appHtml.replaceAll(rep.from, rep.to);
+      }
+
       // 2. Build route-specific HTML from template
       let html = baseTemplate;
+
+      // Also replace in template if any
+      for (const rep of assetReplacements) {
+        html = html.replaceAll(rep.from, rep.to);
+      }
 
       // Inject rendered markup into #root
       html = html.replace(
