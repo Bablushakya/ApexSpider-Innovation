@@ -7,11 +7,19 @@
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
     {
-      "source": "/((?!assets/|favicon|og-image|site.webmanifest|robots.txt|sitemap).*)",
+      "source": "/((?!assets/|favicon|og-|logo-|site\\.webmanifest|robots\\.txt|sitemap|llms\\.txt|apple-touch-icon|ee1069c454324cdca211769730191bef).*)",
       "destination": "/index.html"
     }
   ],
   "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy",        "value": "strict-origin-when-cross-origin" },
+        { "key": "X-Frame-Options",        "value": "SAMEORIGIN" }
+      ]
+    },
     {
       "source": "/assets/(.*)",
       "headers": [

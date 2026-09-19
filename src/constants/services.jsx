@@ -17,6 +17,7 @@ export const SERVICES = [
     ),
     title: 'Web Development',
     shortDesc: 'Business websites, e-commerce platforms and custom web applications.',
+    seoDesc: 'Custom websites and web applications built for usability, scalability and growth. Every project starts with your business requirements — not a template.',
     fullDesc:
       'From high-performance business websites to custom web applications, we build digital experiences designed for usability, scalability and growth. Every project starts with understanding your business — not a template.',
     capabilities: [
@@ -68,6 +69,7 @@ export const SERVICES = [
     ),
     title: 'Mobile App Development',
     shortDesc: 'Scalable mobile applications designed for real-world business use.',
+    seoDesc: 'Android, iOS and cross-platform mobile apps built for real-world business use. We focus on usability, performance and seamless backend integration.',
     fullDesc:
       'We design and develop mobile applications that work reliably in the real world. Whether you need an Android app, iOS app or a cross-platform solution, we focus on usability, performance and seamless backend integration.',
     capabilities: [
@@ -115,6 +117,7 @@ export const SERVICES = [
     ),
     title: 'AI Solutions',
     shortDesc: 'Practical AI systems built around your business requirements.',
+    seoDesc: 'Practical AI systems built for real business problems — customer assistants, intelligent workflows and AI integrations designed around your data and operations.',
     fullDesc:
       'We build AI solutions that solve real business problems — not AI for the sake of AI. From customer-facing assistants to intelligent internal tools, we design AI systems around your workflows and data.',
     capabilities: [
@@ -162,6 +165,7 @@ export const SERVICES = [
     ),
     title: 'Business Applications',
     shortDesc: 'Admin panels, CRM-style systems, internal tools and workflow platforms.',
+    seoDesc: 'Custom admin panels, CRM systems and internal tools built for the way your business operates. Replace spreadsheets with purpose-built software.',
     fullDesc:
       'Custom software built for the way your business actually operates. We design and develop business applications that centralise your operations, connect your data and replace disconnected spreadsheets and manual processes.',
     capabilities: [
@@ -208,6 +212,7 @@ export const SERVICES = [
     ),
     title: 'Data Analytics',
     shortDesc: 'Business dashboards, KPI monitoring, reporting and decision-support systems.',
+    seoDesc: 'Business intelligence dashboards, KPI monitoring and automated reporting. Turn your data into clear, actionable insight for better decisions.',
     fullDesc:
       'Turn your business data into clear, actionable insight. We build dashboards, reporting systems and analytics tools that give you visibility into what is actually happening in your business — and help you make better decisions.',
     capabilities: [
@@ -254,6 +259,7 @@ export const SERVICES = [
     ),
     title: 'Automation',
     shortDesc: 'Workflow automation, API integrations and repetitive-process optimisation.',
+    seoDesc: 'API integrations, workflow automation and process optimisation. Connect your systems and free your team from repetitive manual work.',
     fullDesc:
       'Reduce repetitive work. Connect your systems. Give your team more time to focus on the work that matters. We design and build automation solutions that make your business operations faster, more reliable and easier to manage.',
     capabilities: [

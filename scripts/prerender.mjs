@@ -114,9 +114,9 @@ async function prerender() {
       url: `${BASE_URL}/`,
       logo: {
         '@type': 'ImageObject',
-        url: `${BASE_URL}/og-image.png`,
-        width: 1200,
-        height: 630,
+        url: `${BASE_URL}/logo-512.png`,
+        width: 512,
+        height: 512,
       },
       description:
         'Apex Spider Innovation builds custom software, scalable web applications, and automation solutions for startups and growing enterprises.',
@@ -235,7 +235,7 @@ async function prerender() {
           ),
         seo: {
           title: `${s.title} Services | ${BRAND_NAME}`,
-          description: s.fullDesc,
+          description: s.seoDesc || s.fullDesc,
           canonical: `${BASE_URL}/services/${s.slug}`,
         },
         buildJsonLd: () => ({
@@ -248,14 +248,14 @@ async function prerender() {
               '@id': `${BASE_URL}/services/${s.slug}#webpage`,
               url: `${BASE_URL}/services/${s.slug}`,
               name: `${s.title} Services | ${BRAND_NAME}`,
-              description: s.fullDesc,
+              description: s.seoDesc || s.fullDesc,
               isPartOf: { '@id': `${BASE_URL}/#website` },
               about: { '@id': `${BASE_URL}/#organization` },
             },
             {
               '@type': 'Service',
               name: `${s.title} Services`,
-              description: s.fullDesc,
+              description: s.seoDesc || s.fullDesc,
               provider: {
                 '@id': `${BASE_URL}/#organization`,
               },
@@ -312,9 +312,10 @@ async function prerender() {
             })
           ),
         seo: {
-          title: `${cs.title} | Case Study — ${BRAND_NAME}`,
-          description: cs.overview,
+          title: cs.seoTitle || `${cs.title} | Case Study — ${BRAND_NAME}`,
+          description: cs.seoDesc || cs.overview,
           canonical: `${BASE_URL}/portfolio/${cs.slug}`,
+          ogImage: cs.ogImage || `${BASE_URL}/og-image.png`,
         },
         buildJsonLd: () => ({
           '@context': 'https://schema.org',
@@ -325,8 +326,8 @@ async function prerender() {
               '@type': 'WebPage',
               '@id': `${BASE_URL}/portfolio/${cs.slug}#webpage`,
               url: `${BASE_URL}/portfolio/${cs.slug}`,
-              name: `${cs.title} | Case Study — ${BRAND_NAME}`,
-              description: cs.overview,
+              name: cs.seoTitle || `${cs.title} | Case Study — ${BRAND_NAME}`,
+              description: cs.seoDesc || cs.overview,
               isPartOf: { '@id': `${BASE_URL}/#website` },
               about: { '@id': `${BASE_URL}/#organization` },
             },
@@ -524,6 +525,11 @@ async function prerender() {
         /<meta\s+property="og:url"\s+content="[\s\S]*?"\s*\/?>/i,
         `<meta property="og:url" content="${canonical}" />`
       );
+      const ogImage = route.seo?.ogImage || `${BASE_URL}/og-image.png`;
+      html = html.replace(
+        /<meta\s+property="og:image"\s+content="[\s\S]*?"\s*\/?>/i,
+        `<meta property="og:image" content="${escapeHtml(ogImage)}" />`
+      );
       html = html.replace(
         /<meta\s+property="og:image:alt"\s+content="[\s\S]*?"\s*\/?>/i,
         `<meta property="og:image:alt" content="${escapeHtml(BRAND_NAME)} — Custom Software &amp; Web Development" />`
@@ -537,6 +543,10 @@ async function prerender() {
       html = html.replace(
         /<meta\s+name="twitter:description"\s+content="[\s\S]*?"\s*\/?>/i,
         `<meta name="twitter:description" content="${escapeHtml(description)}" />`
+      );
+      html = html.replace(
+        /<meta\s+name="twitter:image"\s+content="[\s\S]*?"\s*\/?>/i,
+        `<meta name="twitter:image" content="${escapeHtml(ogImage)}" />`
       );
       html = html.replace(
         /<meta\s+name="twitter:image:alt"\s+content="[\s\S]*?"\s*\/?>/i,
