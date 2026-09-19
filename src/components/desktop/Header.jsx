@@ -121,6 +121,13 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
                       >
                         <div className="nav-dropdown-header">
                           <span className="nav-dropdown-label">Services</span>
+                          <NavLink
+                            to="/services"
+                            className="nav-dropdown-all-link"
+                            onClick={() => setIsDropdownOpen(false)}
+                          >
+                            All Services &rarr;
+                          </NavLink>
                         </div>
                         <ul className="nav-dropdown-list" role="list">
                           {SERVICE_NAV_ITEMS.map((item, idx) => (

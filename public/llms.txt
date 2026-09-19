@@ -1,0 +1,27 @@
+# Apex Spider Innovation
+
+> Custom Software Development, Scalable Web Applications & Digital Solutions.
+
+Apex Spider Innovation builds modern, high-performance web applications, scalable enterprise systems, and custom automation solutions for startups and growing enterprises.
+
+## Core Services
+
+- [Web Development](https://www.apexspiderinnovation.com/services/web-development): Modern, high-performance responsive web applications built with React and cutting-edge frontend tooling.
+- [Mobile App Development](https://www.apexspiderinnovation.com/services/mobile-app-development): Native and cross-platform mobile apps for iOS and Android.
+- [AI & Machine Learning Solutions](https://www.apexspiderinnovation.com/services/ai-solutions): Custom AI integrations, workflow automation, and predictive data intelligence.
+- [Business Applications](https://www.apexspiderinnovation.com/services/business-applications): Enterprise software, ERP integrations, internal portals, and SaaS platforms.
+- [Data Analytics & BI](https://www.apexspiderinnovation.com/services/data-analytics): End-to-end data pipelines, real-time analytics dashboards, and business intelligence.
+- [Cloud & Workflow Automation](https://www.apexspiderinnovation.com/services/automation): Cloud architecture, DevOps automation, CI/CD, and system integration.
+
+## Portfolio & Case Studies
+
+- [India Heritage Travel](https://www.apexspiderinnovation.com/portfolio/india-heritage-travel): Complete digital presence, website design, and SEO strategy for a curated travel brand.
+- [Elevation by Kim](https://www.apexspiderinnovation.com/portfolio/elevation-by-kim): High-converting landing page and lead generation platform for an India Sourcing Trip experience.
+
+## Key Pages
+
+- [Home](https://www.apexspiderinnovation.com/): Company overview, technology stack, client reviews, and engineering capabilities.
+- [About](https://www.apexspiderinnovation.com/about): Mission, engineering values, leadership, and company background.
+- [Services](https://www.apexspiderinnovation.com/services): Overview of all engineering and consulting services.
+- [Portfolio](https://www.apexspiderinnovation.com/portfolio): Curated client case studies and digital transformation projects.
+- [Contact](https://www.apexspiderinnovation.com/contact): Project inquiries, consultation booking, and support.

@@ -22,7 +22,8 @@ export default function ServiceDetailPage() {
   }
 
   const seoTitle = `${service.title} Services | ${BRAND.name}`;
-  const seoDesc = service.fullDesc;
+  // Use the dedicated SEO description (≤160 chars) rather than the full body copy
+  const seoDesc = service.seoDesc || service.fullDesc;
   const canonicalUrl = `${BRAND.url}/services/${service.slug}`;
 
   // Filter case studies relevant to this service
@@ -212,13 +213,16 @@ export default function ServiceDetailPage() {
                         </svg>
                       </span>
                     </button>
-                    {isOpen && (
-                      <div className="faq-answer open">
-                        <div className="faq-answer-content">
-                          <p className="faq-answer-text">{faq.a}</p>
-                        </div>
+                    {/* Answer is always in the DOM so crawlers can index the text.
+                        CSS controls visibility; aria-hidden hides it from AT when closed. */}
+                    <div
+                      className={`faq-answer${isOpen ? ' open' : ''}`}
+                      aria-hidden={!isOpen}
+                    >
+                      <div className="faq-answer-content">
+                        <p className="faq-answer-text">{faq.a}</p>
                       </div>
-                    )}
+                    </div>
                   </div>
                 );
               })}

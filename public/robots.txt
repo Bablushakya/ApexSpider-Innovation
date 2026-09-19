@@ -1,4 +1,4 @@
-# ApexSpider Innovation — robots.txt
+# Apex Spider Innovation — robots.txt
 
 User-agent: *
 Allow: /

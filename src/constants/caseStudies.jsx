@@ -13,6 +13,9 @@ export const CASE_STUDIES = [
     category: 'Travel & Digital Experience',
     client: 'India Heritage Travel',
     title: 'India Heritage Travel — Complete Digital Presence',
+    seoTitle: 'India Heritage Travel Case Study | Apex Spider Innovation',
+    seoDesc: 'How Apex Spider Innovation built a complete digital presence for India Heritage Travel — website design, technical SEO and social media management.',
+    ogImage: 'https://www.apexspiderinnovation.com/og-india-heritage-travel.png',
     shortDesc:
       'A complete digital transformation for a travel company — from website design and development through to SEO and social media management.',
     overview:
@@ -57,6 +60,9 @@ export const CASE_STUDIES = [
     category: 'E-Commerce & Lead Generation',
     client: 'Kim — Elevation by Kim',
     title: 'India Sourcing Trip Landing Page',
+    seoTitle: 'Elevation by Kim — Landing Page Case Study | Apex Spider Innovation',
+    seoDesc: 'How Apex Spider Innovation designed a premium landing page for Elevation by Kim’s India Sourcing Trip program, focused on storytelling and lead generation.',
+    ogImage: 'https://www.apexspiderinnovation.com/og-elevation-by-kim.png',
     shortDesc:
       'A dedicated landing page for Elevation by Kim to promote their India Sourcing Trip program, focused on storytelling and lead generation.',
     overview:

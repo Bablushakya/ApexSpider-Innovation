@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useParams, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import PageLayout from '../components/layout/PageLayout';
 import PageSEO from '../components/layout/PageSEO';
@@ -18,12 +18,17 @@ export default function CaseStudyPage() {
     return <Navigate to="/portfolio" replace />;
   }
 
-  const seoTitle = `${project.title} | Case Study — ${BRAND.name}`;
-  const seoDesc = project.overview;
+  const seoTitle = project.seoTitle || `${project.title} | Case Study — ${BRAND.name}`;
+  const seoDesc = project.seoDesc || project.overview;
 
   return (
     <PageLayout>
-      <PageSEO title={seoTitle} description={seoDesc} canonical={`${BRAND.url}/portfolio/${project.slug}`} />
+      <PageSEO
+        title={seoTitle}
+        description={seoDesc}
+        canonical={`${BRAND.url}/portfolio/${project.slug}`}
+        ogImage={project.ogImage}
+      />
 
       {/* Case Study Hero */}
       <section className="cs-hero section-padding">

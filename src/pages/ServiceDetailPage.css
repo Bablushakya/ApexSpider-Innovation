@@ -162,3 +162,20 @@
     justify-content: center;
   }
 }
+
+/* ── FAQ accordion — CSS-based collapse ─────────────────────────────────────
+   Answers are always in the DOM so search engine crawlers can index the text.
+   Visual collapse is handled here with max-height + overflow instead of
+   conditional React rendering.
+   ─────────────────────────────────────────────────────────────────────────── */
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  transition: max-height 0.3s ease, visibility 0.3s ease;
+}
+
+.faq-answer.open {
+  max-height: 600px; /* generous ceiling — answers are short paragraphs */
+  visibility: visible;
+}

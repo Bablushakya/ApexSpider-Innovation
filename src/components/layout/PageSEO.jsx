@@ -15,6 +15,7 @@ const BASE_URL = BRAND.url;
  * @param {string} [props.ogTitle]    - OG title (falls back to title)
  * @param {string} [props.ogDesc]     - OG description (falls back to description)
  * @param {string} [props.ogImage]    - OG image URL
+ * @param {boolean} [props.noindex]   - When true, sets meta robots to noindex
  */
 export default function PageSEO({
   title,
@@ -23,6 +24,7 @@ export default function PageSEO({
   ogTitle,
   ogDesc,
   ogImage,
+  noindex = false,
 }) {
   useEffect(() => {
     // Title
@@ -56,6 +58,16 @@ export default function PageSEO({
       setMeta('meta[name="twitter:image"]', ogImage);
     }
 
+    // noindex — used on 404 / error pages as belt-and-suspenders
+    const robotsEl = document.querySelector('meta[name="robots"]');
+    if (noindex) {
+      if (robotsEl) robotsEl.setAttribute('content', 'noindex');
+      else setMeta('meta[name="robots"]', 'noindex');
+    } else if (robotsEl && robotsEl.getAttribute('content') === 'noindex') {
+      // Reset if navigating away from a noindex page
+      robotsEl.setAttribute('content', 'index, follow');
+    }
+
     // Canonical
     let canonicalEl = document.querySelector('link[rel="canonical"]');
     if (canonical) {
@@ -76,7 +88,7 @@ export default function PageSEO({
       // Reset to site defaults on unmount
       document.title = 'Apex Spider Innovation | Custom Software & Web Development';
     };
-  }, [title, description, canonical, ogTitle, ogDesc, ogImage]);
+  }, [title, description, canonical, ogTitle, ogDesc, ogImage, noindex]);
 
   return null;
 }
