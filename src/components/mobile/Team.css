@@ -1,0 +1,201 @@
+/* ==========================================================================
+   OUR TEAM SECTION - Mobile & Tablet Styling
+   ApexSpider Innovation Design System
+   ========================================================================== */
+
+.mobile-team-section {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Tablet: 2 × 2 grid, Mobile: 1 card per row */
+.mobile-team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .mobile-team-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+.mobile-team-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  box-shadow: var(--shadow-premium);
+  box-sizing: border-box;
+}
+
+/* Photo Frame */
+.mobile-team-photo-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 4.4;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: hsla(223, 30%, 8%, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+@media (max-width: 640px) {
+  .mobile-team-photo-frame {
+    aspect-ratio: 4 / 4.2;
+    max-height: 280px;
+  }
+}
+
+.mobile-team-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.mobile-team-photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, hsla(224, 40%, 7%, 0.6) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+/* Fallback Portrait Container */
+.mobile-team-photo-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 40%, hsla(180, 100%, 50%, 0.12), transparent 70%),
+              hsl(223, 30%, 9%);
+}
+
+.mobile-team-fallback-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: hsla(224, 40%, 14%, 0.9);
+  border: 2px solid hsla(180, 100%, 50%, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 16px hsla(180, 100%, 50%, 0.2);
+  margin-bottom: 8px;
+}
+
+.mobile-team-fallback-initials {
+  font-family: var(--font-headings);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-accent-teal);
+  letter-spacing: 0.05em;
+}
+
+.mobile-team-fallback-tag {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: var(--color-accent-teal);
+  letter-spacing: 0.1em;
+  background: var(--color-accent-teal-muted);
+  border: 1px solid hsla(180, 100%, 50%, 0.25);
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+/* Card Content */
+.mobile-team-card-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-top: 14px;
+}
+
+.mobile-team-member-name {
+  font-family: var(--font-headings);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 6px;
+  line-height: 1.25;
+}
+
+.mobile-team-designation-badge {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--color-accent-teal);
+  background: var(--color-accent-teal-muted);
+  border: 1px solid hsla(180, 100%, 50%, 0.25);
+  border-radius: 4px;
+  padding: 2px 7px;
+  margin-bottom: 10px;
+}
+
+.mobile-team-meta-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: hsla(215, 20%, 65%, 0.75);
+  margin-bottom: 2px;
+}
+
+.mobile-team-role-row {
+  margin-bottom: 8px;
+}
+
+.mobile-team-role-value {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  line-height: 1.3;
+}
+
+.mobile-team-focus-block {
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.mobile-team-focus-value {
+  font-size: 0.78125rem;
+  color: var(--color-text-secondary);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Social links (if provided) */
+.mobile-team-social-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 6px;
+}
+
+.mobile-team-social-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-glass);
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
