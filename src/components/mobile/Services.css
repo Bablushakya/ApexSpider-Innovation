@@ -122,9 +122,9 @@
 .mobile-btn-explore {
   display: inline-flex;
   align-items: center;
-  min-height: 36px;
-  padding: 0 10px;
-  border-radius: 7px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: 8px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border-glass);
   color: var(--color-text-secondary);

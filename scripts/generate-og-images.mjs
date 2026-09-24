@@ -1,7 +1,14 @@
 /**
  * scripts/generate-og-images.mjs
+ * 
+ * ⚠️  ONE-TIME UTILITY SCRIPT — Not part of the build pipeline.
+ * 
  * Generates custom 1200x630 OpenGraph preview cards for case studies
  * using sharp and SVG composition.
+ * 
+ * Only run manually when adding new case studies or updating OG images.
+ * 
+ * Requirements: npm install sharp
  */
 import sharp from 'sharp';
 import path from 'node:path';

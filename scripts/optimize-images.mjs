@@ -1,7 +1,14 @@
 /**
  * optimize-images.mjs
+ * 
+ * ⚠️  ONE-TIME UTILITY SCRIPT — Not part of the build pipeline.
+ * 
  * Converts all PNG assets → WebP using sharp (already installed).
+ * Only run manually when adding new PNG assets that need WebP conversion.
+ * 
  * Run: node scripts/optimize-images.mjs
+ * 
+ * Requirements: npm install sharp
  */
 
 import sharp from 'sharp';

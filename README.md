@@ -16,9 +16,9 @@ Premium custom software, scalable web applications, and intelligent digital syst
 | Routing   | React Router DOM 7                             |
 | Linting   | oxlint                                         |
 | Testing   | Vitest + React Testing Library + jsdom         |
-| Forms     | Web3Forms (no backend required)                |
+| Forms     | EmailJS (client-side email service)            |
 | Fonts     | Inter, Outfit, JetBrains Mono (Google Fonts)   |
-| Deploy    | GitHub Actions → GitHub Pages                  |
+| Deploy    | Vercel (Automatic deployment from main branch) |
 
 ---
 
@@ -26,18 +26,35 @@ Premium custom software, scalable web applications, and intelligent digital syst
 
 ```
 src/
-├── assets/           # Static assets (logo, images)
+├── assets/           # Static assets (logo images in WebP format)
 ├── components/       # All React components + companion CSS
-│   └── ui/           # Reusable presentational primitives
-├── constants/        # brand.js — single source of truth for copy & config
-├── hooks/            # Reusable custom React hooks
-├── pages/            # Route-level pages (legal pages, 404)
+│   ├── desktop/      # Desktop-optimized components
+│   ├── mobile/       # Mobile-optimized components
+│   ├── layout/       # Layout components (PageLayout, PageSEO, ScrollToTop)
+│   ├── shared/       # Shared components (Breadcrumb, CTASection)
+│   ├── ui/           # Reusable UI primitives (GlowHorizonFM)
+│   └── ErrorBoundary.jsx
+├── constants/        # Data constants and configuration
+├── hooks/            # Custom React hooks
+├── pages/            # Route-level pages
 ├── services/         # API service layer (contactService.js)
-└── test/             # Unit & component tests
+├── test/             # Unit & component tests
+└── utils/            # Utility functions
 
 public/
-├── robots.txt
-└── sitemap.xml
+├── images/           # Team photos and case study images
+├── robots.txt        # SEO crawler instructions
+├── sitemap.xml       # Generated sitemap (auto-updated on build)
+├── llms.txt          # AI crawler documentation
+└── [favicons, OG images, manifest]
+
+api/
+└── indexnow.js       # Vercel serverless function for IndexNow submission
+
+scripts/
+├── prerender.mjs     # SSR prerendering (runs during build)
+├── generate-sitemap.mjs  # Sitemap generator (runs during build)
+└── indexnow.mjs      # Manual IndexNow submission script
 ```
 
 ---
@@ -46,7 +63,7 @@ public/
 
 ### Prerequisites
 
-- Node.js ≥ 18
+- Node.js ≥ 22 (specified in `.nvmrc`)
 - npm ≥ 9
 
 ### Installation
@@ -65,13 +82,18 @@ Copy `.env.example` to `.env` and fill in your values:
 cp .env.example .env
 ```
 
-| Variable                    | Description                                | Required |
-|-----------------------------|--------------------------------------------|----------|
-| `VITE_WEB3FORMS_ACCESS_KEY` | Web3Forms key for contact form delivery    | Yes (for live form) |
+| Variable                       | Description                                | Required |
+|--------------------------------|--------------------------------------------|----------|
+| `VITE_EMAILJS_SERVICE_ID`      | EmailJS service ID for contact forms       | Yes (for live form) |
+| `VITE_EMAILJS_TEMPLATE_ID`     | EmailJS template ID                        | Yes (for live form) |
+| `VITE_EMAILJS_PUBLIC_KEY`      | EmailJS public key                         | Yes (for live form) |
+| `INDEXNOW_API_KEY`             | Bing IndexNow API key (server-side only)  | Optional |
+| `INDEXNOW_TRIGGER_SECRET`      | Secret for /api/indexnow endpoint         | Optional |
+| `VITE_SENTRY_DSN`              | Sentry error tracking DSN                  | Optional |
 
-Get a free Web3Forms key at [web3forms.com](https://web3forms.com).
+Get a free EmailJS account at [emailjs.com](https://www.emailjs.com).
 
-Without the key, the form runs in **demo mode** — submissions are acknowledged in the UI but no email is sent.
+Without the EmailJS keys, the form runs in **demo mode** — submissions are acknowledged in the UI but no email is sent.
 
 ---
 
@@ -88,31 +110,40 @@ npm run dev      # Start Vite dev server at http://localhost:5173
 | Command           | Description                              |
 |-------------------|------------------------------------------|
 | `npm run dev`     | Start development server                 |
-| `npm run build`   | Production build → `dist/`              |
+| `npm run build`   | Production build with SSR prerendering   |
 | `npm run preview` | Preview production build locally         |
 | `npm run lint`    | Run oxlint                               |
 | `npm test`        | Run all tests (single run)               |
 | `npm run test:ui` | Vitest UI                                |
 | `npm run test:watch` | Vitest in watch mode                  |
+| `npm run indexnow` | Submit URLs to Bing IndexNow (manual)  |
+| `npm run verify-deploy` | Pre-deployment verification script |
 
 ---
 
 ## Deployment
 
-### GitHub Pages (Automatic)
+### Vercel (Automatic)
 
-Pushes to `main` trigger the deploy workflow automatically via GitHub Actions.
+Pushes to `main` branch trigger automatic deployment via Vercel.
 
 **One-time setup:**
-1. Go to repository **Settings → Pages → Source** → select `GitHub Actions`
-2. Add `VITE_WEB3FORMS_ACCESS_KEY` to **Settings → Secrets → Actions**
+1. Connect repository to Vercel
+2. Add environment variables in **Vercel Dashboard → Settings → Environment Variables**
+3. Vercel will automatically build and deploy on every push to main
 
-### Manual Build
+### Environment Variables on Vercel
 
-```bash
-npm run build
-# Output is in /dist — deploy to any static host (Netlify, Vercel, Cloudflare Pages)
-```
+Add these in the Vercel Dashboard:
+
+**Required (client-side):**
+- `VITE_EMAILJS_SERVICE_ID`
+- `VITE_EMAILJS_TEMPLATE_ID`
+- `VITE_EMAILJS_PUBLIC_KEY`
+
+**Optional (server-side for IndexNow API):**
+- `INDEXNOW_API_KEY`
+- `INDEXNOW_TRIGGER_SECRET`
 
 ---
 
@@ -130,12 +161,13 @@ Update that file once to propagate changes everywhere.
 
 ## Contact Form
 
-The form uses [Web3Forms](https://web3forms.com) for email delivery. No backend or server is required.
+The form uses [EmailJS](https://www.emailjs.com) for email delivery. No backend server is required.
 
 To activate:
-1. Create a free account at web3forms.com
-2. Copy your access key
-3. Add it to `.env` as `VITE_WEB3FORMS_ACCESS_KEY`
+1. Create a free account at emailjs.com
+2. Configure an email service connected to info@apexspiderinnovation.com
+3. Create a template with required variables (see `.env.example`)
+4. Add credentials to `.env` and Vercel environment variables
 
 ---
 

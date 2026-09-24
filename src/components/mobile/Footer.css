@@ -194,6 +194,8 @@
 .mobile-footer-bottom {
   border-top: 1px solid var(--border-glass);
   padding: 16px 0;
+  /* Add spacing for bottom navigation on mobile */
+  padding-bottom: calc(16px + 72px + env(safe-area-inset-bottom));
 }
 
 .mobile-bottom-container {

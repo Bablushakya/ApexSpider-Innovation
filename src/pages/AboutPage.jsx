@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import PageLayout from '../components/layout/PageLayout';
 import PageSEO, { PAGE_SEO } from '../components/layout/PageSEO';
@@ -6,9 +6,15 @@ import Breadcrumb from '../components/shared/Breadcrumb';
 import CTASection from '../components/shared/CTASection';
 import { ABOUT_CONTENT } from '../constants/about';
 import { EASE } from '../constants/animations';
+import { useIsMobile } from '../hooks/useIsMobile';
 import './AboutPage.css';
 
+// Lazy load Team components
+const DesktopTeam = lazy(() => import('../components/desktop/Team'));
+const MobileTeam = lazy(() => import('../components/mobile/Team'));
+
 export default function AboutPage() {
+  const isMobile = useIsMobile();
   const { hero, whoWeAre, whatWeBelieve, ourApproach, expertise, techStack, cta } = ABOUT_CONTENT;
 
   return (
@@ -125,6 +131,11 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* Meet The Team */}
+      <Suspense fallback={null}>
+        {isMobile ? <MobileTeam /> : <DesktopTeam />}
+      </Suspense>
 
       {/* CTA */}
       <CTASection heading={cta.heading} body={cta.body} primaryBtn={cta.primaryBtn} secondaryBtn={cta.secondaryBtn} />

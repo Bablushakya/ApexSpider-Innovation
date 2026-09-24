@@ -1,7 +1,11 @@
 /**
  * generate-favicons.js
  * 
+ * ⚠️  ONE-TIME UTILITY SCRIPT — Not part of the build pipeline.
+ * 
  * This script generates all required favicon and logo sizes from the source logo.
+ * Only run manually when you need to regenerate favicons from a new logo.
+ * 
  * Run with: node generate-favicons.js
  * 
  * Requirements: npm install sharp

@@ -1,6 +1,7 @@
 /* ═══════════════════════════════════════════════════════════
-   MOBILE CONTACT CTA STYLES
-   Compact, high-impact CTA Card linking to /contact
+   MOBILE CONTACT CTA STYLES - OPTIMIZED FOR REAL DEVICES
+   Compact, high-impact CTA with horizontal trust indicators
+   No oversized circular cards - clean, app-like design
    ═══════════════════════════════════════════════════════════ */
 
 .mobile-contact-section {
@@ -9,11 +10,11 @@
 }
 
 .mobile-contact-card {
-  padding: 36px 20px;
+  padding: 32px 20px;
   background: radial-gradient(130% 100% at 50% 0%, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.85) 100%);
   border: 1px solid rgba(0, 240, 255, 0.15);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
-  border-radius: 20px;
+  border-radius: 16px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -28,45 +29,55 @@
   border: 1px solid rgba(16, 185, 129, 0.25);
   padding: 6px 14px;
   border-radius: 99px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .mobile-contact-title {
-  font-size: 1.75rem;    /* 28px */
+  font-size: 1.625rem;    /* 26px - more compact */
   font-weight: 800;
   color: var(--color-text-primary);
-  margin: 0 0 14px 0;
+  margin: 0 0 12px 0;
   line-height: 1.2;
   letter-spacing: -0.02em;
 }
 
 .mobile-contact-desc {
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   line-height: 1.6;
   color: var(--color-text-secondary);
-  margin-bottom: 24px;
-  max-width: 320px;
+  margin-bottom: 20px;
+  max-width: 340px;
 }
 
+/* Compact horizontal trust indicators */
 .mobile-contact-perks {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   width: 100%;
-  margin-bottom: 28px;
+  max-width: 360px;
+  margin-bottom: 24px;
 }
 
 .mobile-perk-item {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-size: 0.85rem;
+  justify-content: flex-start;
+  gap: 10px;
+  font-size: 0.875rem;
   color: var(--color-text-primary);
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 8px 12px;
-  border-radius: 99px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.perk-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--color-accent-teal);
 }
 
 .mobile-contact-actions {
@@ -74,6 +85,7 @@
   flex-direction: column;
   gap: 14px;
   width: 100%;
+  max-width: 360px;
   align-items: center;
 }
 
@@ -84,16 +96,76 @@
   font-size: 1rem;
   font-weight: 600;
   box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+  min-height: 50px;
 }
 
 .mobile-contact-email-link {
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   color: var(--color-accent-teal);
   text-decoration: none;
-  word-break: break-all;
+  word-break: break-word;
+  overflow-wrap: break-word;
   padding: 6px 0;
+  transition: color 0.25s ease;
+  max-width: 100%;
+  display: inline-block;
 }
 
 .mobile-contact-email-link:hover {
   text-decoration: underline;
+  color: var(--color-text-primary);
+}
+
+/* Tablet optimization */
+@media (min-width: 480px) {
+  .mobile-contact-card {
+    padding: 40px 32px;
+    border-radius: 20px;
+  }
+
+  .mobile-contact-title {
+    font-size: 1.875rem;
+  }
+
+  .mobile-contact-desc {
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+  }
+
+  .mobile-contact-perks {
+    flex-direction: row;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .mobile-perk-item {
+    flex: 1;
+    justify-content: center;
+    padding: 12px 16px;
+  }
+}
+
+/* Small screens - even more compact */
+@media (max-width: 380px) {
+  .mobile-contact-card {
+    padding: 28px 18px;
+  }
+
+  .mobile-contact-title {
+    font-size: 1.5rem;
+  }
+
+  .mobile-contact-desc {
+    font-size: 0.875rem;
+  }
+
+  .mobile-perk-item {
+    font-size: 0.8125rem;
+    padding: 9px 14px;
+  }
+
+  .perk-icon {
+    width: 16px;
+    height: 16px;
+  }
 }
