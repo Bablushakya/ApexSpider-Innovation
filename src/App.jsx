@@ -16,7 +16,6 @@ const DesktopValueProps   = lazy(() => import('./components/desktop/ValueProps')
 const DesktopProcess      = lazy(() => import('./components/desktop/Process'));
 const DesktopCaseStudy    = lazy(() => import('./components/desktop/CaseStudy'));
 const DesktopAbout        = lazy(() => import('./components/desktop/About'));
-const DesktopTeam         = lazy(() => import('./components/desktop/Team'));
 const DesktopTestimonials = lazy(() => import('./components/desktop/Testimonials'));
 const DesktopFAQ          = lazy(() => import('./components/desktop/FAQ'));
 const DesktopContactCTA   = lazy(() => import('./components/desktop/ContactCTA'));
@@ -25,6 +24,7 @@ const DesktopContactCTA   = lazy(() => import('./components/desktop/ContactCTA')
 import MobileHeader from './components/mobile/Header';
 import MobileHero from './components/mobile/Hero';
 import MobileFooter from './components/mobile/Footer';
+import MobileBottomNav from './components/mobile/BottomNav';
 
 // Mobile below-fold sections — lazy loaded
 const MobileServices     = lazy(() => import('./components/mobile/Services'));
@@ -32,7 +32,6 @@ const MobileValueProps   = lazy(() => import('./components/mobile/ValueProps'));
 const MobileProcess      = lazy(() => import('./components/mobile/Process'));
 const MobileCaseStudy    = lazy(() => import('./components/mobile/CaseStudy'));
 const MobileAbout        = lazy(() => import('./components/mobile/About'));
-const MobileTeam         = lazy(() => import('./components/mobile/Team'));
 const MobileTestimonials = lazy(() => import('./components/mobile/Testimonials'));
 const MobileFAQ          = lazy(() => import('./components/mobile/FAQ'));
 const MobileContactCTA   = lazy(() => import('./components/mobile/ContactCTA'));
@@ -103,7 +102,6 @@ function DesktopHomePage({ logoNavRef, navReady, heroReady }) {
           <DesktopProcess />
           <DesktopCaseStudy />
           <DesktopAbout />
-          <DesktopTeam />
           <DesktopTestimonials />
           <DesktopFAQ />
           <DesktopContactCTA />
@@ -127,7 +125,6 @@ function MobileHomePage({ logoNavRef, navReady, heroReady }) {
           <MobileProcess />
           <MobileCaseStudy />
           <MobileAbout />
-          <MobileTeam />
           <MobileTestimonials />
           <MobileFAQ />
           <MobileContactCTA />
@@ -281,6 +278,9 @@ export default function App() {
           />
         </Routes>
       </AnimatePresence>
+
+      {/* Mobile Bottom Navigation - Only visible on mobile */}
+      {isMobile && <MobileBottomNav />}
     </>
   );
 }

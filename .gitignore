@@ -1,4 +1,30 @@
-# Logs
+# ═════════════════════════════════════════════════════════════════
+# .gitignore — Apex Spider Innovation
+# ═════════════════════════════════════════════════════════════════
+# This file prevents sensitive data, build artifacts, and local
+# development files from being committed to version control.
+# ═════════════════════════════════════════════════════════════════
+
+# ── Build Output ──────────────────────────────────────────────────
+# Vite build output directory — regenerated on every build
+dist/
+dist-ssr/
+
+# ── Dependencies ──────────────────────────────────────────────────
+# Node.js package dependencies — installed via npm install
+node_modules/
+
+# ── Environment Variables (CRITICAL - DO NOT COMMIT) ──────────────
+# These files contain API keys, secrets, and credentials
+# NEVER commit .env files to Git - they must remain local only
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.local
+
+# ── Logs ──────────────────────────────────────────────────────────
 logs
 *.log
 npm-debug.log*
@@ -7,21 +33,54 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
-.env
-.env.local
-.env.*.local
-
-# Editor directories and files
+# ── IDE / Editor Files ────────────────────────────────────────────
+# VSCode settings (except extensions.json which is shared)
 .vscode/*
 !.vscode/extensions.json
-.idea
+
+# JetBrains IDEs (WebStorm, IntelliJ, etc.)
+.idea/
+*.iml
+
+# Vim
+*.sw?
+*.swp
+*.swo
+
+# ── Operating System Files ────────────────────────────────────────
+# macOS
 .DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Windows project files
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+
+# ── Test Coverage ─────────────────────────────────────────────────
+coverage/
+*.lcov
+.nyc_output/
+
+# ── Temporary Files ───────────────────────────────────────────────
+*.tmp
+*.temp
+.cache/
+
+# ── Optional: Local Development Files ─────────────────────────────
+# Uncomment if you create local test/debug files
+# *.local.js
+# *.local.jsx
+# test-local/

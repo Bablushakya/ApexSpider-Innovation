@@ -1,6 +1,12 @@
 /**
  * scripts/verify-seo.mjs
+ * 
+ * ⚠️  MANUAL TESTING UTILITY — Not part of the build pipeline.
+ * 
  * Automated SEO and Structured Data Auditor for all 16 generated HTML files.
+ * Run manually after build to verify SEO metadata and structured data.
+ * 
+ * Run: node scripts/verify-seo.mjs
  */
 
 import fs from 'node:fs';

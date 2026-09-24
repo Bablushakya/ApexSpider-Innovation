@@ -1,7 +1,11 @@
 /**
  * create-favicon-ico.js
  * 
+ * ⚠️  ONE-TIME UTILITY SCRIPT — Not part of the build pipeline.
+ * 
  * This script creates favicon.ico from the 32x32 PNG file.
+ * Only run manually when you need to regenerate the favicon.
+ * 
  * Run with: node create-favicon-ico.js
  * 
  * Requirements: npm install --save-dev to-ico
