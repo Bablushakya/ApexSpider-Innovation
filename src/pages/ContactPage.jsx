@@ -76,7 +76,7 @@ export default function ContactPage() {
               <div className="consultation-guarantees">
                 {guarantees.map((g) => (
                   <div key={g} className="guarantee-badge">
-                    <svg className="bullet-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                    <svg className="bullet-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
                     <span>{g}</span>

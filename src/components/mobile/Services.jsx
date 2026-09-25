@@ -45,6 +45,8 @@ function MobileServiceCard({ service, index }) {
           <li key={idx} className="mobile-service-bullet-item">
             <svg
               className="bullet-check"
+              width="12"
+              height="12"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"

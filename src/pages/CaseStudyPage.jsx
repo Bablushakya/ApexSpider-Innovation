@@ -109,7 +109,7 @@ export default function CaseStudyPage() {
               <ul className="cs-objectives-list">
                 {project.objectives.map((obj, idx) => (
                   <li key={idx}>
-                    <svg className="bullet-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                    <svg className="bullet-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
                     {obj}
