@@ -129,8 +129,10 @@
 }
 
 .approach-box {
-  padding: 20px 16px;
-  border-radius: 12px;
+  padding: 20px 18px;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
 }
 
 .approach-num {
@@ -143,18 +145,23 @@
 }
 
 .approach-box h3 {
-  font-size: 0.98rem;
+  font-size: 1.05rem;
   margin-bottom: 6px;
+  color: var(--color-text-primary);
 }
 
 .approach-box p {
-  font-size: 0.82rem;
+  font-size: 0.875rem;
   color: var(--color-text-secondary);
   line-height: 1.55;
+  hyphens: none;
+  -webkit-hyphens: none;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
 /* Tablet breakpoint - 2 column approach */
-@media (min-width: 640px) {
+@media (min-width: 640px) and (max-width: 1023px) {
   .approach-5step {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
@@ -238,13 +245,6 @@
   .approach-box p {
     font-size: 0.84rem;
     line-height: 1.5;
-  }
-}
-
-@media (max-width: 1024px) {
-  .approach-5step {
-    grid-template-columns: repeat(3, 1fr);
-  }
 }
 
 /* Mobile-first responsive adjustments */
