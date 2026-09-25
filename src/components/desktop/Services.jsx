@@ -22,7 +22,7 @@ export default function Services() {
           <span className="tag">Services</span>
           <h2 id="services-heading">Technology built around your business.</h2>
           <p>
-            From customer-facing websites to internal business systems, AI solutions and data platforms — we build custom technology designed around real operational needs.
+            From customer-facing websites to internal business systems, AI solutions, Data Platforms, and many more. We build custom technology designed around real operational needs.
           </p>
         </motion.div>
 
@@ -78,6 +78,8 @@ export default function Services() {
                       <li key={idx} className="service-bullet-item">
                         <svg
                           className="bullet-check"
+                          width="14"
+                          height="14"
                           viewBox="0 0 24 24"
                           fill="none"
                           stroke="currentColor"

@@ -97,10 +97,22 @@
 
 .service-caps-list li {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
   font-size: 0.9rem;
   color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+.service-caps-list .bullet-check {
+  width: 16px;
+  height: 16px;
+  max-width: 16px;
+  max-height: 16px;
+  flex-shrink: 0;
+  stroke: var(--color-accent-teal);
+  stroke-width: 2.5;
+  margin-top: 2px;
 }
 
 .service-page-card-footer {
