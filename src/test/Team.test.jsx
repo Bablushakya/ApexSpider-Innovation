@@ -23,9 +23,9 @@ describe('DesktopTeam component', () => {
     expect(screen.getByRole('heading', { name: 'Vishal' })).toBeInTheDocument();
 
     expect(screen.getByText('Founder')).toBeInTheDocument();
-    expect(screen.getByText('Co-Founder · UI/UX & Operations')).toBeInTheDocument();
-    expect(screen.getByText('Data & Analytics')).toBeInTheDocument();
-    expect(screen.getByText('Software Developer & Strategist')).toBeInTheDocument();
+    expect(screen.getByText('Founding Member · UI/UX & Operations')).toBeInTheDocument();
+    expect(screen.getByText('Founding Member · Data & Analytics')).toBeInTheDocument();
+    expect(screen.getByText('Founding Member · Software Developer & Strategist')).toBeInTheDocument();
   });
 
   it('renders accurate focus areas', () => {
