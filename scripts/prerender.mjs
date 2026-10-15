@@ -88,8 +88,7 @@ async function prerender() {
     const { default: Security } = await vite.ssrLoadModule('/src/pages/Security.jsx');
 
     // Load data & constants
-    const { BRAND } = await vite.ssrLoadModule('/src/constants/brand.js');
-    const { PAGE_SEO } = await vite.ssrLoadModule('/src/components/layout/PageSEO.jsx');
+    const { PAGE_SEO } = await vite.ssrLoadModule('/src/constants/seo.js');
     const { SERVICES } = await vite.ssrLoadModule('/src/constants/services.jsx');
     const { CASE_STUDIES } = await vite.ssrLoadModule('/src/constants/caseStudies.jsx');
 

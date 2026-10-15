@@ -66,22 +66,78 @@
   padding: 0;
 }
 
-/* Prevent horizontal overflow globally */
-html, body {
-  overflow-x: hidden;
-  max-width: 100vw;
-  position: relative;
-}
-
+/* Prevent horizontal overflow while allowing smooth kinetic momentum scroll */
 html {
-  scroll-behavior: smooth;
   color-scheme: dark;
+  overflow-x: clip;
 }
 
-/* Ensure all major containers respect viewport width */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Custom Glassmorphic Dark Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(224, 40%, 7%);
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsla(215, 20%, 28%, 0.6);
+  border-radius: 9999px;
+  border: 2px solid hsl(224, 40%, 7%);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(180, 100%, 50%);
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.6);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsla(215, 20%, 28%, 0.6) hsl(224, 40%, 7%);
+}
+
+/* Top Reading Progress Bar */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, hsl(180, 100%, 50%), hsl(250, 100%, 65%));
+  transform-origin: 0%;
+  z-index: 99999;
+  box-shadow: 0 0 12px hsla(180, 100%, 50%, 0.6);
+  pointer-events: none;
+}
+
+/* Ensure root container respects viewport width */
 #root {
-  overflow-x: hidden;
-  max-width: 100vw;
+  overflow-x: clip;
+  width: 100%;
 }
 
 select, option {
@@ -96,6 +152,13 @@ option {
 body {
   font-family: var(--font-body);
   background-color: var(--color-bg-deep);
+  background-image:
+    radial-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+    radial-gradient(ellipse 90% 45% at 50% -10%, rgba(0, 255, 255, 0.08), transparent 70%),
+    radial-gradient(ellipse 70% 35% at 100% 40%, rgba(99, 102, 241, 0.07), transparent 60%),
+    radial-gradient(ellipse 70% 40% at 0% 70%, rgba(0, 255, 255, 0.06), transparent 60%);
+  background-size: 32px 32px, 100% 100%, 100% 100%, 100% 100%;
+  background-attachment: fixed;
   color: var(--color-text-primary);
   line-height: 1.6;
   overflow-x: hidden;
@@ -231,20 +294,7 @@ iframe {
   padding-left: env(safe-area-inset-left);
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-bg-deep);
-}
-::-webkit-scrollbar-thumb {
-  background: hsla(215, 20%, 30%, 0.5);
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-accent-teal);
-}
+
 
 /* Base Styles & Typography */
 h1, h2, h3, h4, h5, h6 {
@@ -535,139 +585,12 @@ button {
   background-clip: text;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   BUTTON MICRO-INTERACTIONS
-   Premium hover, active, and focus states with smooth animations
-   ═══════════════════════════════════════════════════════════ */
 
-/* Base Button */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 28px;
-  min-height: 44px;
-  border-radius: 8px;
-  font-weight: 500;
-  font-size: 0.95rem;
-  letter-spacing: 0.01em;
-  gap: 8px;
-  box-sizing: border-box;
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-}
 
-@media (max-width: 768px) {
-  .btn {
-    min-height: 48px;
-    padding: 12px 24px;
-  }
-}
 
-/* Primary Button - Gradient with glow effect */
-.btn-primary {
-  background: linear-gradient(135deg, var(--color-accent-teal) 0%, var(--color-accent-indigo) 100%);
-  color: var(--color-bg-deep);
-  font-weight: 600;
-  transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1), 
-              box-shadow 0.25s cubic-bezier(0.25, 0.8, 0.25, 1),
-              filter 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
+/* btn-primary and btn-secondary are defined in the BUTTON SYSTEM section below ↓ */
 
-.btn-primary::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%);
-  opacity: 0;
-  transition: opacity 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
-  z-index: -1;
-}
 
-.btn-primary:hover {
-  box-shadow: 0 8px 24px rgba(0, 255, 255, 0.3), 0 0 32px rgba(99, 102, 241, 0.2);
-  transform: translateY(-3px) scale(1.02);
-  filter: brightness(1.15);
-}
-
-.btn-primary:hover::before {
-  opacity: 1;
-}
-
-.btn-primary:active {
-  transform: translateY(-1px) scale(0.98);
-  box-shadow: 0 4px 16px rgba(0, 255, 255, 0.25);
-  transition-duration: 0.1s;
-}
-
-.btn-primary:focus-visible {
-  outline: 2px solid var(--color-accent-teal);
-  outline-offset: 4px;
-}
-
-/* Arrow icon animation in primary buttons */
-.btn-primary svg {
-  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.btn-primary:hover svg {
-  transform: translateX(4px);
-}
-
-/* Secondary Button - Glass morphism with border glow */
-.btn-secondary {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--border-glass);
-  color: var(--color-text-primary);
-  backdrop-filter: blur(8px);
-  transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1),
-              background 0.25s cubic-bezier(0.25, 0.8, 0.25, 1),
-              border-color 0.25s cubic-bezier(0.25, 0.8, 0.25, 1),
-              box-shadow 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.btn-secondary::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 8px;
-  background: linear-gradient(135deg, var(--color-accent-teal) 0%, var(--color-accent-indigo) 100%);
-  opacity: 0;
-  transition: opacity 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
-  z-index: -1;
-}
-
-.btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: var(--color-accent-teal);
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 8px 20px rgba(0, 255, 255, 0.15);
-}
-
-.btn-secondary:hover::before {
-  opacity: 0.05;
-}
-
-.btn-secondary:active {
-  transform: translateY(-1px) scale(0.98);
-  box-shadow: 0 4px 12px rgba(0, 255, 255, 0.1);
-  transition-duration: 0.1s;
-}
-
-.btn-secondary:focus-visible {
-  outline: 2px solid var(--color-accent-teal);
-  outline-offset: 4px;
-}
-
-/* Arrow icon animation in secondary buttons */
-.btn-secondary svg {
-  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.btn-secondary:hover svg {
-  transform: translateX(4px);
-}
 
 /* Text Button - Underline reveal effect */
 .btn-text {
@@ -854,65 +777,70 @@ button {
   }
 }
 
-/* Section Header styling */
+/* ── Section Header — Premium Global Styles ── */
 .section-header {
   text-align: center;
-  max-width: 650px;
-  margin: 0 auto 60px auto;
+  max-width: 680px;
+  margin: 0 auto 64px auto;
   position: relative;
   z-index: 10;
 }
 
-.section-header .tag {
+/* Global .tag pill — used by all section headers */
+.tag {
+  display: inline-flex;
+  align-items: center;
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: 0.74rem;
   text-transform: uppercase;
+  letter-spacing: 0.12em;
   color: var(--color-accent-teal);
-  background: var(--color-accent-teal-muted);
-  padding: 6px 14px;
+  background: rgba(0, 255, 255, 0.07);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  padding: 5px 16px;
   border-radius: 99px;
-  border: 1px solid hsla(180, 100%, 50%, 0.3);
-  display: inline-block;
-  margin-bottom: 16px;
-  letter-spacing: 0.1em;
+  margin-bottom: 18px;
 }
 
 .section-header h2 {
-  font-size: 2.5rem;
+  font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
   margin-bottom: 16px;
+  line-height: 1.15;
 }
 
 .section-header p {
   color: var(--color-text-secondary);
-  font-size: 1.1rem;
-  line-height: 1.6;
+  font-size: 1.05rem;
+  line-height: 1.7;
 }
 
 @media (max-width: 768px) {
   .section-header {
-    margin-bottom: 28px;   /* Down from 32px */
+    margin-bottom: 32px;
   }
 
   .section-header h2 {
-    font-size: 1.625rem; /* 26px — clean section heading */
+    font-size: 1.625rem;
     margin-bottom: 10px;
   }
-  
+
   .section-header p {
-    font-size: 0.9rem;   /* 14.4px */
-    line-height: 1.6;
+    font-size: 0.9rem;
+    line-height: 1.65;
   }
-  
-  .section-header .tag {
-    font-size: 0.6875rem;
-    padding: 4px 11px;
-    margin-bottom: 10px;
+
+  .tag {
+    font-size: 0.68rem;
+    padding: 4px 12px;
+    margin-bottom: 12px;
   }
 }
 
 @media (max-width: 360px) {
   .section-header h2 {
-    font-size: 1.5rem; /* 24px */
+    font-size: 1.5rem;
   }
 }
 

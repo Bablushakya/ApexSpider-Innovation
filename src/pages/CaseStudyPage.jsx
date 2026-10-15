@@ -30,8 +30,9 @@ export default function CaseStudyPage() {
         ogImage={project.ogImage}
       />
 
-      {/* Case Study Hero */}
-      <section className="cs-hero section-padding">
+      <div className="cs-page-wrapper">
+        {/* Case Study Hero */}
+        <section className="cs-hero section-padding">
         <div className="container">
           <Breadcrumb
             items={[
@@ -209,6 +210,7 @@ export default function CaseStudyPage() {
         secondaryBtn="View More Portfolio"
         secondaryHref="/portfolio"
       />
+      </div>
     </PageLayout>
   );
 }

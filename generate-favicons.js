@@ -94,7 +94,6 @@ async function generateFavicons() {
   // Also generate favicon.ico from 32x32 version
   try {
     const favicon32Path = path.join(PUBLIC_DIR, 'favicon-32x32.png');
-    const faviconIcoPath = path.join(PUBLIC_DIR, 'favicon.ico');
     
     if (fs.existsSync(favicon32Path)) {
       // Note: Sharp doesn't support ICO format directly

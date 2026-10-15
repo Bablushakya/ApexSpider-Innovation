@@ -1,54 +1,111 @@
+.portfolio-page-wrapper {
+  position: relative;
+  overflow: hidden;
+  background-color: hsl(224, 40%, 6%);
+  background-image:
+    radial-gradient(rgba(0, 255, 255, 0.06) 1px, transparent 1px),
+    radial-gradient(ellipse 90% 45% at 50% -10%, rgba(0, 255, 255, 0.12), transparent 70%),
+    radial-gradient(ellipse 70% 35% at 100% 40%, rgba(99, 102, 241, 0.09), transparent 60%),
+    radial-gradient(ellipse 70% 40% at 0% 70%, rgba(0, 255, 255, 0.08), transparent 60%);
+  background-size: 32px 32px, 100% 100%, 100% 100%, 100% 100%;
+  min-height: 100vh;
+}
+
 .portfolio-hero {
-  padding-top: 40px;
+  position: relative;
+  padding-top: 48px;
+  padding-bottom: 24px;
 }
 
 .portfolio-hero-content {
-  max-width: 800px;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .portfolio-hero-title {
-  font-size: 3rem;
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
   line-height: 1.15;
-  margin-top: 16px;
-  margin-bottom: 20px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-top: 18px;
+  margin-bottom: 22px;
+  color: var(--color-text-primary);
 }
 
 .portfolio-hero-desc {
-  font-size: 1.15rem;
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
   color: var(--color-text-secondary);
-  line-height: 1.6;
-  margin-bottom: 24px;
+  line-height: 1.7;
+  max-width: 780px;
+  margin: 0 auto 28px auto;
+}
+
+/* Portfolio Hero Metrics */
+.portfolio-hero-metrics {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.portfolio-metric-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(0, 255, 255, 0.18);
+  border-radius: 99px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+}
+
+.portfolio-metric-badge .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent-teal);
+  box-shadow: 0 0 8px var(--color-accent-teal);
 }
 
 .portfolio-filter-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 20px;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
 }
 
 .portfolio-filter-pill {
-  padding: 8px 16px;
-  background: var(--color-glass-bg);
-  border: 1px solid var(--color-glass-border);
-  border-radius: var(--radius-full);
+  padding: 9px 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 99px;
   color: var(--color-text-secondary);
-  font-size: 0.85rem;
+  font-size: 0.86rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  user-select: none;
 }
 
 .portfolio-filter-pill:hover {
-  border-color: var(--color-accent-cyan);
+  border-color: rgba(0, 255, 255, 0.4);
   color: var(--color-text-primary);
+  background: rgba(0, 255, 255, 0.06);
+  transform: translateY(-2px);
 }
 
 .portfolio-filter-pill.active {
   background: rgba(0, 255, 255, 0.12);
-  border-color: var(--color-accent-cyan);
-  color: var(--color-accent-cyan);
+  border-color: var(--color-accent-teal);
+  color: var(--color-accent-teal);
   font-weight: 600;
+  box-shadow: 0 0 16px rgba(0, 255, 255, 0.2);
 }
 
 .portfolio-grid {
@@ -57,43 +114,111 @@
   gap: 48px;
 }
 
-.portfolio-card {
-  border-radius: 20px;
+.portfolio-card-v2 {
+  border-radius: 24px;
   overflow: hidden;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.15fr 0.85fr;
   gap: 0;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, hsla(223, 30%, 12%, 0.75), hsla(224, 40%, 8%, 0.9));
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
 }
 
-.portfolio-card:nth-child(even) {
-  direction: rtl;
+.portfolio-card-v2:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 255, 255, 0.3);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 255, 255, 0.1);
 }
 
-.portfolio-card:nth-child(even) > * {
-  direction: ltr;
+.portfolio-card-v2:nth-child(even) {
+  grid-template-columns: 0.85fr 1.15fr;
+}
+
+.portfolio-card-v2:nth-child(even) .portfolio-browser-mockup {
+  order: 2;
+}
+
+.portfolio-card-v2:nth-child(even) .portfolio-card-content {
+  order: 1;
+}
+
+/* Browser Mockup Frame */
+.portfolio-browser-mockup {
+  background: hsl(224, 40%, 6%);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+}
+
+.portfolio-card-v2:nth-child(even) .portfolio-browser-mockup {
+  border-right: none;
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.browser-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: hsla(223, 30%, 10%, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.browser-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.browser-dots .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-red { background: #ff5f56; }
+.dot-yellow { background: #ffbd2e; }
+.dot-green { background: #27c93f; }
+
+.browser-url-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
 }
 
 .portfolio-img-wrapper {
   position: relative;
   overflow: hidden;
-  aspect-ratio: 16 / 10;
+  height: 100%;
+  min-height: 280px;
 }
 
 .portfolio-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  object-position: top center;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.portfolio-card:hover .portfolio-img {
-  transform: scale(1.04);
+.portfolio-card-v2:hover .portfolio-img {
+  transform: scale(1.03);
 }
 
 .portfolio-img-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(7, 11, 20, 0.65);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -101,7 +226,7 @@
   transition: opacity 0.3s ease;
 }
 
-.portfolio-card:hover .portfolio-img-overlay {
+.portfolio-card-v2:hover .portfolio-img-overlay {
   opacity: 1;
 }
 
@@ -114,15 +239,16 @@
   font-size: 0.9rem;
   text-decoration: none;
   transform: translateY(8px);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 255, 255, 0.4);
 }
 
-.portfolio-card:hover .portfolio-overlay-btn {
+.portfolio-card-v2:hover .portfolio-overlay-btn {
   transform: translateY(0);
 }
 
 .portfolio-card-content {
-  padding: 40px;
+  padding: 36px 32px;
   display: flex;
   flex-direction: column;
 }
@@ -130,8 +256,8 @@
 .portfolio-card-meta {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 16px;
+  gap: 12px;
+  margin-bottom: 14px;
   flex-wrap: wrap;
 }
 
@@ -141,9 +267,9 @@
 }
 
 .portfolio-card-title {
-  font-size: 1.8rem;
-  margin-bottom: 14px;
-  line-height: 1.2;
+  font-size: 1.65rem;
+  margin-bottom: 12px;
+  line-height: 1.25;
 }
 
 .portfolio-card-desc {
@@ -151,6 +277,46 @@
   color: var(--color-text-secondary);
   line-height: 1.65;
   margin-bottom: 20px;
+}
+
+/* Metrics Chips */
+.portfolio-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.portfolio-metric-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+}
+
+.portfolio-metric-chip .metric-icon {
+  font-size: 1.1rem;
+}
+
+.portfolio-metric-chip .metric-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.portfolio-metric-chip .metric-val {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-accent-cyan);
+  font-family: var(--font-mono);
+}
+
+.portfolio-metric-chip .metric-lbl {
+  font-size: 0.72rem;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
 }
 
 .portfolio-service-tags {
@@ -167,22 +333,33 @@
   margin-top: auto;
 }
 
-@media (max-width: 900px) {
-  .portfolio-card {
+@media (max-width: 992px) {
+  .portfolio-card-v2,
+  .portfolio-card-v2:nth-child(even) {
     grid-template-columns: 1fr;
-    direction: ltr;
   }
 
-  .portfolio-card:nth-child(even) {
-    direction: ltr;
+  .portfolio-card-v2:nth-child(even) .portfolio-browser-mockup {
+    order: 1;
+    border-left: none;
+  }
+
+  .portfolio-card-v2:nth-child(even) .portfolio-card-content {
+    order: 2;
+  }
+
+  .portfolio-browser-mockup {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .portfolio-img-wrapper {
     aspect-ratio: 16 / 9;
+    min-height: auto;
   }
 
   .portfolio-card-content {
-    padding: 28px 24px;
+    padding: 28px 22px;
   }
 
   .portfolio-card-title {
@@ -193,6 +370,10 @@
 @media (max-width: 768px) {
   .portfolio-hero-title {
     font-size: 2.2rem;
+  }
+
+  .portfolio-grid {
+    gap: 28px;
   }
 
   .portfolio-card-actions {

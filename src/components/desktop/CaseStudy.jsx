@@ -32,9 +32,9 @@ export default function CaseStudy() {
 
         <div className="work-container">
           {CASE_STUDIES.map((project, index) => (
-            <motion.article
+            <motion.div
               key={project.slug}
-              className="glass-panel work-card"
+              className="work-card-wrap"
               initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-10%' }}
@@ -43,6 +43,9 @@ export default function CaseStudy() {
                 ease: EASE.premium, 
                 delay: prefersReducedMotion ? 0 : index * 0.18 
               }}
+            >
+            <article
+              className="work-card"
               aria-labelledby={`work-card-title-${index}`}
             >
               {/* Visual screenshot inside browser mockup */}
@@ -63,27 +66,11 @@ export default function CaseStudy() {
                     <span className="chrome-dot dot-yellow" />
                     <span className="chrome-dot dot-green" />
                   </div>
-                  <motion.img
+                  <img
                     src={project.image}
                     alt={project.imageAlt}
                     className="work-project-img"
                     loading="lazy"
-                    initial={{ opacity: 0, scale: prefersReducedMotion ? 1 : 0.98 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ 
-                      duration: prefersReducedMotion ? 0.01 : 0.6, 
-                      ease: EASE.smooth, 
-                      delay: prefersReducedMotion ? 0 : index * 0.18 + 0.35 
-                    }}
-                    whileHover={
-                      prefersReducedMotion 
-                        ? {} 
-                        : { 
-                            scale: 1.03,
-                            transition: { duration: 0.4, ease: EASE.smooth }
-                          }
-                    }
                   />
                 </motion.div>
               </div>
@@ -152,7 +139,8 @@ export default function CaseStudy() {
                   )}
                 </div>
               </div>
-            </motion.article>
+            </article>
+            </motion.div>
           ))}
         </div>
       </div>

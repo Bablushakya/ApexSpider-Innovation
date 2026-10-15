@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback, useRef, forwardRef } from 'react';
+import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { NAV_LINKS, SERVICE_NAV_ITEMS, BRAND } from '../../constants/brand';
 import { EASE } from '../../constants/animations';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
@@ -11,7 +11,6 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
   const [isScrolled, setIsScrolled]         = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const navigate    = useNavigate();
   const prefersReduced = useReducedMotion();
 
   useEffect(() => {
@@ -161,6 +160,24 @@ const Header = forwardRef(function Header({ navReady = false }, logoNavRef) {
           </ul>
         </nav>
 
+        {/* Header CTA */}
+        <motion.div
+          className="header-actions"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: navReady ? 1 : 0 }}
+          transition={{ duration: prefersReduced ? 0.01 : 0.5, ease: 'easeOut', delay: prefersReduced ? 0 : 0.3 }}
+        >
+          <Link
+            to="/contact"
+            className="btn btn-primary header-start-project"
+            aria-label="Start a new project with Apex Spider Innovation"
+          >
+            Start a Project
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+              <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </Link>
+        </motion.div>
 
       </div>
     </header>

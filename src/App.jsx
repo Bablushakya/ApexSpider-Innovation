@@ -3,6 +3,8 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { useIsMobile } from './hooks/useIsMobile';
 import ScrollToTop from './components/layout/ScrollToTop';
+import SmoothScrollProvider from './components/layout/SmoothScrollProvider';
+import ScrollProgressBar from './components/layout/ScrollProgressBar';
 
 // Desktop Components (Home page) — Header + Hero stay eager (above-fold critical path)
 import DesktopHeader from './components/desktop/Header';
@@ -150,7 +152,10 @@ export default function App() {
   const handleHeroReady         = useCallback(() => setHeroReady(true),      []);
 
   return (
-    <>
+    <SmoothScrollProvider>
+      {/* Dynamic glowing scroll progress bar */}
+      <ScrollProgressBar />
+
       {/* Skip-to-content link for keyboard / screen-reader users */}
       <a href="#main-content" className="skip-link">
         Skip to main content
@@ -281,6 +286,6 @@ export default function App() {
 
       {/* Mobile Bottom Navigation - Only visible on mobile */}
       {isMobile && <MobileBottomNav />}
-    </>
+    </SmoothScrollProvider>
   );
 }

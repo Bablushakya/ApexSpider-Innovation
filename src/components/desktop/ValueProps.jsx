@@ -10,17 +10,17 @@ export default function ValueProps() {
 
   return (
     <section className="value-section section-padding" id="why-apexspider" aria-labelledby="why-heading">
-      <motion.div 
-        className="glow-blob glow-blob-indigo value-blob" 
+      <motion.div
+        className="glow-blob glow-blob-indigo value-blob"
         aria-hidden="true"
         initial={{ opacity: 0, scale: 0.8 }}
-        whileInView={{ opacity: 0.15, scale: 1 }}
+        whileInView={{ opacity: 0.13, scale: 1 }}
         viewport={{ once: true, margin: '-20%' }}
         transition={{ duration: prefersReducedMotion ? 0.01 : 1.5, ease: EASE.smooth }}
       />
-      
+
       <div className="container">
-        <motion.div 
+        <motion.div
           className="section-header"
           initial={{ opacity: 0, y: 20, filter: prefersReducedMotion ? 'blur(0px)' : 'blur(4px)' }}
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
@@ -34,44 +34,30 @@ export default function ValueProps() {
 
         <div className="value-grid">
           {VALUE_PROPS.map((principle, index) => (
-            <motion.div 
-              key={principle.number} 
-              className="glass-panel value-card"
+            <motion.div
+              key={principle.number}
+              className="value-card-wrap"
               initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-10%' }}
-              transition={{ 
-                duration: prefersReducedMotion ? 0.01 : 0.7, 
-                ease: EASE.premium, 
-                delay: prefersReducedMotion ? 0 : index * 0.12 
+              transition={{
+                duration: prefersReducedMotion ? 0.01 : 0.7,
+                ease: EASE.premium,
+                delay: prefersReducedMotion ? 0 : index * 0.1,
               }}
               whileHover={
-                prefersReducedMotion 
-                  ? {} 
-                  : { 
-                      y: -4,
-                      borderColor: 'rgba(0, 255, 255, 0.25)',
-                      transition: { duration: 0.3, ease: EASE.smooth }
-                    }
+                prefersReducedMotion
+                  ? {}
+                  : { scale: 1.01, transition: { duration: 0.25, ease: EASE.smooth } }
               }
             >
-              <motion.div 
-                className="principle-number"
-                whileHover={
-                  prefersReducedMotion 
-                    ? {} 
-                    : { 
-                        scale: 1.05,
-                        backgroundColor: 'rgba(0, 255, 255, 0.25)',
-                        transition: { duration: 0.2, ease: EASE.smooth }
-                      }
-                }
-              >
-                {principle.number}
-              </motion.div>
-              <h3 className="value-title">{principle.title}</h3>
-              <div className="value-subtitle">{principle.subtitle}</div>
-              <p className="value-desc">{principle.desc}</p>
+              <div className="value-card">
+                <div className="principle-number">{principle.number}</div>
+                <h3 className="value-title">{principle.title}</h3>
+                <div className="value-subtitle">{principle.subtitle}</div>
+                <p className="value-desc">{principle.desc}</p>
+                <div className="value-card-bar" aria-hidden="true" />
+              </div>
             </motion.div>
           ))}
         </div>

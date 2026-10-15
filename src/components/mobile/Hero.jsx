@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+// import TrustedByMarquee from '../shared/TrustedByMarquee'; // Kept for future use
 import { EASE } from '../../constants/animations';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import './Hero.css';
@@ -101,6 +102,12 @@ export default function MobileHero({ heroReady = false }) {
           </motion.div>
 
         </div>
+
+        {/* Global Trusted By Marquee — Kept in codebase, commented out for future use
+        <motion.div className="mobile-hero-trusted" {...stagger(0.5)} style={{ width: '100%' }}>
+          <TrustedByMarquee title="Trusted by enterprise founders" />
+        </motion.div>
+        */}
       </div>
     </section>
   );
