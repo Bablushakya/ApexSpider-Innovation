@@ -12,7 +12,7 @@
  */
 
 import sharp from 'sharp';
-import { readdir, stat, rename } from 'fs/promises';
+import { readdir, stat } from 'fs/promises';
 import { join, extname, basename, dirname } from 'path';
 import { fileURLToPath } from 'url';
 

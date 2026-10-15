@@ -21,7 +21,7 @@ export default function ContactCTA() {
         className="glow-blob glow-blob-indigo contact-blob-1" 
         aria-hidden="true"
         initial={{ opacity: 0, scale: prefersReduced ? 1 : 0.8 }}
-        whileInView={{ opacity: 0.6, scale: 1 }}
+        whileInView={{ opacity: 0.18, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: prefersReduced ? 0.01 : 1.5, ease: EASE.premium }}
       />
@@ -29,7 +29,7 @@ export default function ContactCTA() {
         className="glow-blob glow-blob-teal contact-blob-2" 
         aria-hidden="true"
         initial={{ opacity: 0, scale: prefersReduced ? 1 : 0.8 }}
-        whileInView={{ opacity: 0.6, scale: 1 }}
+        whileInView={{ opacity: 0.12, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: prefersReduced ? 0.01 : 1.5, ease: EASE.premium, delay: prefersReduced ? 0 : 0.2 }}
       />

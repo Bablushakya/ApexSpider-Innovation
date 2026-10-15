@@ -1,3 +1,7 @@
+/* ══════════════════════════════════════════════════════
+   CONTACT CTA — Premium Redesign
+   ══════════════════════════════════════════════════════ */
+
 .contact-section {
   position: relative;
   overflow: hidden;
@@ -9,45 +13,98 @@
 }
 
 .contact-blob-1 {
-  top: -100px;
-  right: -50px;
-  opacity: 0.12;
+  top: -120px;
+  right: -80px;
+  opacity: 0.18;
+  width: 500px !important;
+  height: 500px !important;
 }
 
 .contact-blob-2 {
   bottom: -150px;
-  left: 20%;
-  opacity: 0.08;
+  left: 10%;
+  opacity: 0.12;
+  width: 400px !important;
+  height: 400px !important;
 }
 
+/* ── Card with multi-layer border glow ── */
 .contact-cta-card {
-  max-width: 920px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 64px 48px;
-  background: radial-gradient(130% 100% at 50% 0%, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.85) 100%);
-  border: 1px solid rgba(0, 240, 255, 0.15);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  border-radius: 28px;
+  padding: 72px 56px;
+  background:
+    radial-gradient(130% 100% at 50% -10%, rgba(0,255,255,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 100% 100%, rgba(99,102,241,0.08) 0%, transparent 50%),
+    hsla(224, 35%, 9%, 0.95);
+  border: 1px solid rgba(0,255,255,0.18);
+  box-shadow:
+    0 0 0 1px rgba(99,102,241,0.08),
+    0 20px 60px rgba(0,0,0,0.5),
+    0 0 120px rgba(0,255,255,0.04),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+  border-radius: 32px;
   text-align: center;
   position: relative;
-  backdrop-filter: blur(20px);
+  overflow: hidden;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+/* Animated top border sweep */
+.contact-cta-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 300%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0,255,255,0.4),
+    rgba(99,102,241,0.6),
+    rgba(0,255,255,0.4),
+    transparent
+  );
+  animation: topLineSweep 6s ease-in-out 2s infinite;
+}
+
+@keyframes topLineSweep {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Corner glow accents */
+.contact-cta-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 32px;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(0,255,255,0.04), transparent 40%),
+    radial-gradient(circle at 100% 100%, rgba(99,102,241,0.06), transparent 40%);
+  pointer-events: none;
 }
 
 .contact-cta-content {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
+/* ── Status badge ── */
 .contact-status-note {
   display: inline-flex;
   align-items: center;
   gap: 10px;
   background: rgba(16, 185, 129, 0.08);
   border: 1px solid rgba(16, 185, 129, 0.25);
-  padding: 8px 18px;
+  padding: 8px 20px;
   border-radius: 99px;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .pulse-dot {
@@ -57,78 +114,91 @@
   border-radius: 50%;
   box-shadow: 0 0 10px #10b981;
   animation: pulseDot 2s infinite;
+  flex-shrink: 0;
 }
 
 @keyframes pulseDot {
-  0% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-  }
-  70% {
-    transform: scale(1);
-    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
-  }
-  100% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
-  }
+  0%   { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16,185,129,0.7); }
+  70%  { transform: scale(1);    box-shadow: 0 0 0 8px rgba(16,185,129,0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16,185,129,0); }
 }
 
 .status-text {
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   color: #10b981;
   font-family: var(--font-mono);
   text-transform: uppercase;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
 }
 
+/* ── Title ── */
 .contact-cta-title {
-  font-size: 3.25rem;
+  font-size: clamp(2rem, 4vw, 3.5rem);
   margin-bottom: 20px;
   font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.15;
-  max-width: 760px;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  max-width: 800px;
+  background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.8) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
+.contact-cta-title .text-gradient-cyan {
+  background: linear-gradient(135deg, hsl(180,100%,55%) 0%, hsl(250,100%,70%) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Description ── */
 .contact-cta-desc {
   color: var(--color-text-secondary);
-  font-size: 1.15rem;
-  margin-bottom: 36px;
-  line-height: 1.65;
-  max-width: 640px;
+  font-size: 1.1rem;
+  margin-bottom: 40px;
+  line-height: 1.7;
+  max-width: 600px;
 }
 
-/* Perks list */
+/* ── Perks ── */
 .contact-cta-perks {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 24px;
-  margin-bottom: 44px;
+  gap: 12px;
+  margin-bottom: 48px;
 }
 
 .contact-perk-item {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   color: var(--color-text-primary);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 8px 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 9px 18px;
   border-radius: 99px;
+  transition: all 0.2s ease;
 }
 
-.perk-icon {
-  width: 16px;
-  height: 16px;
+.contact-perk-item:hover {
+  background: rgba(0,255,255,0.06);
+  border-color: rgba(0,255,255,0.2);
   color: var(--color-accent-teal);
 }
 
-/* Action Buttons */
+.perk-icon {
+  width: 15px;
+  height: 15px;
+  color: var(--color-accent-teal);
+  flex-shrink: 0;
+}
+
+/* ── Action Buttons ── */
 .contact-cta-actions {
   display: flex;
   align-items: center;
@@ -139,93 +209,43 @@
 
 .contact-main-btn {
   font-size: 1.05rem;
-  padding: 16px 36px;
-  font-weight: 600;
+  padding: 16px 40px;
+  font-weight: 700;
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  box-shadow: 0 0 25px rgba(0, 240, 255, 0.35);
-  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 0 30px rgba(0,240,255,0.35), 0 8px 24px rgba(0,0,0,0.3);
+  transition: transform 0.3s cubic-bezier(0.25,0.8,0.25,1), box-shadow 0.3s cubic-bezier(0.25,0.8,0.25,1);
 }
 
 .contact-main-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 35px rgba(0, 240, 255, 0.55);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 0 50px rgba(0,240,255,0.55), 0 12px 32px rgba(0,0,0,0.4);
 }
 
 .contact-email-btn {
   font-size: 0.95rem;
-  padding: 15px 26px;
+  padding: 15px 28px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
 }
 
-/* Responsiveness */
+/* ── Responsive ── */
 @media (max-width: 1024px) {
-  .contact-cta-card {
-    padding: 48px 32px;
-  }
-  
-  .contact-cta-title {
-    font-size: 2.5rem;
-  }
-  
-  .contact-cta-desc {
-    font-size: 1.05rem;
-  }
+  .contact-cta-card { padding: 52px 36px; }
 }
 
 @media (max-width: 768px) {
-  .contact-blob-1,
-  .contact-blob-2 {
-    display: none;
-  }
-  
-  .contact-cta-card {
-    padding: 36px 20px;
-    border-radius: 20px;
-  }
-
-  .contact-cta-title {
-    font-size: 1.85rem;
-    margin-bottom: 14px;
-  }
-  
-  .contact-cta-desc {
-    font-size: 0.95rem;
-    margin-bottom: 28px;
-  }
-
-  .contact-cta-perks {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-    margin-bottom: 32px;
-  }
-
-  .contact-perk-item {
-    justify-content: center;
-  }
-
-  .contact-cta-actions {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .contact-main-btn,
-  .contact-email-btn {
-    width: 100%;
-    justify-content: center;
-  }
+  .contact-blob-1, .contact-blob-2 { display: none; }
+  .contact-cta-card { padding: 40px 24px; border-radius: 22px; }
+  .contact-cta-perks { flex-direction: column; align-items: stretch; gap: 8px; margin-bottom: 36px; }
+  .contact-perk-item { justify-content: center; }
+  .contact-cta-actions { flex-direction: column; width: 100%; }
+  .contact-main-btn, .contact-email-btn { width: 100%; justify-content: center; }
 }
 
-@media (max-width: 480px) {
-  .contact-cta-title {
-    font-size: 1.6rem;
-  }
-  
-  .contact-cta-desc {
-    font-size: 0.9rem;
-  }
+@media (prefers-reduced-motion: reduce) {
+  .contact-cta-card::before, .pulse-dot { animation: none; }
+  .contact-main-btn:hover { transform: none; }
 }

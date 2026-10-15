@@ -121,7 +121,6 @@ if (existsSync(gitignorePath)) {
 
 // Check 6: dist folder (output) doesn't exist or is in .gitignore
 console.log('\n✓ Checking build output configuration...');
-const distPath = join(rootDir, 'dist');
 if (existsSync(gitignorePath)) {
   const gitignore = readFileSync(gitignorePath, 'utf8');
   if (gitignore.includes('dist')) {

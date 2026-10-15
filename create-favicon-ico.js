@@ -29,7 +29,7 @@ async function createFaviconIco() {
     let toIco;
     try {
       toIco = (await import('to-ico')).default;
-    } catch (error) {
+    } catch {
       console.log('⚠️  Package "to-ico" not found.');
       console.log('   Installing it now...\n');
       

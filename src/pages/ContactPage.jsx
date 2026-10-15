@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import PageLayout from '../components/layout/PageLayout';
-import PageSEO, { PAGE_SEO } from '../components/layout/PageSEO';
+import PageSEO from '../components/layout/PageSEO';
+import { PAGE_SEO } from '../constants/seo';
 import Breadcrumb from '../components/shared/Breadcrumb';
 import { useContactForm } from '../hooks/useContactForm';
 import {
@@ -38,7 +39,8 @@ export default function ContactPage() {
     <PageLayout>
       <PageSEO {...PAGE_SEO.contact} />
 
-      <section className="contact-page-section section-padding">
+      <div className="contact-page-wrapper">
+        <section className="contact-page-section section-padding">
         <div className="container">
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Contact' }]} />
 
@@ -275,6 +277,7 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+      </div>
     </PageLayout>
   );
 }

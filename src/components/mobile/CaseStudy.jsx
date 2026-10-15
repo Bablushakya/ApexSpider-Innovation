@@ -62,18 +62,11 @@ export default function MobileCaseStudy() {
                     <span className="chrome-dot dot-yellow" />
                     <span className="chrome-dot dot-green" />
                   </div>
-                  <motion.img
+                  <img
                     src={project.image}
                     alt={project.imageAlt}
                     className="mobile-project-img"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ 
-                      duration: prefersReducedMotion ? 0.01 : 0.5, 
-                      ease: EASE.smooth, 
-                      delay: prefersReducedMotion ? 0 : index * 0.18 + 0.3 
-                    }}
+                    loading="lazy"
                   />
                 </motion.div>
               </div>

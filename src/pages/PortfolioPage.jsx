@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import PageLayout from '../components/layout/PageLayout';
-import PageSEO, { PAGE_SEO } from '../components/layout/PageSEO';
+import PageSEO from '../components/layout/PageSEO';
+import { PAGE_SEO } from '../constants/seo';
 import Breadcrumb from '../components/shared/Breadcrumb';
 import CTASection from '../components/shared/CTASection';
 import { CASE_STUDIES } from '../constants/caseStudies.jsx';
@@ -23,42 +24,59 @@ export default function PortfolioPage() {
     <PageLayout>
       <PageSEO {...PAGE_SEO.portfolio} />
 
-      {/* Hero */}
-      <section className="portfolio-hero section-padding">
-        <div className="container">
-          <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Portfolio' }]} />
+      <div className="portfolio-page-wrapper">
+        {/* Hero */}
+        <section className="portfolio-hero section-padding">
+          <div className="container">
+            <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Portfolio' }]} />
 
-          <motion.div
-            className="portfolio-hero-content"
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: EASE.premium }}
-          >
-            <span className="tag">Portfolio</span>
-            <h1 className="portfolio-hero-title">
-              Real projects, <span className="text-gradient-cyan">real outcomes.</span>
-            </h1>
-            <p className="portfolio-hero-desc">
-              Explore our delivered software engagements — from full digital transformations to high-conversion lead generation systems.
-            </p>
+            <motion.div
+              className="portfolio-hero-content"
+              initial={{ opacity: 0, y: 25 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: EASE.premium }}
+            >
+              <span className="tag">DELIVERED WORK</span>
+              <h1 className="portfolio-hero-title">
+                Real projects, <span className="text-gradient-cyan">proven outcomes.</span>
+              </h1>
+              <p className="portfolio-hero-desc">
+                Explore our delivered software engagements — from full digital transformations and custom applications to high-conversion lead generation platforms.
+              </p>
 
-            {/* Category Filter Pills */}
-            <div className="portfolio-filter-row" role="tablist" aria-label="Filter case studies by category">
-              {CATEGORIES.map((cat) => (
-                <button
-                  key={cat}
-                  role="tab"
-                  aria-selected={activeCategory === cat}
-                  className={`portfolio-filter-pill${activeCategory === cat ? ' active' : ''}`}
-                  onClick={() => setActiveCategory(cat)}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
+              {/* Metrics Highlights */}
+              <div className="portfolio-hero-metrics">
+                <div className="portfolio-metric-badge">
+                  <span className="dot" />
+                  <span>50+ Projects Delivered</span>
+                </div>
+                <div className="portfolio-metric-badge">
+                  <span className="dot" />
+                  <span>100% Client Satisfaction</span>
+                </div>
+                <div className="portfolio-metric-badge">
+                  <span className="dot" />
+                  <span>Senior Engineering Standards</span>
+                </div>
+              </div>
+
+              {/* Category Filter Pills */}
+              <div className="portfolio-filter-row" role="tablist" aria-label="Filter case studies by category">
+                {CATEGORIES.map((cat) => (
+                  <button
+                    key={cat}
+                    role="tab"
+                    aria-selected={activeCategory === cat}
+                    className={`portfolio-filter-pill${activeCategory === cat ? ' active' : ''}`}
+                    onClick={() => setActiveCategory(cat)}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </section>
 
       {/* Portfolio Grid */}
       <section className="portfolio-projects-section section-padding">
@@ -68,29 +86,42 @@ export default function PortfolioPage() {
               {filteredProjects.map((project, idx) => (
                 <motion.article
                   key={project.slug}
-                  className="glass-panel portfolio-card"
+                  className="glass-panel portfolio-card-v2"
                   initial={{ opacity: 0, y: 35 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, ease: EASE.premium, delay: idx * 0.1 }}
                 >
-                  {/* Project Image */}
-                  <div className="portfolio-img-wrapper">
-                    <motion.img
-                      src={project.image}
-                      alt={project.imageAlt}
-                      className="portfolio-img"
-                      loading="lazy"
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true, margin: '-10%' }}
-                      transition={{ duration: 0.6, ease: EASE.smooth, delay: 0.2 + idx * 0.1 }}
-                    />
-                    <div className="portfolio-img-overlay">
-                      <Link to={`/portfolio/${project.slug}`} className="portfolio-overlay-btn">
-                        View Case Study
-                      </Link>
+                  {/* Browser Mockup Frame */}
+                  <div className="portfolio-browser-mockup">
+                    <div className="browser-header-bar">
+                      <div className="browser-dots" aria-hidden="true">
+                        <span className="dot dot-red" />
+                        <span className="dot dot-yellow" />
+                        <span className="dot dot-green" />
+                      </div>
+                      <div className="browser-url-bar">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                          <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                        </svg>
+                        <span>{project.slug}.apexspider.live</span>
+                      </div>
+                    </div>
+
+                    <div className="portfolio-img-wrapper">
+                      <img
+                        src={project.image}
+                        alt={project.imageAlt}
+                        className="portfolio-img"
+                        loading="lazy"
+                      />
+                      <div className="portfolio-img-overlay">
+                        <Link to={`/portfolio/${project.slug}`} className="portfolio-overlay-btn">
+                          View Case Study
+                        </Link>
+                      </div>
                     </div>
                   </div>
 
@@ -103,6 +134,21 @@ export default function PortfolioPage() {
 
                     <h2 className="portfolio-card-title">{project.title}</h2>
                     <p className="portfolio-card-desc">{project.shortDesc}</p>
+
+                    {/* Metric Highlights */}
+                    {project.metrics && (
+                      <div className="portfolio-metrics-grid">
+                        {project.metrics.map((m, mIdx) => (
+                          <div key={mIdx} className="portfolio-metric-chip">
+                            <span className="metric-icon">{m.icon}</span>
+                            <div className="metric-info">
+                              <span className="metric-val">{m.value}</span>
+                              <span className="metric-lbl">{m.label}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
 
                     {/* Service Tags */}
                     <div className="portfolio-service-tags">
@@ -146,6 +192,7 @@ export default function PortfolioPage() {
         secondaryBtn="Explore Our Services"
         secondaryHref="/services"
       />
+      </div>
     </PageLayout>
   );
 }

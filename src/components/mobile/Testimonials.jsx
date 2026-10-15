@@ -62,6 +62,14 @@ export default function MobileTestimonials() {
 
   useEffect(() => {
     const onKey = (e) => {
+      const tag = e.target?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || e.target?.isContentEditable) return;
+      const section = document.getElementById('testimonials');
+      if (!section) return;
+      const rect = section.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight && rect.bottom > 0;
+      if (!inView) return;
+
       if (e.key === 'ArrowRight') go(1);
       if (e.key === 'ArrowLeft')  go(-1);
     };

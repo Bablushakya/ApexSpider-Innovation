@@ -1,5 +1,5 @@
 .site-footer {
-  background: var(--color-bg-secondary);
+  background: hsl(224, 40%, 7%);
   border-top: 1px solid var(--border-glass);
   padding: 80px 0 0 0;
   position: relative;
@@ -160,7 +160,7 @@
 .footer-bottom {
   border-top: 1px solid var(--border-glass);
   padding: 30px 0;
-  background: var(--color-bg-deep);
+  background: hsla(224, 40%, 5%, 0.8);
 }
 
 .bottom-container {
@@ -214,9 +214,17 @@
 
 /* Responsiveness */
 @media (max-width: 1024px) {
+  .site-footer {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+  }
+
   .footer-container {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 40px;
+  }
+
+  .footer-brand-column {
+    grid-column: span 2;
   }
   
   .footer-col-title {

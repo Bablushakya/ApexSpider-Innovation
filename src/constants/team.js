@@ -16,7 +16,7 @@ export const TEAM_MEMBERS = [
     role: 'Founder',
     focus: 'Technology Leadership & Business Strategy',
     image: '/images/team/bharat-singh.png',
-    fallbackImage: '/images/team/bharat-singh.png',
+    fallbackImage: null,
     imageAlt: 'Bharat Singh, Founder at ApexSpider Innovation',
     initials: 'BS',
     socials: {
@@ -27,10 +27,10 @@ export const TEAM_MEMBERS = [
   {
     id: 'bablu-shakya',
     name: 'Bablu',
-    role: 'Founding Member · UI/UX & Operations',
+    role: 'UI/UX & Operations',
     focus: 'Product Design · User Experience · Operations',
     image: '/images/team/bablu-shakya.png',
-    fallbackImage: '/images/team/bablu-shakya.png',
+    fallbackImage: null,
     imageAlt: 'Bablu, Co-Founder · UI/UX & Operations at ApexSpider Innovation',
     initials: 'BS',
     socials: {
@@ -41,10 +41,10 @@ export const TEAM_MEMBERS = [
   {
     id: 'rahul-sahani',
     name: 'Rahul Sahani',
-    role: 'Founding Member · Data & Analytics',
+    role: 'Data & Analytics',
     focus: 'Data Analytics · Business Intelligence · AI/ML',
     image: '/images/team/Rahul_photo.JPG.jpeg',
-    fallbackImage: '/images/team/Rahul_photo.JPG.jpeg',
+    fallbackImage: null,
     imageAlt: 'Rahul Sahani, Data & Analytics at ApexSpider Innovation',
     initials: 'RS',
     socials: {
@@ -55,10 +55,10 @@ export const TEAM_MEMBERS = [
   {
     id: 'vishal',
     name: 'Vishal',
-    role: 'Founding Member · Software Developer & Strategist',
+    role: 'Software Developer & Strategist',
     focus: 'Software Development · Technical Strategy · Digital Solutions',
     image: '/images/team/Vishal.jpeg',
-    fallbackImage: '/images/team/Vishal.jpeg',
+    fallbackImage: null,
     imageAlt: 'Vishal, Software Developer & Strategist at ApexSpider Innovation',
     initials: 'V',
     socials: {

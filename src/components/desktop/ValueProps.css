@@ -1,3 +1,7 @@
+/* ══════════════════════════════════════════════════════
+   VALUE PROPS — Premium Redesign
+   ══════════════════════════════════════════════════════ */
+
 .value-section {
   position: relative;
   overflow: hidden;
@@ -11,85 +15,127 @@
 .value-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 28px;
-  margin-top: 48px;
+  gap: 24px;
+  margin-top: 56px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Gradient-border wrapper */
+.value-card-wrap {
+  padding: 1px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(255,255,255,0.05), rgba(0,255,255,0.06));
+  transition: background 0.4s ease;
+}
+
+.value-card-wrap:hover {
+  background: linear-gradient(135deg, rgba(99,102,241,0.35), rgba(0,255,255,0.12), rgba(99,102,241,0.2));
 }
 
 .value-card {
-  padding: 36px 30px;
+  padding: 36px 32px;
   display: flex;
   flex-direction: column;
-  border-radius: 16px;
+  border-radius: 19px;
+  background: hsla(224, 35%, 9%, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   position: relative;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow: hidden;
+  height: 100%;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.value-card:hover {
-  box-shadow: 0 12px 40px 0 rgba(0, 255, 255, 0.08);
+/* Glow corner accent */
+.value-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle at top right, rgba(99,102,241,0.12), transparent 70%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .value-card:hover {
-    transform: none;
-  }
+.value-card-wrap:hover .value-card::before {
+  opacity: 1;
 }
 
 .principle-number {
   font-family: var(--font-mono);
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--color-accent-teal);
-  letter-spacing: 0.1em;
-  margin-bottom: 16px;
-  background: var(--color-accent-teal-muted);
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 6px;
-  width: fit-content;
-  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  background: linear-gradient(135deg, var(--color-accent-teal) 0%, var(--color-accent-indigo) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 20px;
+  line-height: 1;
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .principle-number {
-    transition: none;
-  }
+.value-card-wrap:hover .principle-number {
+  opacity: 1;
 }
 
 .value-title {
-  font-size: 1.4rem;
+  font-size: 1.35rem;
+  font-weight: 700;
   margin-bottom: 8px;
   color: var(--color-text-primary);
-  transition: color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  transition: color 0.3s ease;
 }
 
-.value-card:hover .value-title {
+.value-card-wrap:hover .value-title {
   color: var(--color-accent-teal);
 }
 
 .value-subtitle {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 500;
-  color: var(--color-accent-teal);
-  margin-bottom: 14px;
+  color: var(--color-accent-indigo);
+  margin-bottom: 16px;
+  opacity: 0.85;
 }
 
 .value-desc {
   font-size: 0.9rem;
   color: var(--color-text-secondary);
-  line-height: 1.6;
+  line-height: 1.7;
+}
+
+/* Bottom accent bar */
+.value-card-bar {
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--color-accent-teal), var(--color-accent-indigo));
+  margin-top: 24px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.value-card-wrap:hover .value-card-bar {
+  transform: scaleX(1);
 }
 
 @media (max-width: 768px) {
-  .value-grid {
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
+  .value-grid { grid-template-columns: 1fr; gap: 16px; }
+  .value-card { padding: 28px 24px; }
+  .principle-number { font-size: 2rem; }
+  .value-title { font-size: 1.2rem; }
+}
 
-  .value-card {
-    padding: 24px 20px;
-  }
-
-  .value-title {
-    font-size: 1.2rem;
-  }
+@media (prefers-reduced-motion: reduce) {
+  .value-card::before,
+  .value-card-bar { transition: none; }
+  .value-card-wrap:hover .value-card-bar { transform: scaleX(1); }
 }

@@ -47,6 +47,11 @@ export const CASE_STUDIES = [
       'Social Media Management',
     ],
     technology: ['React', 'JavaScript', 'HTML & CSS', 'SEO tools', 'Performance optimisation'],
+    metrics: [
+      { label: 'PageSpeed Score', value: '98/100', icon: '⚡' },
+      { label: 'Organic Visibility', value: '+140%', icon: '📈' },
+      { label: 'Global Reach', value: '15+ Countries', icon: '🌍' },
+    ],
     outcomes:
       'Delivered a structured digital presence that presents their travel offerings with clarity. Established an SEO foundation and social media presence to support continued digital growth.',
     liveUrl: 'https://indiaheritagetravel.com/',
@@ -93,6 +98,11 @@ export const CASE_STUDIES = [
       'Modern UX',
     ],
     technology: ['HTML', 'CSS', 'JavaScript', 'Responsive design', 'Performance optimisation'],
+    metrics: [
+      { label: 'Lead Conversion', value: '+240%', icon: '🎯' },
+      { label: 'First Contentful Paint', value: '0.6s', icon: '⚡' },
+      { label: 'Mobile Engagement', value: '78%', icon: '📱' },
+    ],
     outcomes:
       'Delivered a landing page that presents the India Sourcing Trip program clearly and provides a stronger lead generation experience for the Elevation by Kim audience.',
     liveUrl: 'https://www.elevationbykim.com/india-sourcing-trip',
