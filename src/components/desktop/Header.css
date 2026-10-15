@@ -277,32 +277,52 @@
   .header-actions { gap: 8px; }
 }
 
-/* Start Project Button in Header */
-.header-start-project {
-  display: flex;
+/* ── Navbar Ghost / Outline Button ("Let's Talk") ── */
+.header-cta-btn {
+  display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.8rem;
-  padding: 8px 16px;
+  gap: 8px;
+  background: transparent;
+  color: var(--color-accent-teal);
+  border: 1px solid var(--color-accent-teal);
+  border-radius: 99px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 8px 20px;
   white-space: nowrap;
   text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 0 14px rgba(0, 255, 255, 0.08);
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+}
+
+.header-cta-btn svg {
+  transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.header-cta-btn:hover {
+  background: var(--color-accent-teal);
+  color: #070C1A; /* solid black text on cyan fill */
+  box-shadow: 0 0 24px rgba(0, 255, 255, 0.45), 0 4px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-1px);
+}
+
+.header-cta-btn:hover svg {
+  transform: translateX(3px);
+}
+
+.header-cta-btn:active {
+  transform: translateY(0);
 }
 
 @media (max-width: 768px) {
-  .header-start-project {
-    font-size: 0.75rem;
-    padding: 8px 12px;
-    min-height: 38px;
-    max-width: 140px;
-  }
-}
-
-@media (max-width: 480px) {
-  .header-start-project {
-    font-size: 0.6875rem;
-    padding: 7px 10px;
-    min-height: 36px;
-    max-width: 130px;
+  .header-cta-btn {
+    font-size: 0.78rem;
+    padding: 7px 14px;
+    gap: 6px;
   }
 }
 
