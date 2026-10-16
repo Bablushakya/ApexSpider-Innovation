@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import PageLayout from '../components/layout/PageLayout';
 import PageSEO from '../components/layout/PageSEO';
 import Breadcrumb from '../components/shared/Breadcrumb';
@@ -380,24 +380,49 @@ export default function ServiceDetailPage() {
                         onClick={() => setActiveFaq(isOpen ? null : idx)}
                       >
                         <span className="faq-question-text">{faq.q}</span>
-                        <span className="faq-arrow-icon" aria-hidden="true">
+                        <motion.span
+                          className="faq-arrow-icon"
+                          aria-hidden="true"
+                          animate={{ rotate: isOpen ? 180 : 0 }}
+                          transition={{ duration: prefersReduced ? 0.01 : 0.28, ease: EASE.smooth }}
+                        >
                           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                             <polyline points="6 9 12 15 18 9" />
                           </svg>
-                        </span>
+                        </motion.span>
                       </button>
 
-                      <div
-                        id={answerId}
-                        className={`faq-answer${isOpen ? ' open' : ''}`}
-                        role="region"
-                        aria-labelledby={questionId}
-                        aria-hidden={!isOpen}
-                      >
-                        <div className="faq-answer-content">
-                          <p className="faq-answer-text">{faq.a}</p>
-                        </div>
-                      </div>
+                      <AnimatePresence initial={false}>
+                        {isOpen && (
+                          <motion.div
+                            id={answerId}
+                            className="faq-answer open"
+                            role="region"
+                            aria-labelledby={questionId}
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{
+                              height: 'auto',
+                              opacity: 1,
+                              transition: {
+                                height: { duration: prefersReduced ? 0.01 : 0.35, ease: EASE.smooth },
+                                opacity: { duration: prefersReduced ? 0.01 : 0.25, delay: prefersReduced ? 0 : 0.08 }
+                              }
+                            }}
+                            exit={{
+                              height: 0,
+                              opacity: 0,
+                              transition: {
+                                height: { duration: prefersReduced ? 0.01 : 0.25, ease: EASE.smooth },
+                                opacity: { duration: prefersReduced ? 0.01 : 0.15 }
+                              }
+                            }}
+                          >
+                            <div className="faq-answer-content">
+                              <p className="faq-answer-text">{faq.a}</p>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </div>
                   );
                 })}

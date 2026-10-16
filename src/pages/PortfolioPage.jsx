@@ -129,7 +129,7 @@ export default function PortfolioPage() {
                   <div className="portfolio-card-content">
                     <div className="portfolio-card-meta">
                       <span className="work-badge-tag">{project.category}</span>
-                      <span className="portfolio-client">Client: {project.client}</span>
+                      <span className="portfolio-client">Client: <strong>{project.client}</strong></span>
                     </div>
 
                     <h2 className="portfolio-card-title">{project.title}</h2>

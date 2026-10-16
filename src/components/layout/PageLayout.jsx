@@ -60,7 +60,8 @@ export default function PageLayout({ children }) {
         variants={pageVariants}
         style={{
           minHeight: '80vh',
-          paddingTop: isMobile ? '64px' : '90px',
+          paddingTop: isMobile ? 'calc(64px + env(safe-area-inset-top))' : '90px',
+          paddingBottom: isMobile ? 'calc(76px + env(safe-area-inset-bottom))' : '0px',
         }}
       >
         {children}
