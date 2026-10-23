@@ -20,4 +20,12 @@ export const TESTIMONIALS = [
     quote:
       'Apex Spider Innovation transformed our website with a modern design and significantly improved our SEO foundation. Their technical expertise and ongoing support have been valuable for our digital growth.',
   },
+  {
+    name:     'GuiltFree Cravings',
+    role:     'E-commerce / Web Development',
+    initials: 'GC',
+    accent:   '#7fffd4',
+    quote:
+      'A customer-focused e-commerce website for a laddoo and sweets brand, designed to showcase products, communicate brand values, and provide customers with a convenient browsing and shopping experience',
+  },
 ];

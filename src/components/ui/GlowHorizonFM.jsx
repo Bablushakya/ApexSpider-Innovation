@@ -17,8 +17,8 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { EASE } from '../../constants/animations';
 
-const EASE     = [0.16, 1, 0.3, 1];
 const DURATION = 2;
 
 const VARIANTS = {
@@ -52,7 +52,7 @@ function Arc({ variant, color, size, initialOffset, blur, boxShadow, delay }) {
       }}
       initial={startPct ? { [axis]: startPct } : false}
       animate={startPct ? { [axis]: 0 }        : undefined}
-      transition={{ duration: DURATION, ease: EASE, delay }}
+      transition={{ duration: DURATION, ease: EASE.premium, delay }}
     />
   );
 }
@@ -73,7 +73,7 @@ export default function GlowHorizonFM({ variant = 'top', className }) {
       }}
       initial={{ [axis]: enterPct, [scaleAxis]: 1.5, opacity: 0, filter: 'blur(15px)' }}
       animate={{ [axis]: restPct,  [scaleAxis]: 1,   opacity: 1, filter: 'blur(0px)'  }}
-      transition={{ duration: DURATION, ease: EASE }}
+      transition={{ duration: DURATION, ease: EASE.premium }}
     >
       {/* White rim — thin bright arc, delayed for cinematic entry */}
       <Arc

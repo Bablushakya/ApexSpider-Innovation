@@ -22,11 +22,11 @@ const DesktopTestimonials = lazy(() => import('./components/desktop/Testimonials
 const DesktopFAQ          = lazy(() => import('./components/desktop/FAQ'));
 const DesktopContactCTA   = lazy(() => import('./components/desktop/ContactCTA'));
 
-// Mobile Components (Home page) — Header + Hero stay eager
-import MobileHeader from './components/mobile/Header';
-import MobileHero from './components/mobile/Hero';
-import MobileFooter from './components/mobile/Footer';
-import MobileBottomNav from './components/mobile/BottomNav';
+// Mobile Components (Home page) — lazy loaded for optimal desktop initial bundle
+const MobileHeader    = lazy(() => import('./components/mobile/Header'));
+const MobileHero      = lazy(() => import('./components/mobile/Hero'));
+const MobileFooter    = lazy(() => import('./components/mobile/Footer'));
+const MobileBottomNav = lazy(() => import('./components/mobile/BottomNav'));
 
 // Mobile below-fold sections — lazy loaded
 const MobileServices     = lazy(() => import('./components/mobile/Services'));
@@ -81,11 +81,6 @@ function PageLoader() {
           animation: 'pageLoaderSpin 0.8s linear infinite',
         }}
       />
-      <style>{`
-        @keyframes pageLoaderSpin {
-          to { transform: rotate(360deg); }
-        }
-      `}</style>
       <span>Loading…</span>
     </div>
   );
@@ -141,13 +136,40 @@ export default function App() {
   const isMobile = useIsMobile();
   const location = useLocation();
 
-  const [showPreloader, setShowPreloader] = useState(!isMobile);
-  const [navReady,      setNavReady]      = useState(isMobile);
-  const [heroReady,     setHeroReady]     = useState(isMobile);
+  const [showPreloader, setShowPreloader] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    try {
+      const seen = sessionStorage.getItem('preloader-seen');
+      return !seen && !isMobile;
+    } catch {
+      return !isMobile;
+    }
+  });
+  const [navReady, setNavReady] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    try {
+      return isMobile || Boolean(sessionStorage.getItem('preloader-seen'));
+    } catch {
+      return isMobile;
+    }
+  });
+  const [heroReady, setHeroReady] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    try {
+      return isMobile || Boolean(sessionStorage.getItem('preloader-seen'));
+    } catch {
+      return isMobile;
+    }
+  });
 
   const logoNavRef = useRef(null);
 
-  const handlePreloaderComplete = useCallback(() => setShowPreloader(false), []);
+  const handlePreloaderComplete = useCallback(() => {
+    setShowPreloader(false);
+    try {
+      sessionStorage.setItem('preloader-seen', '1');
+    } catch {}
+  }, []);
   const handleNavReady          = useCallback(() => setNavReady(true),       []);
   const handleHeroReady         = useCallback(() => setHeroReady(true),      []);
 
@@ -180,11 +202,13 @@ export default function App() {
                   />
                 )}
                 {isMobile ? (
-                  <MobileHomePage
-                    logoNavRef={logoNavRef}
-                    navReady={navReady}
-                    heroReady={heroReady}
-                  />
+                  <Suspense fallback={<PageLoader />}>
+                    <MobileHomePage
+                      logoNavRef={logoNavRef}
+                      navReady={navReady}
+                      heroReady={heroReady}
+                    />
+                  </Suspense>
                 ) : (
                   <DesktopHomePage
                     logoNavRef={logoNavRef}
@@ -285,7 +309,11 @@ export default function App() {
       </AnimatePresence>
 
       {/* Mobile Bottom Navigation - Only visible on mobile */}
-      {isMobile && <MobileBottomNav />}
+      {isMobile && (
+        <Suspense fallback={null}>
+          <MobileBottomNav />
+        </Suspense>
+      )}
     </SmoothScrollProvider>
   );
 }

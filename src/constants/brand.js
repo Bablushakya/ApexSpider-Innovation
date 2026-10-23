@@ -28,6 +28,8 @@ export const BRAND = {
   founded: '2026',
 };
 
+export const CURRENT_YEAR = new Date().getFullYear();
+
 export const SITE_META = {
   title: 'Apex Spider Innovation | Custom Software & Web Development',
   description: BRAND.description,

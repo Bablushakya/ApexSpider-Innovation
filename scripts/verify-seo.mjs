@@ -29,6 +29,7 @@ const ROUTES = [
   { path: '/portfolio', file: 'portfolio/index.html', expectService: false, expectBreadcrumbs: true, expectContact: false },
   { path: '/portfolio/india-heritage-travel', file: 'portfolio/india-heritage-travel/index.html', expectService: false, expectBreadcrumbs: true, expectContact: false },
   { path: '/portfolio/elevation-by-kim', file: 'portfolio/elevation-by-kim/index.html', expectService: false, expectBreadcrumbs: true, expectContact: false },
+  { path: '/portfolio/guiltfree-cravings', file: 'portfolio/guiltfree-cravings/index.html', expectService: false, expectBreadcrumbs: true, expectContact: false },
   { path: '/contact', file: 'contact/index.html', expectService: false, expectBreadcrumbs: true, expectContact: true },
   { path: '/privacy', file: 'privacy/index.html', expectService: false, expectBreadcrumbs: false, expectContact: false },
   { path: '/terms', file: 'terms/index.html', expectService: false, expectBreadcrumbs: false, expectContact: false },
