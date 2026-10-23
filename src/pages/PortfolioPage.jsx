@@ -10,7 +10,12 @@ import { CASE_STUDIES } from '../constants/caseStudies.jsx';
 import { EASE } from '../constants/animations';
 import './PortfolioPage.css';
 
-const CATEGORIES = ['All Projects', 'Travel & Digital Experience', 'E-Commerce & Lead Generation'];
+const CATEGORIES = [
+  'All Projects',
+  'Travel & Digital Experience',
+  'E-Commerce & Lead Generation',
+  'E-commerce / Web Development',
+];
 
 export default function PortfolioPage() {
   const [activeCategory, setActiveCategory] = useState('All Projects');

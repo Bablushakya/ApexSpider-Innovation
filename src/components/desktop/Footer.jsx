@@ -1,14 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { BRAND, FOOTER_NAV_LINKS, FOOTER_SERVICE_LINKS, LEGAL_LINKS } from '../../constants/brand';
+import { BRAND, CURRENT_YEAR, FOOTER_NAV_LINKS, FOOTER_SERVICE_LINKS, LEGAL_LINKS } from '../../constants/brand';
 import { EASE } from '../../constants/animations';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import logoImg from '../../assets/apexspiderinnovationfotterlogo.webp';
 import './Footer.css';
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
   const prefersReduced = useReducedMotion();
 
   return (
@@ -148,7 +147,7 @@ export default function Footer() {
       >
         <div className="container bottom-container">
           <p className="footer-copyright">
-            &copy; {currentYear} {BRAND.name}. All rights reserved.
+            &copy; {CURRENT_YEAR} {BRAND.name}. All rights reserved.
           </p>
 
           <nav className="footer-legal-links" aria-label="Legal links">

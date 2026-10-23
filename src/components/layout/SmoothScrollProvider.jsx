@@ -24,17 +24,11 @@ export default function SmoothScrollProvider({ children }) {
       wheelMultiplier: 0.95,
       touchMultiplier: 1.2,
       infinite: false,
+      autoRaf: true,
     });
 
     lenisRef.current = lenis;
     window.__lenis = lenis;
-
-    let animationFrameId;
-    function raf(time) {
-      lenis.raf(time);
-      animationFrameId = requestAnimationFrame(raf);
-    }
-    animationFrameId = requestAnimationFrame(raf);
 
     // Global in-page anchor click handler for smooth scrolling
     const handleAnchorClick = (e) => {
@@ -58,7 +52,6 @@ export default function SmoothScrollProvider({ children }) {
 
     return () => {
       document.removeEventListener('click', handleAnchorClick);
-      cancelAnimationFrame(animationFrameId);
       lenis.destroy();
       lenisRef.current = null;
       delete window.__lenis;

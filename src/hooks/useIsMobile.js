@@ -22,17 +22,8 @@ export function useIsMobile() {
   useEffect(() => {
     const mediaQuery = window.matchMedia(MOBILE_BREAKPOINT);
     const handler = (e) => setIsMobile(e.matches);
-    
-    // Modern browsers
-    if (mediaQuery.addEventListener) {
-      mediaQuery.addEventListener('change', handler);
-      return () => mediaQuery.removeEventListener('change', handler);
-    }
-    // Fallback for older browsers
-    else {
-      mediaQuery.addListener(handler);
-      return () => mediaQuery.removeListener(handler);
-    }
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
   }, []);
 
   return isMobile;

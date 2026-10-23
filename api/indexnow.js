@@ -38,6 +38,7 @@ const URLS_TO_SUBMIT = [
   'https://www.apexspiderinnovation.com/portfolio',
   'https://www.apexspiderinnovation.com/portfolio/india-heritage-travel',
   'https://www.apexspiderinnovation.com/portfolio/elevation-by-kim',
+  'https://www.apexspiderinnovation.com/portfolio/guiltfree-cravings',
   'https://www.apexspiderinnovation.com/contact',
 ];
 

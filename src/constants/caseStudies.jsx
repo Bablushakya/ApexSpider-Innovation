@@ -5,6 +5,7 @@
 
 import kinImg from '../assets/Our work/kin-webiste.webp';
 import heritageImg from '../assets/Our work/india-heritage-travel.webp';
+import guiltfreeImg from '../assets/Our work/guiltfree-cravings.webp';
 
 export const CASE_STUDIES = [
   {
@@ -109,6 +110,59 @@ export const CASE_STUDIES = [
     liveLabel: 'View Live Project — Elevation by Kim',
     image: kinImg,
     imageAlt: 'Elevation by Kim — India Sourcing Trip Landing Page screenshot',
+  },
+  {
+    slug: 'guiltfree-cravings',
+    tag: 'E-Commerce Web Development',
+    category: 'E-commerce / Web Development',
+    client: 'GuiltFree Cravings',
+    title: 'GuiltFree Cravings — E-commerce Website',
+    seoTitle: 'GuiltFree Cravings — E-Commerce Website Case Study | Apex Spider Innovation',
+    seoDesc: 'How Apex Spider Innovation designed and developed a customer-focused e-commerce website for GuiltFree Cravings — handcrafted laddoo brand with ingredient transparency and seamless online ordering.',
+    ogImage: 'https://www.apexspiderinnovation.com/og-guiltfree-cravings.png',
+    shortDesc:
+      'A customer-focused e-commerce website for a laddoo and sweets brand, designed to showcase products, communicate brand values, and provide customers with a convenient browsing and shopping experience.',
+    overview:
+      'GuiltFree Cravings partnered with Apex Spider Innovation to build a modern, customer-centric e-commerce website for their handcrafted laddoo and healthy sweets brand. The platform showcases pure ingredients, communicates authentic brand values, and delivers a frictionless browsing, discovery, and checkout experience for health-conscious consumers.',
+    clientChallenge:
+      'GuiltFree Cravings required a modern, high-converting digital storefront to showcase their premium range of artisanal, no-refined-sugar laddoos. They needed an intuitive e-commerce experience that effectively highlights nutritional transparency and ingredient purity while offering customers swift mobile shopping, product filtering, and hassle-free ordering.',
+    objectives: [
+      'Design an appetizing, brand-aligned visual identity and product showcase',
+      'Develop an ultra-fast, mobile-first responsive shopping experience',
+      'Communicate health benefits, ingredients transparency, and customer trust',
+      'Implement streamlined cart, checkout, and direct ordering capabilities',
+      'Optimize technical SEO and page speed for organic discovery',
+    ],
+    solution:
+      'Apex Spider Innovation engineered a high-performance e-commerce platform with rich product imagery, clear nutritional profiles, intuitive category browsing, and an optimized checkout workflow. The interface was crafted to load instantly, look stunning on smartphones, and guide shoppers smoothly from initial discovery to purchase.',
+    keyFeatures: [
+      'Interactive product catalog with ingredients & nutrition details',
+      'Mobile-optimized cart and smooth checkout experience',
+      'Brand storytelling showcasing 100% natural sweetening & bilona ghee',
+      'Customer reviews and social proof integration',
+      'Direct WhatsApp order assistance & customer support',
+      'Technical SEO, structured schema data, and fast Core Web Vitals',
+    ],
+    services: [
+      'E-Commerce Web Design',
+      'Full-Stack Web Development',
+      'UI/UX Design & Brand Experience',
+      'Mobile-First Responsive Design',
+      'Technical SEO & Performance Optimization',
+      'Cart & Checkout Flow Engineering',
+    ],
+    technology: ['React', 'Vite', 'Modern CSS & UI', 'JavaScript', 'Responsive Architecture', 'SEO Optimization'],
+    metrics: [
+      { label: 'Mobile PageSpeed', value: '96/100', icon: '⚡' },
+      { label: 'Catalog Browsing Speed', value: '<0.5s', icon: '🚀' },
+      { label: 'User Engagement', value: '+185%', icon: '🛒' },
+    ],
+    outcomes:
+      'Delivered an elegant, high-speed e-commerce storefront that strengthens GuiltFree Cravings’ digital brand authority, increases online customer engagement, and streamlines the end-to-end shopping journey.',
+    liveUrl: 'https://guiltfreecravings.com',
+    liveLabel: 'View Live Project — GuiltFree Cravings',
+    image: guiltfreeImg,
+    imageAlt: 'GuiltFree Cravings — E-commerce Website screenshot',
   },
 ];
 

@@ -20,13 +20,8 @@ export function useReducedMotion() {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
     const handler = (e) => setPrefersReduced(e.matches);
 
-    if (mq.addEventListener) {
-      mq.addEventListener('change', handler);
-      return () => mq.removeEventListener('change', handler);
-    } else if (mq.addListener) {
-      mq.addListener(handler);
-      return () => mq.removeListener(handler);
-    }
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
   }, []);
 
   return prefersReduced;

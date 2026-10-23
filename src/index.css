@@ -1127,3 +1127,8 @@ select:focus-visible {
     scroll-behavior: auto !important;
   }
 }
+
+/* PageLoader spinner animation */
+@keyframes pageLoaderSpin {
+  to { transform: rotate(360deg); }
+}
