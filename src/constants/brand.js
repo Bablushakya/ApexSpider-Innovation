@@ -19,7 +19,7 @@ export const BRAND = {
   social: {
     youtube: 'https://www.youtube.com/@ApexSpiderInnovation',
     instagram: 'https://www.instagram.com/apex_spider_innovation/',
-    linkedin: 'https://www.linkedin.com/company/apexspider-innovation',
+    linkedin: 'https://www.linkedin.com/in/apexspider-innovation/',
     twitter: 'https://x.com/Apex_Spider_Ino',
   },
   logo: {
